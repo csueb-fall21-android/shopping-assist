@@ -104,6 +104,7 @@ An app that can assist you with your shopping. Take a picture and upload it to t
     - Additionally, user can send the details of this item to a user via a external messaging app of their choice
 
 * Search List View
+    - Show the existing item that the search was made on
     - Shows list of items found based on an existing item
     - Each item has a link to item that it found online (external link)
 
@@ -122,20 +123,35 @@ An app that can assist you with your shopping. Take a picture and upload it to t
 
 **Flow Navigation** (Screen to Screen)
 
-* [list first screen here] - Login / sign up screen
-   * [list screen navigation here]
-   - Includes text box for username and password.
-* [list second screen here] - Direct to either a log in page or new account page
-   * [list screen navigation here]
-   - Once we log in or sign up we get directed to a new respective page.
-   - Login page will display information such as a list of the previous pictures of items that were taken
-   - New account page will display a blank slate with options to take a new picture.
-   -
-   - Landing page -> Login/Sign Up page
-   - Feed page -> Goes to either feed page, camera page, or user page
-   - Camera page -> Details found -> Add details -> view details
-   - Search
-   - User page
+* Landing
+  * Login / Sign up
+* Login / Sign up
+  * Feed
+* Feed
+  * Feed
+  * Camera
+  * User
+  * Item Detail View
+* Camera
+  * Details Found
+  * No Details Found
+* Details Found
+  * Add Details
+  * View Details
+  * (Retake Picture) Camera
+  * (Back/Cancel) Feed
+* No Details Found
+  * (Retake Picture) Camera
+  * Add Details
+  * (Back/Cancel) Feed
+* View Details
+  * Search
+  * Share Details Externally
+  * (Back) Feed
+* Search
+  * External Item Link
+  * (Back) View Details
+* User Page
 
 ## Wireframes
 
