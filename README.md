@@ -116,11 +116,9 @@ An app that can assist you with your shopping. Take a picture and upload it to t
 
 **Tab Navigation** (Tab to Screen)
 
-* [fill out your first tab]
-    - List screen / Home feed
-* [fill out your second tab]
-    - Take picture tab
-* [fill out your third tab]
+* List screen / Home feed
+* Take picture tab
+* User tab
 
 **Flow Navigation** (Screen to Screen)
 
@@ -132,6 +130,12 @@ An app that can assist you with your shopping. Take a picture and upload it to t
    - Once we log in or sign up we get directed to a new respective page.
    - Login page will display information such as a list of the previous pictures of items that were taken
    - New account page will display a blank slate with options to take a new picture.
+   -
+   - Landing page -> Login/Sign Up page
+   - Feed page -> Goes to either feed page, camera page, or user page
+   - Camera page -> Details found -> Add details -> view details
+   - Search
+   - User page
 
 ## Wireframes
 
