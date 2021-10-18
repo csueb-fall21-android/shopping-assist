@@ -11,7 +11,8 @@
 ## Overview
 ### Description
 
-An app that can assist you with your shopping. Take a picture and upload it to the app. The app will search for details about the item online, including the price, product details, where to find it in person or online, and items that might be similar to it. It can also save items that you've found but want to buy later.
+The aim is to build a shopping assistant app that will provide a seamless search capability for searching products on e-commerce websites using images captured by mobile cameras and it will show all related information of products with more descriptions, prices, and nearby store location options. 
+Users can sort search results with cheaper prices, nearby locations, etc. Users can save search products that you've found but want to buy later to their account/profile and can see them.
 
 ### App Evaluation
 - **Category:**
