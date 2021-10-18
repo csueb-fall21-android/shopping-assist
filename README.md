@@ -97,11 +97,9 @@ An app that can assist you with your shopping. Take a picture and upload it to t
 
 **Tab Navigation** (Tab to Screen)
 
-* [fill out your first tab]
-    - List screen / Home feed
-* [fill out your second tab]
-    - Take picture tab
-* [fill out your third tab]
+* List screen / Home feed
+* Take picture tab
+* User tab
 
 **Flow Navigation** (Screen to Screen)
 
