@@ -114,11 +114,11 @@ An app that can assist you with your shopping. Take a picture and upload it to t
    - Login page will display information such as a list of the previous pictures of items that were taken
    - New account page will display a blank slate with options to take a new picture.
 
-*Landing page -> Login/Sign Up page
-*Feed page -> Goes to either feed page, camera page, or user page
-*Camera page -> Details found -> Add details -> view details
-*Search
-*User page
+    - Landing page -> Login/Sign Up page
+    - Feed page -> Goes to either feed page, camera page, or user page
+    - Camera page -> Details found -> Add details -> view details
+    - Search
+    - User page
 
 ## Wireframes
 
