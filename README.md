@@ -115,10 +115,62 @@ An app that can assist you with your shopping. Take a picture and upload it to t
    - New account page will display a blank slate with options to take a new picture.
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+
+<img src="wireframes/wireframe.jpg" width=600>
+
+<img src="wireframes/wireframe_variation.jpeg" width=600>
+
+<img src="wireframes/wireframe_camera_detail.jpg" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
+
+Made with balsamiq.cloud.
+
+Project link [here](https://balsamiq.cloud/svjx0yg/psf9cvc/r7923).
+
+Landing Page > Signup / Login
+
+<img src="wireframes/digital/Landing%20Page.png" width=200>
+
+Signup / Login > Feed
+
+<img src="wireframes/digital/Signup%20_%20Login.png" width=200>
+
+Feed (Basic View)
+
+<img src="wireframes/digital/Feed%20(Alternate%2032g).png" width=200>
+
+Feed (with More Features)
+
+<img src="wireframes/digital/Feed.png" width=200>
+
+Details Found (Screen after taking a picture)
+
+<img src="wireframes/digital/Details%20Found.png" width=200>
+
+No Details Found (Screen after taking a picture)
+
+<img src="wireframes/digital/Details%20Found%20(Alternate%20(No%20details%20found)).png" width=200>
+
+Add Details (After selecting to add more details)
+
+<img src="wireframes/digital/Add%20Details.png" width=200>
+
+Add Details (More features)
+
+<img src="wireframes/digital/Add%20Details%20(More%20Features).png" width=200>
+
+View Details (After successfully adding details)
+
+<img src="wireframes/digital/View%20Details.png" width=200>
+
+Search (Clicking on search nearby or online buttons)
+
+<img src="wireframes/digital/Search.png" width=200>
+
+User Options
+
+<img src="wireframes/digital/User%20Options.png" width=200>
 
 ### [BONUS] Interactive Prototype
 
