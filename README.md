@@ -227,7 +227,11 @@ User Options
 
 Property | Type | Description
 --- | --- | --- 
-userId | Number | unique id for the user id (Primary Key)
+ userId | Number | unique id for the user id (Primary Key)
+ email | String | User Email Address
+ password | String | User Password
+ defaultLocation | Number | Default Location to from user want to search nearby store option (It's refering to Location Schema with locationID)
+ defaultLocationRadius | Number | Number of Radius from default location user want to search in that area
 
 #### Item
 - itemId
@@ -241,11 +245,30 @@ userId | Number | unique id for the user id (Primary Key)
 - externalLink (if details were found)
 - [optional] isArchived (if the user wants to keep the item but dismiss it from their view)
 
+Property | Type | Description
+--- | --- | --- 
+ itemId | Number | Unique Item id for fresh Search of Product
+ userId | Number | Id for Login User which refer to User Schema with UserID
+ locationId | Number | Search for specific location which refer to location schema with locationID
+ createdAt | DateTime | time of when product searched
+ name | String | Product Name
+ price | Number | Product Price
+ brand | String | Product Brand
+ externalLink | String | Link for external purchase
+ isArchived | Boolean |
+ 
 #### [Relational] ItemRecommendedItem (One-to-many)
 - itemRecommendedItemId
 - [Item] itemId
 - [RecommendedItem] recommendedItemId
 - createdAt
+
+Property | Type | Description
+--- | --- | --- 
+itemRecommendedItemId | Number | Unique Id
+itemId | Number | Reference to Item Schema with itemId
+recommendedItemId | Number | Reference to RecommendedItem Schema with recommendedItemId
+createdAt | DateTime | current time data when user saved
 
 #### RecommendedItem
 - recommendedItemId
@@ -255,6 +278,15 @@ userId | Number | unique id for the user id (Primary Key)
 - externalLink
 - [Location] locationId
 
+Property | Type | Description
+--- | --- | --- 
+recommendedItemId | Number | Unique Id for each Recommended Item
+name| String | Name of Product 
+price | Number | Price of Product
+details | String | Product Details
+externalLink | String | Purchase External Link of product which tends to e-commerce websites
+locationId | Number | Reference to Location Schema with locationID
+ 
 #### Picture
 - [Item] itemId
 - pictureId
@@ -262,14 +294,31 @@ userId | Number | unique id for the user id (Primary Key)
 - createdAt
 - [File] pictureFile
 
+Property | Type | Description
+--- | --- | --- 
+ itemId | Number | Reference ID for Picture of Specific Item
+ pictureId | Number | Unique Id for picture
+ description | String | Product Description
+ createdAt | DateTime | Captured time of picture
+ pictureFile | FILE | Store/File Location of Picture/Image
+ 
 #### Location
 - locationId
 - descriptor (name)
 - coordinates
 - integrate w/ Google Maps
 
+Property | Type | Description
+--- | --- | --- 
+ locationId | Number | Unique ID of Specific Location
+ descriptor(name) | String | Location Description
+ coordinates | |
+ integrate w/ Google Maps | |
+ 
 ### Networking
-- [Add list of network requests by screen ]
+
+## List of network requests and Snippets by screen
+
 
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
