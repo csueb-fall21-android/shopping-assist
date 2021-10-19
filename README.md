@@ -215,54 +215,83 @@ User Options
 ### [BONUS] Interactive Prototype
 
 ## Schema 
-[This section will be completed in Unit 9]
+
 ### Models
 
 #### User
-- userId
-- email
-- password
-- [Location, locationId] defaultLocation
-- defaultLocationRadius
+
+| Property              | Type                | Description                                                              |
+|-----------------------|---------------------|--------------------------------------------------------------------------|
+| userId                | String              | unique id for the user (default field)                                   |
+| email                 | String              | email for the user                                                       |
+| password              | String              | password for the user                                                    |
+| defaultLocation       | Pointer to Location | a location for the user for search criteria, if nothing else is provided |
+| defaultLocationRadius | Number              | a radius in miles for search criteria, if nothing else is provided       |
+| createdAt             | DateTime            | date when user is created (default field)                                |
+| updatedAt             | DateTime            | date when user is last updated (default field)                           |
 
 #### Item
-- itemId
-- [User] userId (user that created it)
-- [Location] locationId
-- createdAt
-- name
-- price
-- details
-- (optional) brand
-- externalLink (if details were found)
-- [optional] isArchived (if the user wants to keep the item but dismiss it from their view)
+
+| Property     | Type                | Description                                    |
+|--------------|---------------------|------------------------------------------------|
+| itemId       | String              | unique id for the item (default field)         |
+| user         | Pointer to User     | user who created this item                     |
+| location     | Pointer to Location | location that this item was found              |
+| name         | String              | name of item                                   |
+| price        | Number              | price of the item                              |
+| details      | String              | details about the item                         |
+| brand        | String              | (optional) brand of the item                   |
+| externalLink | String              | external link associated with the item         |
+| isArchived   | Boolean             | whether the item is archived by the user       |
+| createdAt    | DateTime            | date when item is created (default field)      |
+| updatedAt    | DateTime            | date when item is last updated (default field) |
 
 #### [Relational] ItemRecommendedItem (One-to-many)
-- itemRecommendedItemId
-- [Item] itemId
-- [RecommendedItem] recommendedItemId
-- createdAt
+
+| Property              | Type                       | Description                                                                         |
+|-----------------------|----------------------------|-------------------------------------------------------------------------------------|
+| itemRecommendedItemId | String                     | unique id for the relationship between an item and recommended item (default field) |
+| item                  | Pointer to Item            | an item                                                                             |
+| recommendedItem       | Pointer to RecommendedItem | a recommended item that is related to the item                                      |
+| createdAt             | DateTime                   | date when relationship is created (default field)                                   |
+| updatedAt             | DateTime                   | date when relationship is last updated (default field)                              |
 
 #### RecommendedItem
-- recommendedItemId
-- name
-- price
-- details
-- externalLink
-- [Location] locationId
+
+| Property          | Type                | Description                                        |
+|-------------------|---------------------|----------------------------------------------------|
+| recommendedItemId | String              | unique id for the recommended item (default field) |
+| location          | Pointer to Location | location that this item was found                  |
+| name              | String              | name of item                                       |
+| price             | Number              | price of the item                                  |
+| details           | String              | details about the item                             |
+| brand             | String              | (optional) brand of the item                       |
+| externalLink      | String              | external link associated with the item             |
+| createdAt         | DateTime            | date when item is created (default field)          |
+| updatedAt         | DateTime            | date when item is last updated (default field)     |
 
 #### Picture
-- [Item] itemId
-- pictureId
-- description
-- createdAt
-- [File] pictureFile
 
-#### Location (?)
-- locationId
-- descriptor (name)
-- coordinates
-- integrate w/ Google Maps
+| Property    | Type            | Description                                       |
+|-------------|-----------------|---------------------------------------------------|
+| pictureId   | String          | unique id for the picture (default field)         |
+| item        | Pointer to Item | item that the picture is related to               |
+| description | String          | text description of the picture                   |
+| pictureFile | File            | the file of the picture                           |
+| createdAt   | DateTime        | date when picture is created (default field)      |
+| updatedAt   | DateTime        | date when picture is last updated (default field) |
+
+#### Location
+
+| Property    | Type     | Description                                        |
+|-------------|----------|----------------------------------------------------|
+| locationId  | String   | unique id for the location (default field)         |
+| descriptor  | String   | an identifying description of the location         |
+| coordinates | String   | the coordinates of the location                    |
+| createdAt   | DateTime | date when location is created (default field)      |
+| updatedAt   | DateTime | date when location is last updated (default field) |
+
+Note: This table will integrate w/ Google Maps, so schema may change
 
 ### Networking
 - [Add list of network requests by screen ]
