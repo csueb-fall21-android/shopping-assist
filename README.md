@@ -230,14 +230,6 @@ User Options
 | createdAt             | DateTime            | date when user is created (default field)                                |
 | updatedAt             | DateTime            | date when user is last updated (default field)                           |
 
-Property | Type | Description
---- | --- | --- 
- userId | Number | unique id for the user id (Primary Key)
- email | String | User Email Address
- password | String | User Password
- defaultLocation | Number | Default Location to from user want to search nearby store option (It's refering to Location Schema with locationID)
- defaultLocationRadius | Number | Number of Radius from default location user want to search in that area
-
 #### Item
 
 | Property     | Type                | Description                                    |
@@ -254,18 +246,6 @@ Property | Type | Description
 | createdAt    | DateTime            | date when item is created (default field)      |
 | updatedAt    | DateTime            | date when item is last updated (default field) |
 
-Property | Type | Description
---- | --- | --- 
- itemId | Number | Unique Item id for fresh Search of Product
- userId | Number | Id for Login User which refer to User Schema with UserID
- locationId | Number | Search for specific location which refer to location schema with locationID
- createdAt | DateTime | time of when product searched
- name | String | Product Name
- price | Number | Product Price
- brand | String | Product Brand
- externalLink | String | Link for external purchase
- isArchived | Boolean |
- 
 #### [Relational] ItemRecommendedItem (One-to-many)
 
 | Property              | Type                       | Description                                                                         |
@@ -275,13 +255,6 @@ Property | Type | Description
 | recommendedItem       | Pointer to RecommendedItem | a recommended item that is related to the item                                      |
 | createdAt             | DateTime                   | date when relationship is created (default field)                                   |
 | updatedAt             | DateTime                   | date when relationship is last updated (default field)                              |
-
-Property | Type | Description
---- | --- | --- 
-itemRecommendedItemId | Number | Unique Id
-itemId | Number | Reference to Item Schema with itemId
-recommendedItemId | Number | Reference to RecommendedItem Schema with recommendedItemId
-createdAt | DateTime | current time data when user saved
 
 #### RecommendedItem
 
@@ -296,15 +269,6 @@ createdAt | DateTime | current time data when user saved
 | externalLink      | String              | external link associated with the item             |
 | createdAt         | DateTime            | date when item is created (default field)          |
 | updatedAt         | DateTime            | date when item is last updated (default field)     |
-
-Property | Type | Description
---- | --- | --- 
-recommendedItemId | Number | Unique Id for each Recommended Item
-name| String | Name of Product 
-price | Number | Price of Product
-details | String | Product Details
-externalLink | String | Purchase External Link of product which tends to e-commerce websites
-locationId | Number | Reference to Location Schema with locationID
  
 #### Picture
 
@@ -317,14 +281,6 @@ locationId | Number | Reference to Location Schema with locationID
 | createdAt   | DateTime        | date when picture is created (default field)      |
 | updatedAt   | DateTime        | date when picture is last updated (default field) |
 
-Property | Type | Description
---- | --- | --- 
- itemId | Number | Reference ID for Picture of Specific Item
- pictureId | Number | Unique Id for picture
- description | String | Product Description
- createdAt | DateTime | Captured time of picture
- pictureFile | FILE | Store/File Location of Picture/Image
- 
 #### Location
 
 | Property    | Type     | Description                                        |
@@ -336,13 +292,6 @@ Property | Type | Description
 | updatedAt   | DateTime | date when location is last updated (default field) |
 
 Note: This table will integrate w/ Google Maps, so schema may change
-
-Property | Type | Description
---- | --- | --- 
- locationId | Number | Unique ID of Specific Location
- descriptor(name) | String | Location Description
- coordinates | |
- integrate w/ Google Maps | |
  
 ### Networking
 
