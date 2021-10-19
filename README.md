@@ -217,7 +217,53 @@ User Options
 ## Schema 
 [This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+
+#### User
+- userId
+- email
+- password
+- [Location, locationId] defaultLocation
+- defaultLocationRadius
+
+#### Item
+- itemId
+- [User] userId (user that created it)
+- [Location] locationId
+- createdAt
+- name
+- price
+- details
+- (optional) brand
+- externalLink (if details were found)
+- [optional] isArchived (if the user wants to keep the item but dismiss it from their view)
+
+#### [Relational] ItemRecommendedItem (One-to-many)
+- itemRecommendedItemId
+- [Item] itemId
+- [RecommendedItem] recommendedItemId
+- createdAt
+
+#### RecommendedItem
+- recommendedItemId
+- name
+- price
+- details
+- externalLink
+- [Location] locationId
+
+#### Picture
+- [Item] itemId
+- pictureId
+- description
+- createdAt
+- [File] pictureFile
+
+#### Location (?)
+- locationId
+- descriptor (name)
+- coordinates
+- integrate w/ Google Maps
+
 ### Networking
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
