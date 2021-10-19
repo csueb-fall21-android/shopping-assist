@@ -230,6 +230,10 @@ User Options
 | createdAt             | DateTime            | date when user is created (default field)                                |
 | updatedAt             | DateTime            | date when user is last updated (default field)                           |
 
+Property | Type | Description
+--- | --- | --- 
+userId | Number | unique id for the user id (Primary Key)
+
 #### Item
 
 | Property     | Type                | Description                                    |
@@ -295,5 +299,6 @@ Note: This table will integrate w/ Google Maps, so schema may change
 
 ### Networking
 - [Add list of network requests by screen ]
+
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
