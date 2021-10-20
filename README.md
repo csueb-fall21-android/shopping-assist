@@ -297,7 +297,7 @@ Note: This table will integrate w/ Google Maps, so schema may change
 
 ### List of network requests and Snippets by screen
 
-#### User Settings - [nidhi]
+#### User Settings
 **(Update/PUT) Update user email**
 
 ```android
@@ -370,6 +370,45 @@ query.findInBackground(new FindCallback<ParseObject>() {
     }
  });
 ```
+
+#### Search List
+**(Read/GET) Based on the criteria (item, location, radius, online (y/n), search for recommended items in a certain area and return a list of those items**
+```android 
+ParseUser parseUser = ParseUser.getCurrentUser();
+ParseQuery<ParseObject> query = new ParseQuery("items");
+query.setLimit(25);
+query.whereEqualTo("userID", ParseUser);
+ParseQuery<ParseObject> parseInnerQuery = new ParseQuery<>("location");
+ParseQuery<ParseObject> parseInnerQuery2 = new ParseQuery<>("User");
+if(productName.getText().toString() != null){
+	query.whereEqualTo("name", productName.getText().toString());
+}
+if(productPrice.getText().toString() != null){
+query.whereEqualTo("price", productPrice.getText().toString());
+}
+query.whereMatchesQuery("userID", parseInnerQuery2);
+query.whereMatchesQuery("defaultLocation", parseInnerQuery2);
+query.whereMatchesQuery("defaultLocationRadius", parseInnerQuery2);
+query.whereMatchesQuery("locationId", parseInnerQuery);
+query.include("locationId");
+query.findInBackground(new FindCallback<ParseObject>() {
+    @Override
+    public void done(List<ParseObject> list, ParseException e) {
+
+        if (e == null && list != null && list.size() != 0) {
+            List<Event> listEvent = new ArrayList<Event>();
+            for (ParseObject parseObject : list) {
+                listEvent.add(Event.getEventById(getValue(parseObject, "event")));
+            }
+            masterEventAdapter.setEvents(listEvent);
+            } else {
+        }
+    }
+});
+```
+**(Create/POST) Save a recommended item to the database, in relation to the item**
+
+
 
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
