@@ -300,3 +300,10 @@ Note: This table will integrate w/ Google Maps, so schema may change
 
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
+
+* Home Feed
+  * (Read/GET) Query all recent images
+  ![image](https://user-images.githubusercontent.com/57577440/138152264-eb5f92e2-97e2-4839-bd8b-ad999578ba13.png)
+  * (Read/GET) Query all nearby images
+  ![image](https://user-images.githubusercontent.com/57577440/138152137-4f787513-0ae1-4dfe-8663-a57a0ad6290a.png)
+
