@@ -293,10 +293,83 @@ User Options
 
 Note: This table will integrate w/ Google Maps, so schema may change
  
-### Networking
+## Networking
 
-## List of network requests and Snippets by screen
+### List of network requests and Snippets by screen
 
+#### User Settings - [nidhi]
+**(Update/PUT) Update user email**
+
+```android
+ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+ParseUser parseUser = ParseUser.getCurrentUser();
+query.whereEqualTo("userID", parseUser);
+query.findInBackground(new FindCallback<ParseObject>() {
+    public void done(List<ParseObject> list, ParseException e) {
+        if (e == null) {
+            ParseObject person = list.get(0);
+            person.put("email", emailAddress.getText().toString());
+            person.saveInBackground();
+        } else {
+            Log.d("score", "Error: " + e.getMessage());
+        }
+    }
+ });
+```
+
+**(Update/PUT) Update user password**
+```android
+ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+ParseUser parseUser = ParseUser.getCurrentUser();
+query.whereEqualTo("userID", parseUser);
+query.findInBackground(new FindCallback<ParseObject>() {
+    public void done(List<ParseObject> list, ParseException e) {
+        if (e == null) {
+            ParseObject person = list.get(0);
+            person.put("password", password.getText().toString());
+            person.saveInBackground();
+        } else {
+            Log.d("score", "Error: " + e.getMessage());
+        }
+    }
+ });
+```
+
+**(Update/PUT) Update user default location**
+```android
+ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+ParseUser parseUser = ParseUser.getCurrentUser();
+query.whereEqualTo("userID", parseUser);
+query.findInBackground(new FindCallback<ParseObject>() {
+    public void done(List<ParseObject> list, ParseException e) {
+        if (e == null) {
+            ParseObject person = list.get(0);
+            person.put("defaultLocation", defaultLocation.getText().toString());
+            person.saveInBackground();
+        } else {
+            Log.d("score", "Error: " + e.getMessage());
+        }
+    }
+ });
+```
+
+**(Update/PUT) Update user location radius search**
+```android
+ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+ParseUser parseUser = ParseUser.getCurrentUser();
+query.whereEqualTo("userID", parseUser);
+query.findInBackground(new FindCallback<ParseObject>() {
+    public void done(List<ParseObject> list, ParseException e) {
+        if (e == null) {
+            ParseObject person = list.get(0);
+            person.put("defaultLocationRadius", defaultLocationRadius.getText().toString());
+            person.saveInBackground();
+        } else {
+            Log.d("score", "Error: " + e.getMessage());
+        }
+    }
+ });
+```
 
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
