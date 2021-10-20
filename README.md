@@ -396,18 +396,66 @@ query.findInBackground(new FindCallback<ParseObject>() {
     public void done(List<ParseObject> list, ParseException e) {
 
         if (e == null && list != null && list.size() != 0) {
-            List<Event> listEvent = new ArrayList<Event>();
+            List<Item> itemList = new ArrayList<Item>();
             for (ParseObject parseObject : list) {
-                listEvent.add(Event.getEventById(getValue(parseObject, "event")));
+                itemList.add(Item.getItemById(getValue(parseObject, "itemID")));
             }
-            masterEventAdapter.setEvents(listEvent);
+            masterItemAdapter.setItems(itemList);
             } else {
+			Log.e(TAG,"Something wrong!!",e);
+			return;
         }
     }
 });
 ```
 **(Create/POST) Save a recommended item to the database, in relation to the item**
 
+#### Detailed Item
+
+**(Read/GET) Get item, item details, item picture, item locations, and all recommended items that were previously saved**
+
+
+** (Read/GET) Get a short string containing details of the item (that the user can then copy and message; or this could be created on the app side)**
+```android
+ParseUser parseUser = ParseUser.getCurrentUser();
+ParseQuery<ParseObject> query = new ParseQuery("items");
+query.whereEqualTo("userID", ParseUser);
+query.whereEqualTo("itemId", itemID.getValue());
+query.include("externalLink");
+query.findInBackground(new FindCallback<ParseObject>() {
+    @Override
+    public void done(List<ParseObject> list, ParseException e) {
+
+        if (e == null && list != null && list.size() == 1) {
+            List<Item> itemList = new ArrayList<Item>();
+            for (ParseObject parseObject : list) {
+                itemList.add(Item.getItemById(getValue(parseObject, "externalLink")));
+            }
+            masterItemAdapter.setExternalLink(itemList);
+            } else {
+			Log.e(TAG,"Something wrong!!",e);
+			return;
+        }
+    }
+});
+```
+
+**(Delete) Delete an item from database**
+
+```android
+ParseQuery<ParseObject> query = ParseQuery.getQuery("items");
+query.whereEqualTo("itemId", itemID.getValue());
+query.getInBackground(objectId, new GetCallback<ParseObject>() {
+  public void done(ParseObject object, ParseException e) {
+    if (e == null) {
+       object.deleteInBackground();
+    } else {
+      Log.e(TAG,"Something wrong in delete Item",e);
+	  return;
+    }
+  }
+});
+```
 
 
 - [Create basic snippets for each Parse network request]
