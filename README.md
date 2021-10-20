@@ -409,13 +409,18 @@ query.findInBackground(new FindCallback<ParseObject>() {
 });
 ```
 **(Create/POST) Save a recommended item to the database, in relation to the item**
+```android
+Need to DO
+```
 
 #### Detailed Item
 
 **(Read/GET) Get item, item details, item picture, item locations, and all recommended items that were previously saved**
+```android
+Need to DO
+```
 
-
-** (Read/GET) Get a short string containing details of the item (that the user can then copy and message; or this could be created on the app side)**
+**(Read/GET) Get a short string containing details of the item (that the user can then copy and message; or this could be created on the app side)**
 ```android
 ParseUser parseUser = ParseUser.getCurrentUser();
 ParseQuery<ParseObject> query = new ParseQuery("items");
@@ -457,6 +462,10 @@ query.getInBackground(objectId, new GetCallback<ParseObject>() {
 });
 ```
 
+**[Optional] (Update/PUT) Archives an item, user doesn't get bothered by it anymore, but they can view it (somewhere)**
+```android
+Need to DO
+```
 
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
