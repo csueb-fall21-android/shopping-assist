@@ -652,8 +652,21 @@ query.getInBackground(objectId, new GetCallback<ParseObject>() {
 
 **[Optional] (Update/PUT) Archives an item, user doesn't get bothered by it anymore, but they can view it (somewhere)**
 ```android
-Need to DO
+ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+ParseUser parseUser = ParseUser.getCurrentUser();
+query.whereEqualTo("userID", parseUser);
+query.whereEqualTo("itemId", itemId.getValue());
+query.findInBackground(new FindCallback<ParseObject>() {
+    public void done(List<ParseObject> list, ParseException e) {
+        if (e == null) {
+            ParseObject person = list.get(0);
+            person.put("isArchived", (isArchived.getValue()==0 ? 1: 0));
+            person.saveInBackground();
+        } else {
+            Log.d("score", "Error: " + e.getMessage());
+        }
+    }
+ });
 ```
 
-- [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
