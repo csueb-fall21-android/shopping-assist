@@ -423,7 +423,56 @@ query.findInBackground(new FindCallback<ParseObject>() {
 ```
 **(Create/POST) Save a recommended item to the database, in relation to the item**
 ```android
-Need to DO
+ParseQuery<ParseObject> recommendedItem, itemRecommendedItem, location;
+
+location = new ParseQuery.getQuery("Location");
+location.put("descriptor", descriptor);
+location.put("coordinates", coordinates);
+
+// get any existing location, or save new location
+location.saveInBackground(e -> {
+    if (e == null) {
+        // location saved
+        // assume we can use location immediately, otherwise will need to fetch it again
+    }
+    else {
+        Log.d("Location", "Error: " + e.getMessage());
+    }
+});
+
+recommendedItem = new ParseQuery.getQuery("RecommendedItem");
+recommendedItem.put("name", name);
+recommendedItem.put("price", price);
+recommendedItem.put("details", details);
+recommendedItem.put("externalLink", externalLink);
+recommendedItem.put("location", location); // previous saved ParseObject
+
+recommendedItem.saveInBackground(e => {
+    if (e == null) {
+        // recommendedItem saved
+        // assume we can use recommendedItem immediately, otherwise will need to fetch it again
+    }
+    else {
+        Log.d("Location", "Error: " + e.getMessage());
+    }
+});
+
+Date currentTime = Calendar.getInstance().getTime();
+
+itemRecommendedItem = new ParseQuery.getQuery("ItemRecommendedItem");
+itemRecommendedItem.put("itemRecommendedItemId", itemRecommendedItemId);
+itemRecommendedItem.put("itemId", item); // pointer to item
+itemRecommendedItem.put("recommendedItemId", recommendedItem);
+itemRecommendedItem.put("createdAt", currentTime);
+
+itemRecommendedItem.saveInBackground(e => {
+    if (e == null) {
+        // itemRecommendedItem saved
+    }
+    else {
+        Log.d("Location", "Error: " + e.getMessage());
+    }
+});
 ```
 
 #### Detailed Item
