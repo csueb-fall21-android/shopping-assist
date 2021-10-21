@@ -297,11 +297,6 @@ Note: This table will integrate w/ Google Maps, so schema may change
 
 ### List of network requests and Snippets by screen
 
-#### Home Feed
-**(Read/GET) Query all items that user created**
-
-[TODO]
-
 #### Take a Picture Screen
 **(Create/POST) Post the picture to the backend for image processing, extract the name and price, search for the closest item online based on the name/details, and return name and price, and details (if found)**
 
@@ -312,20 +307,6 @@ Note: This table will integrate w/ Google Maps, so schema may change
 [TODO]
 
 **(Create/POST) When user confirms the details, picture and item details, and location data is saved to the database**
-
-[TODO]
-
-
-#### Add Details
-**(Create/POST) User can post item data (that they filled in) + pictures + location corresponding to the item. Can also save notes**
-
-[TODO]
-
-**[Optional] (Create/POST) A picture for the backend to extract data from and return any details found**
-
-[TODO]
-
-**(External API) Allow user to interact w/ Google Maps to select the right location + descriptor of the location**
 
 [TODO]
 
