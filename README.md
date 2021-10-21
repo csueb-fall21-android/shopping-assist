@@ -299,16 +299,142 @@ Note: This table will integrate w/ Google Maps, so schema may change
 
 #### Take a Picture Screen
 **(Create/POST) Post the picture to the backend for image processing, extract the name and price, search for the closest item online based on the name/details, and return name and price, and details (if found)**
+(Cloud Vision API)[https://cloud.google.com/vision/docs/ocr#vision_text_detection_gcs-java]: using snippet from here for text detection in an image. Also look into integration w/ (Google's Firebase ML)[https://firebase.google.com/docs/ml].
+Search API: ? Could use Google, but has limitations. Will have to search for an alternative.
 
-[TODO]
+Cloud Vision API Request:
+
+```java
+    List<String> extractedText = new ArrayList<>();
+    // Detects text in the specified local image.
+    public static void detectText(String filePath) throws IOException {
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
+
+        Image img = Image.newBuilder().setContent(imgBytes).build();
+        Feature feat = Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build();
+        AnnotateImageRequest request =
+            AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+        // Initialize client that will be used to send requests. This client only needs to be created
+        // once, and can be reused for multiple requests. After completing all of your requests, call
+        // the "close" method on the client to safely clean up any remaining background resources.
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    Log.d("CloudVision", "Error: " + res.getError().getMessage());
+                    return;
+                }
+
+                // For full list of available annotations, see http://g.co/cloud/vision/docs
+                for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
+                    Log.d("CloudVision", "Text: " + annotation.getDescription());
+                    Log.d("CloudVision", "Position: " + annotation.getBoundingPoly());
+                    extractedText.add(annotation.getDescription());
+                }
+            }
+        }
+    }
+
+    // do something with extractedText
+```
+
+Search API: [TODO]
 
 **(External API) post to Google Maps, to ask for the location that the user took this picture and get additional details for this picture**
+Notes for integration: (Location Permissions)[https://developer.android.com/training/location/permissions], (Getting Current Location)[https://developer.android.com/training/location/retrieve-current]
 
-[TODO]
+Location:
+
+```java
+fusedLocationClient.getCurrentLocation()
+        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    // Logic to handle location object
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                }
+            }
+        });
+```
+
+Google Maps API Request:
+
+May specifically narrow down types, according to (this)[https://developers.google.com/maps/documentation/places/web-service/supported_types]. Ideally, we want only business establishments only.
+
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+Request request = new Request.Builder()
+  .url("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={latitude}%{longitude}&radius=1500&key=YOUR_API_KEY")
+  .method("GET", null)
+  .build();
+Response response = client.newCall(request).execute();
+```
 
 **(Create/POST) When user confirms the details, picture and item details, and location data is saved to the database**
+`Note: https://github.com/templates-back4app/android-relations-java/blob/main/app/src/main/java/com/emre/one_to_many_java/book/AddBookActivity.java`
 
-[TODO]
+```java
+ParseObject item, picture, location;
+
+location = new ParseObject("Location");
+location.put("descriptor", descriptor);
+location.put("coordinates", coordinates);
+
+// get any existing location, or save new location
+location.saveInBackground(e -> {
+    if (e == null) {
+        // location saved
+        // assume we can use location immediately, otherwise will need to fetch it again
+    }
+    else {
+        Log.d("Location", "Error: " + e.getMessage());
+    }
+});
+
+item = new ParseObject("Item");
+item.put("name", name);
+item.put("price", price);
+item.put("details", details);
+item.put("brand", brand);
+item.put("externalLink", externalLink);
+item.put("user", getCurrentUser());
+item.put("location", location); // previous saved ParseObject
+
+item.saveInBackground(e => {
+    if (e == null) {
+        // item saved
+        // assume we can use item immediately, otherwise will need to fetch it again
+    }
+    else {
+        Log.d("Location", "Error: " + e.getMessage());
+    }
+});
+
+picture = new ParseObject("Picture");
+picture.put("description", description);
+picture.put("pictureFile", new ParseFile(pictureFile));
+picture.put("item", item); // pointer to item
+
+picture.saveInBackground(e => {
+    if (e == null) {
+        // picture saved
+    }
+    else {
+        Log.d("Location", "Error: " + e.getMessage());
+    }
+});
+
+```
 
 #### User Settings
 **(Update/PUT) Update user email**
