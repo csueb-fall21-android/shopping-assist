@@ -604,8 +604,41 @@ itemRecommendedItem.saveInBackground(e => {
 #### Detailed Item
 
 **(Read/GET) Get item, item details, item picture, item locations, and all recommended items that were previously saved**
-```android
-Need to DO
+```android 
+ParseUser parseUser = ParseUser.getCurrentUser();
+ParseQuery<ParseObject> query = new ParseQuery("items");
+query.setLimit(25);
+query.whereEqualTo("userID", ParseUser);
+ParseQuery<ParseObject> parseInnerQuery = new ParseQuery<>("location");
+ParseQuery<ParseObject> parseInnerQuery2 = new ParseQuery<>("User");
+ParseQuery<ParseObject> parseInnerQuery3 = new ParseQuery<>("Picture");
+ParseQuery<ParseObject> parseInnerQuery4 = new ParseQuery<>("ItemRecommendedItem");
+ParseQuery<ParseObject> parseInnerQuery5 = new ParseQuery<>("RecommendedItem");
+query.whereMatchesQuery("userID", parseInnerQuery2);
+query.whereMatchesQuery("defaultLocation", parseInnerQuery2);
+query.whereMatchesQuery("defaultLocationRadius", parseInnerQuery2);
+query.whereMatchesQuery("itemId", parseInnerQuery3);
+query.whereMatchesQuery("itemId", parseInnerQuery4);
+parseInnerQuery4.whereMatchesQuery("recommendedItemId", parseInnerQuery5);
+query.whereMatchesQuery("locationId", parseInnerQuery);
+query.selectKeys(Arrays.asList("itemId","name", "price","details","brand","externalLink","isArchived"));
+query.include("locationId");
+query.findInBackground(new FindCallback<ParseObject>() {
+    @Override
+    public void done(List<ParseObject> list, ParseException e) {
+
+        if (e == null && list != null && list.size() != 0) {
+            List<Item> itemList = new ArrayList<Item>();
+            for (ParseObject parseObject : list) {
+                itemList.add(Item.getItemById(getValue(parseObject, "itemID")));
+            }
+            masterItemAdapter.setItems(itemList);
+            } else {
+			Log.e(TAG,"Something wrong!!",e);
+			return;
+        }
+    }
+});
 ```
 
 **(Read/GET) Get a short string containing details of the item (that the user can then copy and message; or this could be created on the app side)**
