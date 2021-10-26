@@ -1,0 +1,15 @@
+
+*.xml
+*.iml
+.gradle/7.0.2/fileHashes/fileHashes.bin
+local.properties
+.idea/.name
+.gradle/vcs-1/gc.properties
+.gradle/checksums/checksums.lock
+.gradle/buildOutputCleanup/cache.properties
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/7.0.2/gc.properties
+.gradle/7.0.2/fileHashes/fileHashes.lock
+.gradle/7.0.2/fileChanges/last-build.bin
+.gradle/7.0.2/dependencies-accessors/gc.properties
+.gradle/7.0.2/dependencies-accessors/dependencies-accessors.lock
