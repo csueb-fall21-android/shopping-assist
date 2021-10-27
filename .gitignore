@@ -13,3 +13,5 @@ local.properties
 .gradle/7.0.2/fileChanges/last-build.bin
 .gradle/7.0.2/dependencies-accessors/gc.properties
 .gradle/7.0.2/dependencies-accessors/dependencies-accessors.lock
+*.bin
+*.lock
