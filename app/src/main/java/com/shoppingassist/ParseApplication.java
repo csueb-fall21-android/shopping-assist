@@ -25,9 +25,9 @@ public class ParseApplication extends Application {
         // set applicationId, and server server based on the values in the back4app settings.
         // any network interceptors must be added with the Configuration Builder given this syntax
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("DkfFapw0j5DCOxaSY5Y5YjfkIVkbD74Gjmo8L00U")
-                .clientKey("dvxG2GeQVQdhkofeZh0FhfOX66K6hQq3tXdl8WUu")
-                .server("https://parseapi.back4app.com")
+                .applicationId(getString(R.string.back4app_application_ID))
+                .clientKey(getString(R.string.back4app_client_key))
+                .server(getString(R.string.back4app_server))
                 .build());
     }
 }
