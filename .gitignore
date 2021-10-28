@@ -15,3 +15,4 @@ local.properties
 .gradle/7.0.2/dependencies-accessors/dependencies-accessors.lock
 *.bin
 *.lock
+.gradle/workspace-id.txt
