@@ -6,13 +6,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-//import com.parse.LogInCallback;
-//import com.parse.ParseException;
-//import com.parse.ParseUser;
-//import com.parse.SignUpCallback;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -28,9 +29,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        if (ParseUser.getCurrentUser() != null) {
-//            goMainActivity();
-//        }
+        if (ParseUser.getCurrentUser() != null) {
+            goMainActivity();
+        }
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
@@ -61,44 +62,44 @@ public class LoginActivity extends AppCompatActivity {
     private void signupUser(String username, String password) {
         Log.i(TAG, "Attempting to signup user " + username);
 
-//        ParseUser newUser = new ParseUser();
-//        newUser.setUsername(username);
-//        newUser.setPassword(password);
-//
-//        newUser.signUpInBackground(new SignUpCallback() {
-//            @Override
-//            public void done(ParseException e) {
-//                if (e != null) {
-//                    Log.e(TAG, "Issue with signup", e);
-//                    String message = e.getMessage();
-//                    Toast.makeText(LoginActivity.this, "Issue with signup", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                else {
-//                    goMainActivity();
-//                    Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+        ParseUser newUser = new ParseUser();
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+
+        newUser.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with signup", e);
+                    String message = e.getMessage();
+                    Toast.makeText(LoginActivity.this, "Issue with signup", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    goMainActivity();
+                    Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
     private void loginUser(String username, String password) {
         Log.i(TAG, "Attempting to login user " + username);
-//        ParseUser.logInInBackground(username, password, new LogInCallback() {
-//
-//            @Override
-//            public void done(ParseUser user, ParseException e) {
-//                if (e != null) {
-//                    Log.e(TAG, "Issue with login", e);
-//                    String message = e.getMessage();
-//                    Toast.makeText(LoginActivity.this, "Issue with login", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                goMainActivity();
-//                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        ParseUser.logInInBackground(username, password, new LogInCallback() {
+
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with login", e);
+                    String message = e.getMessage();
+                    Toast.makeText(LoginActivity.this, "Issue with login", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                goMainActivity();
+                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void goMainActivity() {
