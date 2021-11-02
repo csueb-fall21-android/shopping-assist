@@ -15,31 +15,34 @@
     <ImageView
         android:id="@+id/vDetails"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
         android:layout_marginTop="56dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
+    <EditText
         android:id="@+id/prodName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginBottom="236dp"
-        android:layout_marginTop="3dp"
         android:hint="Product Name"
+        android:inputType="text"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vDetails"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
+    <EditText
         android:id="@+id/priceText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:hint="Price"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/prodName" />
 
@@ -53,19 +56,38 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/priceText"
-        app:layout_constraintVertical_bias="0.291"
-        android:contentDescription="TODO" />
+        app:layout_constraintVertical_bias="0.171" />
 
     <TextView
         android:id="@+id/locText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="60dp"
         android:hint="Location"
         android:paddingStart="5dp"
-        android:paddingEnd="5dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintStart_toEndOf="@+id/locButton" />
+        app:layout_constraintStart_toEndOf="@+id/locButton"
+        app:layout_constraintTop_toBottomOf="@+id/priceText"
+        app:layout_constraintVertical_bias="0.46" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="20dp"
+        android:text="Save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/locButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="136dp"
+        android:layout_marginBottom="24dp"
+        android:text="Cancel"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintLeft_toRightOf="@id/saveButton" />
 
     <include
         android:id="@+id/bottom_navigation"
