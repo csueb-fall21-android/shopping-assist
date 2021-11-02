@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Edit"
+        android:id="@+id/eDetails"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item android:title="Share"
+        android:id="@+id/shareDetails"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item android:title="Delete"
+        android:id="@+id/delDetails"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+</menu>
