@@ -2,6 +2,8 @@ package com.shoppingassist.networking;
 
 import android.util.Log;
 
+import com.shoppingassist.BuildConfig;
+import com.shoppingassist.R;
 import com.shoppingassist.models.SearchAPIResponse;
 import com.shoppingassist.models.ShoppingItem;
 
@@ -14,9 +16,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchApiClient {
-    private static final String API_KEY = "Bearer BwYKP-xFXpZ8-qJFYX3IKWHluw9I6oxgcmOgNu64CTnB9w-tPbM9gSlV6nA";
+    private static final String API_KEY = "Bearer " + BuildConfig.SHEETSON_KEY;
     private static final String SHEET_NAME = "SerpShoppingResults";
-    private static final String SHEET_ID = "1ika2ncv3DQuO4K2HinRjUVyotTc7TE62-oBesrirKhQ";
+    private static final String SHEET_ID = BuildConfig.SHEETSON_ID;
     private static final String BASE_URL = "https://api.sheetson.com";
     public static final String TAG = "SearchApiClient";
 
