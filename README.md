@@ -63,56 +63,56 @@ Users can sort search results with cheaper prices, nearby locations, etc. Users 
 ### 2. Screen Archetypes
 
 * Landing Page
-    - Home page with a stylized logo that will ask the user for a log in or sign up option.
-     - User will click on login button and will be redirected to a login page.
-     - If user does not have an account, user should click on the sign up button and will be redirected to a register page.
+    - [x] Home page with a stylized logo that will ask the user for a log in or sign up option.
+     - [x] User will click on login button and will be redirected to a login page.
+     - [x] If user does not have an account, user should click on the sign up button and will be redirected to a register page.
    
 * Login/Signup
-   - User will either be directed to a login or sign up page.
-   - Database that will check whether or not a specific user exists for the site.
-   - If user does not exist, then save the data that is input into the text box after the submit button is pressed. Data will be stored in a database for persistence.
+   - [x] User will either be directed to a login or sign up page.
+   - [x] Database that will check whether or not a specific user exists for the site.
+   - [ ] If user does not exist, then save the data that is input into the text box after the submit button is pressed. Data will be stored in a database for persistence.
 
 * Bottom Navigation
-    - (List) Feed
-    - (Camera) Take a picture
-    - (User) User Settings
+    - [x] (List) Feed
+    - [x] (Camera) Take a picture
+    - [x] (User) User Settings
 
 * List Screen / Page of items after Login or Sign Up
-    - After login show a feed of saved lists and pictures that were taken previously. 
-    - Have functionality in the Login page to click on the camera button to take a new picture.
-    - New account will not have a feed of saved items, so just display the layout along with functionality to click camera for a new picture.
-    - Click on an item to see its detailed view
+    - [ ] After login show a feed of saved lists and pictures that were taken previously. 
+    - [ ] Have functionality in the Login page to click on the camera button to take a new picture.
+    - [ ] New account will not have a feed of saved items, so just display the layout along with functionality to click camera for a new picture.
+    - [ ] Click on an item to see its detailed view
 
 * Take a Picture Screen
-    - User will be redirected to the camera app to take a picture
-    - After the user takes a picture, details will be automatically populated: price, name, location. User will be asked to confirm whether the details of the item is correct
-      - If the user confirms that the details are correct, user is redirected to detailed item view
-      - If the user wants to add details manually, redirect to add details manually
-      - User can also choose to retake the picture
-    - If defails cannot be found automatically, user has the option to add defails manually or to retake the picture
+    - [ ] User will be redirected to the camera app to take a picture
+    - [ ] After the user takes a picture, details will be automatically populated: price, name, location. User will be asked to confirm whether the details of the item is correct
+      - [ ] If the user confirms that the details are correct, user is redirected to detailed item view
+      - [ ] If the user wants to add details manually, redirect to add details manually
+      - [ ] User can also choose to retake the picture
+    - [ ] If defails cannot be found automatically, user has the option to add defails manually or to retake the picture
 
 * Add Details Manually
-    - User can update product name, price, location
-    - Location integration w/ google maps
-    - User can update notes on the product
-    - User can take more pictures to add additional details
-    - User can add more pictures to the item
+    - [ ] User can update product name, price, location
+    - [ ] Location integration w/ google maps
+    - [ ] User can update notes on the product
+    - [ ] User can take more pictures to add additional details
+    - [ ] User can add more pictures to the item
 
 * Detailed Item View
-    - User can view item details including name, price, location found
-    - User can view a gallery of pictures of the item
-    - Additionally, user can click on a button to search for recommended nearby or online items based on this item's details and redirects to Search List View
-    - Additionally, user can send the details of this item to a user via a external messaging app of their choice
+    - [ ] User can view item details including name, price, location found
+    - [ ] User can view a gallery of pictures of the item
+    - [ ] Additionally, user can click on a button to search for recommended nearby or online items based on this item's details and redirects to Search List View
+    - [ ] Additionally, user can send the details of this item to a user via a external messaging app of their choice
 
 * Search List View
-    - Show the existing item that the search was made on
-    - Shows list of items found based on an existing item
-    - Each item has a link to item that it found online (external link)
+    - [ ] Show the existing item that the search was made on
+    - [ ] Shows list of items found based on an existing item
+    - [ ] Each item has a link to item that it found online (external link)
 
 * User Settings
-    - User can change their email
-    - User can change their password
-    - User can set defaults for location (default location, if location cannot be found, and default radius to search)
+    - [ ] User can change their email
+    - [ ] User can change their password
+    - [ ] User can set defaults for location (default location, if location cannot be found, and default radius to search)
 
 ### 3. Navigation
 
