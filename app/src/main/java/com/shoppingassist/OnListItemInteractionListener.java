@@ -4,5 +4,5 @@ import com.shoppingassist.models.ShoppingItem;
 
 public interface OnListItemInteractionListener {
 
-    void onItemClick(ShoppingItem item);
+    void onLinkClick(ShoppingItem item);
 }

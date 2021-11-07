@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -56,7 +58,7 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
     }
 
     @Override
-    public void onItemClick(ShoppingItem item) {
-
+    public void onLinkClick(ShoppingItem item) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(item.link)));
     }
 }

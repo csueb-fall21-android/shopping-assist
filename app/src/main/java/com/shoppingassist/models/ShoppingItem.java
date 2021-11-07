@@ -20,7 +20,7 @@ public class ShoppingItem {
     @SerializedName("title")
     public String title;
 
-    /* not currently used */
-    @SerializedName("image")
-    public String image;
+//    /* not currently used */
+//    @SerializedName("thumbnail")
+//    public String thumbnail;
 }

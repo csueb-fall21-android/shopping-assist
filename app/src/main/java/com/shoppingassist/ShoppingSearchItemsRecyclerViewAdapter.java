@@ -3,7 +3,6 @@ package com.shoppingassist;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,8 +42,11 @@ public class ShoppingSearchItemsRecyclerViewAdapter extends RecyclerView.Adapter
         holder.tvProdName.setText(item.title);
         holder.tvPrice.setText(item.price);
         holder.tvLocation.setText(item.source);
+
+        // uncomment to display image from thumbnail
+        // also uncomment thumbnail in ShoppingItem.java
 //        Glide.with(holder.mView)
-//                .load(item.image)
+//                .load(item.thumbnail)
 //                .centerInside()
 //                .into(holder.ivImage);
 
@@ -52,7 +54,7 @@ public class ShoppingSearchItemsRecyclerViewAdapter extends RecyclerView.Adapter
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    mListener.onItemClick(holder.mItem);
+                    mListener.onLinkClick(holder.mItem);
                 }
             }
         });
