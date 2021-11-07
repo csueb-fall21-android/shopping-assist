@@ -108,11 +108,19 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
     }
 
     private void logoutCurrentUser() {
-        ParseUser.logOut();
+//        ParseUser.logOut();
+//
+//        Toast.makeText(MainActivity.this, "You have successfully logged out.", Toast.LENGTH_SHORT).show();
+//
+//        Intent i = new Intent(this, LoginActivity.class);
+//        startActivity(i);
 
-        Toast.makeText(MainActivity.this, "You have successfully logged out.", Toast.LENGTH_SHORT).show();
+        startSearchActivity();
+    }
 
-        Intent i = new Intent(this, LoginActivity.class);
-        startActivity(i);
+    private void startSearchActivity() {
+        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+        intent.putExtra("query", "sample query");
+        MainActivity.this.startActivity(intent);
     }
 }
