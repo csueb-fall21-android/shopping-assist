@@ -4,9 +4,10 @@
 
 ## Table of Contents
 1. [Overview](#Overview)
-1. [Product Spec](#Product-Spec)
-1. [Wireframes](#Wireframes)
-2. [Schema](#Schema)
+2. [Product Spec](#Product-Spec)
+3. [Wireframes](#Wireframes)
+4. [Schema](#Schema)
+5. [Milestone Walkthroughs](#Milestone-Walkthroughs)
 
 ## Overview
 ### Description
@@ -703,3 +704,27 @@ query.findInBackground(new FindCallback<ParseObject>() {
 ```
 
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
+
+## Milestone Walkthroughs
+
+### Milestone 1: Setup Projects and Designs
+
+<img src="milestone_1.gif" width=200>
+
+### Milestone 2: Essential Activity Functionality
+
+Signup New User
+
+Feed Page
+
+Search Page
+
+<img src="milestone_2_searchpage.gif" width=200>
+
+Take a Picture Screen
+
+Add Details Page
+
+### Milestone 3: Additional Functionality
+
+### Milestone 4: Refine Details
