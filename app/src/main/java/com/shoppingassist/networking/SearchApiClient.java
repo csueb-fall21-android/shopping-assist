@@ -3,8 +3,8 @@ package com.shoppingassist.networking;
 import android.util.Log;
 
 import com.shoppingassist.BuildConfig;
-import com.shoppingassist.R;
 import com.shoppingassist.models.SearchAPIResponse;
+import com.shoppingassist.models.SerpSearchAPIResponse;
 import com.shoppingassist.models.ShoppingItem;
 
 import java.util.List;
@@ -16,24 +16,24 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchApiClient {
-    private static final String API_KEY = "Bearer " + BuildConfig.SHEETSON_KEY;
-    private static final String SHEET_NAME = "SerpShoppingResults";
-    private static final String SHEET_ID = BuildConfig.SHEETSON_ID;
-    private static final String BASE_URL = "https://api.sheetson.com";
+    private static final String PLACEHOLDER_API_KEY = "Bearer " + BuildConfig.SHEETSON_KEY;
+    private static final String PLACEHOLDER_SHEET_NAME = "SerpShoppingResults";
+    private static final String PLACEHOLDER_SHEET_ID = BuildConfig.SHEETSON_ID;
+    private static final String PLACEHOLDER_BASE_URL = "https://api.sheetson.com";
     public static final String TAG = "SearchApiClient";
 
     private SearchService searchService;
 
     public SearchApiClient() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(PLACEHOLDER_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         searchService = retrofit.create(SearchService.class);
     }
 
-    public void getSearchResults(final CallbackResponse<List<ShoppingItem>> searchListResponse) {
-        Call<SearchAPIResponse> current = searchService.getShoppingSearchResults(SHEET_NAME, API_KEY, SHEET_ID);
+    public void getPlaceholderSearchResults(final CallbackResponse<List<ShoppingItem>> searchListResponse) {
+        Call<SearchAPIResponse> current = searchService.getPlaceholderShoppingSearchResults(PLACEHOLDER_SHEET_NAME, PLACEHOLDER_API_KEY, PLACEHOLDER_SHEET_ID);
         current.enqueue(new Callback<SearchAPIResponse>() {
             @Override
             public void onResponse(Call<SearchAPIResponse> call, Response<SearchAPIResponse> response) {
