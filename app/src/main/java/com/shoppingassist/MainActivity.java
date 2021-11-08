@@ -108,19 +108,21 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
     }
 
     private void logoutCurrentUser() {
-//        ParseUser.logOut();
-//
-//        Toast.makeText(MainActivity.this, "You have successfully logged out.", Toast.LENGTH_SHORT).show();
-//
-//        Intent i = new Intent(this, LoginActivity.class);
-//        startActivity(i);
+        ParseUser.logOut();
 
-        startSearchActivity();
+        Toast.makeText(MainActivity.this, "You have successfully logged out.", Toast.LENGTH_SHORT).show();
+
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
     }
 
-    private void startSearchActivity() {
+    /**
+     * Used to begin a search on a specific query
+     * By default, this is hooked up to the Placeholder Search API, and not the real Serp Search API
+     */
+    private void startSearchActivity(String query) {
         Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-        intent.putExtra("query", "coffee maker");
+        intent.putExtra("query", query);
         MainActivity.this.startActivity(intent);
     }
 }

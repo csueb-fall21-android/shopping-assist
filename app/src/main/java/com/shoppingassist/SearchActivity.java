@@ -22,6 +22,7 @@ import java.util.List;
 public class SearchActivity extends AppCompatActivity implements OnListItemInteractionListener {
     public static final String TAG = "SearchActivity";
     public String query;
+    // TODO: use the user's default location
     public String location = "Hayward, California, United States";
 
     @Override
@@ -41,6 +42,12 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
 
         getSupportActionBar().setTitle("Search Page");
     }
+
+    /**
+     * Used to access the Placeholder Search API, i.e. it returns the same static results
+     * @param progressBar
+     * @param recyclerView
+     */
     private void updatePlaceholderAdapter(final ContentLoadingProgressBar progressBar, final RecyclerView recyclerView) {
         progressBar.show();
         SearchApiClient searchApiClient = new SearchApiClient();
@@ -61,6 +68,11 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
         });
     }
 
+    /**
+     * The real Search API that searches based on the query provided to this activity and the current user's location
+     * @param progressBar
+     * @param recyclerView
+     */
     private void updateAdapter(final ContentLoadingProgressBar progressBar, final RecyclerView recyclerView) {
         progressBar.show();
         SerpSearchApiClient serpSearchApiClient = new SerpSearchApiClient();
