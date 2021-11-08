@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
 
         cameraFragment = (CameraFragment) fm.findFragmentByTag(CAMERA_TAG);
         if (cameraFragment == null) {
-            cameraFragment = CameraFragment.newInstance();
+            cameraFragment = new CameraFragment();
+            //cameraFragment = CameraFragment.newInstance();
         }
 
         profileFragment = (ProfileFragment) fm.findFragmentByTag(PROFILE_TAG);
