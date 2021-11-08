@@ -21,6 +21,6 @@ public class ShoppingItem {
     public String title;
 
     /* not currently used */
-    @SerializedName("image")
-    public String image;
+    @SerializedName("thumbnail")
+    public String thumbnail;
 }

@@ -115,4 +115,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
     }
+
+    /**
+     * Used to begin a search on a specific query
+     * By default, this is hooked up to the Placeholder Search API, and not the real Serp Search API
+     */
+    private void startSearchActivity(String query) {
+        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+        intent.putExtra("query", query);
+        MainActivity.this.startActivity(intent);
+    }
 }
