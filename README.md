@@ -78,23 +78,23 @@ Users can sort search results with cheaper prices, nearby locations, etc. Users 
     - [x] (User) User Settings
 
 * List Screen / Page of items after Login or Sign Up
-    - [ ] After login show a feed of saved lists and pictures that were taken previously. 
+    - [x] After login show a feed of saved lists and pictures that were taken previously. 
     - [ ] Have functionality in the Login page to click on the camera button to take a new picture.
     - [ ] New account will not have a feed of saved items, so just display the layout along with functionality to click camera for a new picture.
     - [ ] Click on an item to see its detailed view
 
 * Take a Picture Screen
-    - [ ] User will be redirected to the camera app to take a picture
+    - [x] User will be redirected to the camera app to take a picture
     - [ ] After the user takes a picture, details will be automatically populated: price, name, location. User will be asked to confirm whether the details of the item is correct
       - [ ] If the user confirms that the details are correct, user is redirected to detailed item view
-      - [ ] If the user wants to add details manually, redirect to add details manually
-      - [ ] User can also choose to retake the picture
-    - [ ] If defails cannot be found automatically, user has the option to add defails manually or to retake the picture
+      - [x] If the user wants to add details manually, redirect to add details manually
+      - [x] User can also choose to retake the picture
+    - [ ] If details cannot be found automatically, user has the option to add details manually or to retake the picture
 
 * Add Details Manually
-    - [ ] User can update product name, price, location
+    - [x] User can update product name, price, location
     - [ ] Location integration w/ google maps
-    - [ ] User can update notes on the product
+    - [x] User can update notes on the product
     - [ ] User can take more pictures to add additional details
     - [ ] User can add more pictures to the item
 
@@ -106,8 +106,8 @@ Users can sort search results with cheaper prices, nearby locations, etc. Users 
 
 * Search List View
     - [ ] Show the existing item that the search was made on
-    - [ ] Shows list of items found based on an existing item
-    - [ ] Each item has a link to item that it found online (external link)
+    - [x] Shows list of items found based on an existing item
+    - [x] Each item has a link to item that it found online (external link)
 
 * User Settings
     - [ ] User can change their email
