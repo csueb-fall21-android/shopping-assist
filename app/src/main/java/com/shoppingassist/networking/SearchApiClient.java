@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.shoppingassist.BuildConfig;
 import com.shoppingassist.models.SearchAPIResponse;
+import com.shoppingassist.models.SerpSearchAPIResponse;
 import com.shoppingassist.models.ShoppingItem;
 
 import java.util.List;
@@ -31,8 +32,8 @@ public class SearchApiClient {
         searchService = retrofit.create(SearchService.class);
     }
 
-    public void getSearchResults(final CallbackResponse<List<ShoppingItem>> searchListResponse) {
-        Call<SearchAPIResponse> current = searchService.getShoppingSearchResults(PLACEHOLDER_SHEET_NAME, PLACEHOLDER_API_KEY, PLACEHOLDER_SHEET_ID);
+    public void getPlaceholderSearchResults(final CallbackResponse<List<ShoppingItem>> searchListResponse) {
+        Call<SearchAPIResponse> current = searchService.getPlaceholderShoppingSearchResults(PLACEHOLDER_SHEET_NAME, PLACEHOLDER_API_KEY, PLACEHOLDER_SHEET_ID);
         current.enqueue(new Callback<SearchAPIResponse>() {
             @Override
             public void onResponse(Call<SearchAPIResponse> call, Response<SearchAPIResponse> response) {

@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
 
     private void startSearchActivity() {
         Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-        intent.putExtra("query", "sample query");
+        intent.putExtra("query", "coffee maker");
         MainActivity.this.startActivity(intent);
     }
 }

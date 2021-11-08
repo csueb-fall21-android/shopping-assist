@@ -45,10 +45,10 @@ public class ShoppingSearchItemsRecyclerViewAdapter extends RecyclerView.Adapter
 
         // uncomment to display image from thumbnail
         // also uncomment thumbnail in ShoppingItem.java
-//        Glide.with(holder.mView)
-//                .load(item.thumbnail)
-//                .centerInside()
-//                .into(holder.ivImage);
+        Glide.with(holder.mView)
+                .load(item.thumbnail)
+                .centerInside()
+                .into(holder.ivImage);
 
         holder.btnLink.setOnClickListener(new View.OnClickListener() {
             @Override
