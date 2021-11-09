@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,8 +20,10 @@ import com.shoppingassist.fragments.CameraFragment;
 import com.shoppingassist.fragments.HomeFragment;
 import com.shoppingassist.fragments.ProfileFragment;
 
+import java.io.File;
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.LogoutUserListener {
+
+public class MainActivity extends AppCompatActivity implements ProfileFragment.LogoutUserListener, CameraFragment.sendPictureListener{
     public static final String TAG = "MainActivity";
     public static final String SELECTED_ITEM_ID_KEY = "selected_item";
 
@@ -51,7 +54,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
 
         cameraFragment = (CameraFragment) fm.findFragmentByTag(CAMERA_TAG);
         if (cameraFragment == null) {
-            cameraFragment = CameraFragment.newInstance();
+            cameraFragment = new CameraFragment();
+            //cameraFragment = CameraFragment.newInstance();
         }
 
         profileFragment = (ProfileFragment) fm.findFragmentByTag(PROFILE_TAG);
@@ -124,5 +128,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
         Intent intent = new Intent(MainActivity.this, SearchActivity.class);
         intent.putExtra("query", query);
         MainActivity.this.startActivity(intent);
+    }
+
+    @Override
+    public void imageSendDetailFound(File photoFile) {
+        Intent i = new Intent(this, DetailFound.class);
+        i.putExtra("photoFile", photoFile.toString());
+        Toast.makeText(MainActivity.this, "You have successfully set Picture.", Toast.LENGTH_SHORT).show();
+
+        startActivity(i);
     }
 }
