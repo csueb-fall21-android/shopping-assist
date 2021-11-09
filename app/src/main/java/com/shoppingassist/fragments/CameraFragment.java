@@ -45,7 +45,7 @@ public class CameraFragment extends Fragment {
     }
 
     public interface sendPictureListener {
-        void imageSendDetailFound(Uri fileProvider);
+        void imageSendDetailFound(File photoFile);
     }
 
     public static CameraFragment newInstance() {
@@ -116,8 +116,7 @@ public class CameraFragment extends Fragment {
 
                 CameraFragment.sendPictureListener listener = (CameraFragment.sendPictureListener) getActivity();
                 photoFile = getPhotoFileUrl(photoFileName);
-                Uri fileProvider = FileProvider.getUriForFile(getContext(),"com.shoppingassist.fileprovider",photoFile);
-                listener.imageSendDetailFound(fileProvider);
+                listener.imageSendDetailFound(photoFile);
             }
         });
     }

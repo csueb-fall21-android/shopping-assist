@@ -20,6 +20,8 @@ import com.shoppingassist.fragments.CameraFragment;
 import com.shoppingassist.fragments.HomeFragment;
 import com.shoppingassist.fragments.ProfileFragment;
 
+import java.io.File;
+
 
 public class MainActivity extends AppCompatActivity implements ProfileFragment.LogoutUserListener, CameraFragment.sendPictureListener{
     public static final String TAG = "MainActivity";
@@ -128,17 +130,12 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
         MainActivity.this.startActivity(intent);
     }
 
-    public void imageSendDetailFound(Uri fileProvider) {
+    @Override
+    public void imageSendDetailFound(File photoFile) {
         Intent i = new Intent(this, DetailFound.class);
-        i.setData(fileProvider);
+        i.putExtra("photoFile", photoFile.toString());
         Toast.makeText(MainActivity.this, "You have successfully set Picture.", Toast.LENGTH_SHORT).show();
 
         startActivity(i);
-
-        //Uri fileProvider = FileProvider.getUriForFile(getContext(),"com.shoppingassist.fileprovider",photoFile);
-        //i.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-        //Uri fileProvider = FileProvider.getUriForFile(getContext(),"com.shoppingassist.fileprovider",photoFile);
-        //i.putExtra("resId",fileProvider);
-        //startActivity(i);
     }
 }
