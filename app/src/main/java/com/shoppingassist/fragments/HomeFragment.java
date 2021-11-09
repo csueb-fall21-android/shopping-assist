@@ -2,16 +2,37 @@ package com.shoppingassist.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.shoppingassist.CameraAdapter;
+import com.shoppingassist.Item;
+import com.shoppingassist.MainActivity;
 import com.shoppingassist.R;
 
-public class HomeFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
+public class HomeFragment extends Fragment {
+    public static final String TAG = "HomeFragment";
+    private RecyclerView rvPictures1;
+    private RecyclerView rvPictures2;
+    protected CameraAdapter adapter;
+    protected List<Item> allItems;
+    protected SwipeRefreshLayout swipeContainer;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -34,5 +55,58 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rvPictures1 = view.findViewById(R.id.rvView1);
+        rvPictures2 = view.findViewById(R.id.rvView2);
+
+        allItems = new ArrayList<>();
+        adapter = new CameraAdapter(getContext(), allItems);
+        rvPictures1.setAdapter(adapter);
+        rvPictures1.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        rvPictures2.setAdapter(adapter);
+        rvPictures2.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer); //Add back later when switch relative layout to swipeContainer
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryItems();
+            }
+        });
+
+        queryItems();
+    }
+
+    protected void queryItems() { //Takes items we have and hands it over to the adapter
+        //Specify which class to query
+        //Toast.makeText(getActivity(), "Made it here", Toast.LENGTH_SHORT).show();
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        //query.include(Item.KEY_PICTUREFILE);
+        query.include(Item.KEY_USER);
+        //query.include(Item.KEY_NAME);
+        query.setLimit(7); //Change later to reflect more pictures, picked 7 for testing
+        //query.addDescendingOrder(Item.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Item>() {
+            @Override
+            public void done(List<Item> items, ParseException e) { //Gets all items from database
+                if(e != null){
+                    //Toast.makeText(getActivity(), "Made it here", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Issue with getting items", e);
+                    return;
+                }
+                for(Item item : items){
+                    //Toast.makeText(getActivity(), "Made it here", Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "Item: " + item.getPictureDescription() + ", username: " + item.getName());
+                }
+                     adapter.clear();
+                     adapter.addAll(items);
+                     swipeContainer.setRefreshing(false);
+            }
+        });
     }
 }
