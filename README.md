@@ -723,7 +723,7 @@ Search Page
 
 Take a Picture Screen
 
-Add Details Page
+<img src="milestone_2_takingPicture.gif" width=200>
 
 ### Milestone 3: Additional Functionality
 

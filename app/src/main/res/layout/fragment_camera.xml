@@ -49,7 +49,10 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginEnd="144dp"
             android:layout_marginBottom="32dp"
-            android:onClick="send" />
+            android:background="#8BC34A"
+            android:onClick="send"
+            android:text="Find Item"
+            tools:text="Find Item" />
 
     </RelativeLayout>
 
