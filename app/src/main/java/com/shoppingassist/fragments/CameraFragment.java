@@ -112,7 +112,7 @@ public class CameraFragment extends Fragment {
         btnDetailFound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, "onClick logout");
+                Log.i(TAG, "Captured Image Passing");
 
                 CameraFragment.sendPictureListener listener = (CameraFragment.sendPictureListener) getActivity();
                 photoFile = getPhotoFileUrl(photoFileName);
