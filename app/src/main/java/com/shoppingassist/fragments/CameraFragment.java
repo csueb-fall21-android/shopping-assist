@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -33,13 +34,18 @@ import java.io.File;
 public class CameraFragment extends Fragment {
     public static final String TAG = "CameraFragment";
     ActivityResultLauncher<Intent> someActivityResultLauncher;
-    private File photoFile;
+    private static File photoFile;
     private ImageView camImage;
     private ImageButton simpleImageButton;
     private String photoFileName = "photo.jpg";
+    private Button btnDetailFound;
 
     public CameraFragment() {
         // Required empty public constructor
+    }
+
+    public interface sendPictureListener {
+        void imageSendDetailFound(Uri fileProvider);
     }
 
     public static CameraFragment newInstance() {
@@ -66,8 +72,6 @@ public class CameraFragment extends Fragment {
 
                     }
                 });
-
-
     }
 
     @Override
@@ -104,26 +108,19 @@ public class CameraFragment extends Fragment {
             }
         });
 
-        //queryPosts();
-        /**btnSubmit.setOnClickListener(new View.OnClickListener() {
-
+        btnDetailFound = view.findViewById(R.id.btnDetailFound);
+        btnDetailFound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String description = etDescription1.getText().toString();
-                if (description.isEmpty()) {
-                    Toast.makeText(getContext(), "Description can not be Empty", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (photoFile == null || ivPostImage.getDrawable() == null) {
-                    Toast.makeText(getContext(), "There is no image", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(description, currentUser, photoFile);
+                Log.i(TAG, "onClick logout");
+
+                CameraFragment.sendPictureListener listener = (CameraFragment.sendPictureListener) getActivity();
+                photoFile = getPhotoFileUrl(photoFileName);
+                Uri fileProvider = FileProvider.getUriForFile(getContext(),"com.shoppingassist.fileprovider",photoFile);
+                listener.imageSendDetailFound(fileProvider);
             }
         });
-         **/
-        }
+    }
     private void launchCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         Log.d(TAG,"photoFileName"+photoFileName);
@@ -133,7 +130,6 @@ public class CameraFragment extends Fragment {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
         Log.d(TAG,"intent.resolveActivity(getPackageManager()) "+intent.resolveActivity(getContext().getPackageManager()));
         if(intent.resolveActivity(getContext().getPackageManager()) != null){
-            //startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             someActivityResultLauncher.launch(intent);
         }else{
             Toast.makeText(getContext(), "No Picture on launch",Toast.LENGTH_SHORT).show();
@@ -147,4 +143,15 @@ public class CameraFragment extends Fragment {
         return new File(mediaStorageDir.getPath()+File.separator + fileName);
     }
 
+    /*public void send(View v){
+        Intent i = new Intent(CameraFragment.this, detailFound.class);
+        photoFile = getPhotoFileUrl(photoFileName);
+        Uri fileProvider = FileProvider.getUriForFile(getContext(),"com.shoppingassist.fileprovider",photoFile);
+        i.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+
+        i.putExtra("resId",fileProvider);
+        //startActivity(i);
+        CameraFragment.this.startActivity(i);
+
+    }*/
 }

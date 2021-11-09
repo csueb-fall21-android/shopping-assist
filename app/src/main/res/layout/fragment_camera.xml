@@ -26,6 +26,8 @@
             android:layout_marginBottom="5dp"
             tools:srcCompat="@tools:sample/avatars" />
 
+        <!--src(source)file from drawable folder which display an imagebutton-->
+
         <ImageButton
             android:id="@+id/simpleImageButton"
             android:layout_width="130dp"
@@ -33,9 +35,21 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal"
+
+            android:layout_marginEnd="143dp"
+            android:layout_marginBottom="115dp"
+            android:src="@drawable/camera_button" />
+
+        <Button
+            android:id="@+id/btnDetailFound"
+            android:layout_width="130dp"
+            android:layout_height="62dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"
             android:layout_marginEnd="144dp"
-            android:layout_marginBottom="98dp"
-            android:src="@drawable/camera_button" /> <!--src(source)file from drawable folder which display an imagebutton-->
+            android:layout_marginBottom="32dp"
+            android:onClick="send" />
 
     </RelativeLayout>
 

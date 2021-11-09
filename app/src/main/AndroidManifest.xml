@@ -49,6 +49,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+        <activity
+            android:name=".DetailFound" />
 
         <meta-data
             android:name="com.parse.SERVER_URL"

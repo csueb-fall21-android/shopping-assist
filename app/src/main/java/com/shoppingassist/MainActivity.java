@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,7 +21,7 @@ import com.shoppingassist.fragments.HomeFragment;
 import com.shoppingassist.fragments.ProfileFragment;
 
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.LogoutUserListener {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.LogoutUserListener, CameraFragment.sendPictureListener{
     public static final String TAG = "MainActivity";
     public static final String SELECTED_ITEM_ID_KEY = "selected_item";
 
@@ -125,5 +126,19 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
         Intent intent = new Intent(MainActivity.this, SearchActivity.class);
         intent.putExtra("query", query);
         MainActivity.this.startActivity(intent);
+    }
+
+    public void imageSendDetailFound(Uri fileProvider) {
+        Intent i = new Intent(this, DetailFound.class);
+        i.setData(fileProvider);
+        Toast.makeText(MainActivity.this, "You have successfully set Picture.", Toast.LENGTH_SHORT).show();
+
+        startActivity(i);
+
+        //Uri fileProvider = FileProvider.getUriForFile(getContext(),"com.shoppingassist.fileprovider",photoFile);
+        //i.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+        //Uri fileProvider = FileProvider.getUriForFile(getContext(),"com.shoppingassist.fileprovider",photoFile);
+        //i.putExtra("resId",fileProvider);
+        //startActivity(i);
     }
 }
