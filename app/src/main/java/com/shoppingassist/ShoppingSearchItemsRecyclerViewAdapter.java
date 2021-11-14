@@ -40,7 +40,7 @@ public class ShoppingSearchItemsRecyclerViewAdapter extends RecyclerView.Adapter
         ShoppingItem item = items.get(position);
         holder.mItem = item;
         holder.tvProdName.setText(item.title);
-        holder.tvPrice.setText(item.price);
+        holder.tvPrice.setText(String.valueOf(item.price));
         holder.tvLocation.setText(item.source);
 
         // uncomment to display image from thumbnail
@@ -58,6 +58,15 @@ public class ShoppingSearchItemsRecyclerViewAdapter extends RecyclerView.Adapter
                 }
             }
         });
+
+        holder.btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mListener) {
+                    mListener.onSaveClick(holder.mItem);
+                }
+            }
+        });
     }
 
     @Override
@@ -72,6 +81,7 @@ public class ShoppingSearchItemsRecyclerViewAdapter extends RecyclerView.Adapter
         public final TextView tvPrice;
         public final TextView tvLocation;
         public final ImageButton btnLink;
+        public final ImageButton btnSave;
         public ShoppingItem mItem;
 
         public ShoppingItemViewHolder(View view) {
@@ -81,7 +91,8 @@ public class ShoppingSearchItemsRecyclerViewAdapter extends RecyclerView.Adapter
             ivImage = (ImageView) view.findViewById(R.id.rvImage);
             tvPrice = (TextView) view.findViewById(R.id.rvPrice);
             tvLocation = (TextView) view.findViewById(R.id.rvLocation);
-            btnLink = (ImageButton) view.findViewById(R.id.rvButton);
+            btnLink = (ImageButton) view.findViewById(R.id.rvRecommendedLink);
+            btnSave = (ImageButton) view.findViewById(R.id.rvRecommendedSave);
         }
 
         @Override

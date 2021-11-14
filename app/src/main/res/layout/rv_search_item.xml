@@ -47,7 +47,7 @@
         android:hint="Location" />
 
     <ImageButton
-        android:id="@+id/rvButton"
+        android:id="@+id/rvRecommendedSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/rvImage"
@@ -55,7 +55,21 @@
         android:layout_marginTop="48dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="15dp"
+        android:backgroundTint="#009688"
         android:minHeight="48dp"
-        android:src="@drawable/ic_baseline_open_in_browser_24" />
+        android:src="@drawable/ic_baseline_bookmark_border_24" />
+
+    <ImageButton
+        android:id="@+id/rvRecommendedLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/rvImage"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="15dp"
+        android:layout_toStartOf="@+id/rvRecommendedSave"
+        android:backgroundTint="#009688"
+        android:minHeight="48dp"
+        android:src="@drawable/ic_baseline_link_24" />
 
 </RelativeLayout>
