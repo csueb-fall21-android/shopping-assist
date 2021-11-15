@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.shoppingassist.models.SerpSearchAPIResponse;
@@ -46,6 +47,7 @@ import java.util.concurrent.FutureTask;
 public class SearchActivity extends AppCompatActivity implements OnListItemInteractionListener {
     public static final String TAG = "SearchActivity";
     public String query;
+    public Item item;
     // TODO: use the user's default location
     public String location = "Hayward, California, United States";
 
@@ -55,6 +57,7 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
         setContentView(R.layout.activity_search);
 
         query = getIntent().getStringExtra("query");
+        item = getIntent().getParcelableExtra("item");
 
         ContentLoadingProgressBar progressBar = (ContentLoadingProgressBar) findViewById(R.id.progress);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvSearch);
@@ -142,8 +145,6 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
     }
 
     private void saveRecommendedItem(String name, Number price, String link, String details, File pictureFile) {
-        Context context = this;
-
         ParseFile parsePictureFile = new ParseFile(pictureFile);
         parsePictureFile.saveInBackground(new SaveCallback() {
             public void done(ParseException e) {
@@ -161,11 +162,24 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
                         public void done(ParseException e) {
                             if (e != null) {
                                 Log.e(TAG, "Error while saving", e);
-                                Toast.makeText(context, "Error while saving", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             Log.i(TAG, "Recommended item save was successful");
-                            Toast.makeText(context, "Recommended item saved", Toast.LENGTH_SHORT).show();
+
+                            ItemRecommendedItem itemRecItem = new ItemRecommendedItem();
+                            itemRecItem.setItem(item);
+                            itemRecItem.setRecommendedItem(recItem);
+
+                            itemRecItem.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e != null) {
+                                        Log.e(TAG, "Error while saving relationship", e);
+                                        return;
+                                    }
+                                    Log.i(TAG, "Relationship between item and recommended item save was successful");
+                                }
+                            });
                         }
                     });
                 }
