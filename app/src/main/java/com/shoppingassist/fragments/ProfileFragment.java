@@ -78,7 +78,7 @@ public class ProfileFragment extends Fragment {
             btnMap.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getActivity(), "Map is ready!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Map is ready!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), MapActivity.class);
                     startActivity(intent);
                 }
