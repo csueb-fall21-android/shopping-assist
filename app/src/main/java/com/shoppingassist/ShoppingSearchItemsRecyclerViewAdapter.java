@@ -87,12 +87,12 @@ public class ShoppingSearchItemsRecyclerViewAdapter extends RecyclerView.Adapter
         public ShoppingItemViewHolder(View view) {
             super(view);
             mView = view;
-            tvProdName = (TextView) view.findViewById(R.id.rvProdName);
-            ivImage = (ImageView) view.findViewById(R.id.rvImage);
-            tvPrice = (TextView) view.findViewById(R.id.rvPrice);
-            tvLocation = (TextView) view.findViewById(R.id.rvLocation);
-            btnLink = (ImageButton) view.findViewById(R.id.rvRecommendedLink);
-            btnSave = (ImageButton) view.findViewById(R.id.rvRecommendedSave);
+            tvProdName = (TextView) view.findViewById(R.id.tvSearchName);
+            ivImage = (ImageView) view.findViewById(R.id.ivSearchImage);
+            tvPrice = (TextView) view.findViewById(R.id.tvSearchPrice);
+            tvLocation = (TextView) view.findViewById(R.id.tvSearchLocation);
+            btnLink = (ImageButton) view.findViewById(R.id.ibSearchLink);
+            btnSave = (ImageButton) view.findViewById(R.id.ibSearchSave);
         }
 
         @Override

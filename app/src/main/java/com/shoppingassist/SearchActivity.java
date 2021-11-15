@@ -145,6 +145,7 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
     }
 
     private void saveRecommendedItem(String name, Number price, String link, String details, File pictureFile) {
+        Context context = this;
         ParseFile parsePictureFile = new ParseFile(pictureFile);
         parsePictureFile.saveInBackground(new SaveCallback() {
             public void done(ParseException e) {
@@ -178,6 +179,7 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
                                         return;
                                     }
                                     Log.i(TAG, "Relationship between item and recommended item save was successful");
+                                    Toast.makeText(context, "Saved recommended item", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }

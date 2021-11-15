@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/rvImage"
+        android:id="@+id/ivSearchImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_alignParentStart="true"
@@ -17,40 +17,40 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/rvProdName"
+        android:id="@+id/tvSearchName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:layout_toEndOf="@+id/rvImage"
+        android:layout_toEndOf="@+id/ivSearchImage"
         android:hint="Product Name" />
 
     <TextView
-        android:id="@+id/rvPrice"
+        android:id="@+id/tvSearchPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rvProdName"
+        android:layout_below="@+id/tvSearchName"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/rvImage"
+        android:layout_toEndOf="@+id/ivSearchImage"
         android:hint="Price" />
 
     <TextView
-        android:id="@+id/rvLocation"
+        android:id="@+id/tvSearchLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rvPrice"
+        android:layout_below="@+id/tvSearchPrice"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/rvImage"
+        android:layout_toEndOf="@+id/ivSearchImage"
         android:hint="Location" />
 
     <ImageButton
-        android:id="@+id/rvRecommendedSave"
+        android:id="@+id/ibSearchSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/rvImage"
+        android:layout_alignBottom="@+id/ivSearchImage"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="0dp"
@@ -60,14 +60,14 @@
         android:src="@drawable/ic_baseline_bookmark_border_24" />
 
     <ImageButton
-        android:id="@+id/rvRecommendedLink"
+        android:id="@+id/ibSearchLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/rvImage"
+        android:layout_alignBottom="@+id/ivSearchImage"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="15dp"
-        android:layout_toStartOf="@+id/rvRecommendedSave"
+        android:layout_toStartOf="@+id/ibSearchSave"
         android:backgroundTint="#009688"
         android:minHeight="48dp"
         android:src="@drawable/ic_baseline_link_24" />
