@@ -43,17 +43,11 @@ public class CameraAdapter extends RecyclerView.Adapter<CameraAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvRecent;
         private ImageView ivRImage;
-        private TextView tvNearby;
-        private ImageView ivNImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            //tvRecent = itemView.findViewById(R.id.recentID);
-            ivRImage = itemView.findViewById(R.id.rvFeedImage);
-            //tvNearby = itemView.findViewById(R.id.nearbyID);
-            ivNImage = itemView.findViewById(R.id.rvFeedImage); //If an issue make a new xml row item for this recycler view
+            ivRImage = itemView.findViewById(R.id.ivFeedImage);
         }
 
         public void bind(Item item){

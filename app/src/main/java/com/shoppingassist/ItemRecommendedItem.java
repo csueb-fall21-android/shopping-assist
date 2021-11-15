@@ -5,9 +5,6 @@ import com.parse.ParseObject;
 
 @ParseClassName("ItemRecommendedItem")
 public class ItemRecommendedItem  extends ParseObject {
-
-    ParseObject item = new ParseObject("Item");
-    ParseObject recommendedItem = new ParseObject("RecommendedItem");
     public static final String KEY_ITEM = "item";
     public static final String KEY_RECOMMENDED_ITEM = "recommendedItem";
 

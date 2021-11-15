@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -22,6 +21,8 @@ import com.shoppingassist.CameraAdapter;
 import com.shoppingassist.Item;
 import com.shoppingassist.MainActivity;
 import com.shoppingassist.R;
+import com.shoppingassist.RecommendedItem;
+import com.shoppingassist.SavedRecommendedItemsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,9 @@ public class HomeFragment extends Fragment {
     protected CameraAdapter adapter;
     protected List<Item> allItems;
     protected SwipeRefreshLayout swipeContainer;
+    protected List<RecommendedItem> savedItems;
+    protected SavedRecommendedItemsAdapter savedItemsAdapter;
+    protected RecyclerView rvSavedItems;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -66,10 +70,10 @@ public class HomeFragment extends Fragment {
         allItems = new ArrayList<>();
         adapter = new CameraAdapter(getContext(), allItems);
         rvPictures1.setAdapter(adapter);
-        rvPictures1.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvPictures1.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
 
         rvPictures2.setAdapter(adapter);
-        rvPictures2.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvPictures2.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer); //Add back later when switch relative layout to swipeContainer
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -80,6 +84,15 @@ public class HomeFragment extends Fragment {
         });
 
         queryItems();
+
+        rvSavedItems = view.findViewById(R.id.rvRecommendedItems);
+        savedItems = new ArrayList<>();
+        savedItemsAdapter = new SavedRecommendedItemsAdapter(getContext(), savedItems, (MainActivity) getActivity());
+        rvSavedItems.setAdapter(savedItemsAdapter);
+        rvSavedItems.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        querySavedItems();
+
     }
 
     protected void queryItems() { //Takes items we have and hands it over to the adapter
@@ -106,6 +119,31 @@ public class HomeFragment extends Fragment {
                      adapter.clear();
                      adapter.addAll(items);
                      swipeContainer.setRefreshing(false);
+            }
+        });
+    }
+
+    /**
+     * Query for Saved Recommended Items
+     */
+    protected void querySavedItems() {
+        ParseQuery<RecommendedItem> query = ParseQuery.getQuery(RecommendedItem.class);
+        query.include(Item.KEY_USER);
+
+        query.setLimit(5);
+        query.addDescendingOrder(Item.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<RecommendedItem>() {
+            @Override
+            public void done(List<RecommendedItem> recItems, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting saved items", e);
+                    return;
+                }
+                for (RecommendedItem recItem : recItems){
+                    Log.i(TAG, "Saved Item: " + recItem.getName());
+                }
+                savedItemsAdapter.clear();
+                savedItemsAdapter.addAll(recItems);
             }
         });
     }

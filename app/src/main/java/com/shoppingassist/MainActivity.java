@@ -15,15 +15,22 @@ import android.view.MenuInflater;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.shoppingassist.fragments.CameraFragment;
 import com.shoppingassist.fragments.HomeFragment;
 import com.shoppingassist.fragments.ProfileFragment;
+import com.shoppingassist.interfaces.OnSavedListItemInteractionListener;
+
+import org.parceler.Parcels;
 
 import java.io.File;
 
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.LogoutUserListener, CameraFragment.sendPictureListener{
+public class MainActivity extends AppCompatActivity implements ProfileFragment.LogoutUserListener, CameraFragment.sendPictureListener, OnSavedListItemInteractionListener {
     public static final String TAG = "MainActivity";
     public static final String SELECTED_ITEM_ID_KEY = "selected_item";
 
@@ -120,13 +127,30 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
         startActivity(i);
     }
 
+    private void onBeginSearch() {
+        ParseQuery<Item> query = ParseQuery.getQuery("Item");
+        query.whereEqualTo("objectId", "viU7NASqFU"); // placeholder for now, fetch the first item
+        query.getFirstInBackground(new GetCallback<Item>() {
+            public void done(Item item, ParseException e) {
+                if (e == null) {
+                    Log.d(TAG, "Fetched item from server");
+                    startSearchActivity("kettle", item); // placeholder query for now
+                } else {
+                    Log.e(TAG, "Could not fetch item", e);
+                }
+            }
+        });
+    }
+
     /**
      * Used to begin a search on a specific query
      * By default, this is hooked up to the Placeholder Search API, and not the real Serp Search API
      */
-    private void startSearchActivity(String query) {
+    private void startSearchActivity(String query, Item item) {
         Intent intent = new Intent(MainActivity.this, SearchActivity.class);
         intent.putExtra("query", query);
+        intent.putExtra("item", item);
+
         MainActivity.this.startActivity(intent);
     }
 
@@ -137,5 +161,10 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
         Toast.makeText(MainActivity.this, "You have successfully set Picture.", Toast.LENGTH_SHORT).show();
 
         startActivity(i);
+    }
+
+    @Override
+    public void onClick(RecommendedItem item) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(item.getExternalLink())));
     }
 }
