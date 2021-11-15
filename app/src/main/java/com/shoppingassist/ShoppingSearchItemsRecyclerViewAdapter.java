@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.shoppingassist.interfaces.OnListItemInteractionListener;
 import com.shoppingassist.models.ShoppingItem;
 
 import java.util.List;

@@ -5,24 +5,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
+import com.shoppingassist.interfaces.OnSavedListItemInteractionListener;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class SavedRecommendedItemsAdapter extends RecyclerView.Adapter<SavedRecommendedItemsAdapter.ViewHolder> {
 
     private Context context;
     private List<RecommendedItem> recommendedItems;
+    private final OnSavedListItemInteractionListener mListener;
 
-    public SavedRecommendedItemsAdapter(Context context, List<RecommendedItem> recommendedItems) {
+    public SavedRecommendedItemsAdapter(Context context, List<RecommendedItem> recommendedItems, OnSavedListItemInteractionListener mListener) {
+        this.mListener = mListener;
         this.context = context;
         this.recommendedItems = recommendedItems;
     }
@@ -38,6 +38,15 @@ public class SavedRecommendedItemsAdapter extends RecyclerView.Adapter<SavedReco
     public void onBindViewHolder(@NonNull SavedRecommendedItemsAdapter.ViewHolder holder, int position) {
         RecommendedItem recItem = recommendedItems.get(position);
         holder.bind(recItem);
+
+        holder.ivImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mListener) {
+                    mListener.onClick(recItem);
+                }
+            }
+        });
     }
 
     @Override

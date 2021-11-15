@@ -13,8 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -89,7 +87,7 @@ public class HomeFragment extends Fragment {
 
         rvSavedItems = view.findViewById(R.id.rvRecommendedItems);
         savedItems = new ArrayList<>();
-        savedItemsAdapter = new SavedRecommendedItemsAdapter(getContext(), savedItems);
+        savedItemsAdapter = new SavedRecommendedItemsAdapter(getContext(), savedItems, (MainActivity) getActivity());
         rvSavedItems.setAdapter(savedItemsAdapter);
         rvSavedItems.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
 

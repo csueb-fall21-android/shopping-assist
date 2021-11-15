@@ -1,4 +1,4 @@
-package com.shoppingassist;
+package com.shoppingassist.interfaces;
 
 import com.shoppingassist.models.ShoppingItem;
 
