@@ -5,6 +5,8 @@ import com.parse.ParseObject;
 import com.parse.ParseClassName;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 @ParseClassName("Item")
 public class Item extends ParseObject {
     // Ensure that your subclass has a public default constructor

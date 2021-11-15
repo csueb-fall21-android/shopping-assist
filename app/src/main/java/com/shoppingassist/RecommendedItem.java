@@ -1,18 +1,24 @@
 package com.shoppingassist;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 @ParseClassName("RecommendedItem")
 public class RecommendedItem   extends ParseObject {
     ParseObject Location = new ParseObject("Location");
+    public static final String KEY_USER = "user";
     public static final String KEY_LOCATION = "location";
     public static final String KEY_NAME = "name";
     public static final String KEY_PRICE = "price";
     public static final String KEY_DETAILS = "details";
     public static final String KEY_BRAND = "brand";
     public static final String KEY_EXTERNALLINK = "externalLink";
+    public static final String KEY_PICTUREFILE = "pictureFile";
+
+    public ParseUser getUser() { return getParseUser(KEY_USER); }
+    public void setUser(ParseUser user){ put(KEY_USER, user); }
 
     public String getName(){
         return getString(KEY_NAME);
@@ -45,6 +51,10 @@ public class RecommendedItem   extends ParseObject {
     public void setExternalLink(String externalLink){
         put(KEY_EXTERNALLINK, externalLink);
     }
+
+    public ParseFile getPictureFile(){ return getParseFile(KEY_PICTUREFILE); }
+    public void setPictureFile(ParseFile parseFile){ put(KEY_PICTUREFILE, parseFile); }
+
     /**Location which is pointer to Location**/
     public String getLocation(){ return getString(KEY_LOCATION); }
     public void setLocation(Location location){ put(KEY_LOCATION, location); }
