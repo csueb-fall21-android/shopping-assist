@@ -7,7 +7,6 @@ import com.parse.ParseUser;
 
 @ParseClassName("RecommendedItem")
 public class RecommendedItem   extends ParseObject {
-    ParseObject Location = new ParseObject("Location");
     public static final String KEY_USER = "user";
     public static final String KEY_LOCATION = "location";
     public static final String KEY_NAME = "name";

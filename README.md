@@ -94,7 +94,7 @@ Users can sort search results with cheaper prices, nearby locations, etc. Users 
 
 * Add Details Manually
     - [x] User can update product name, price, location
-    - [ ] Location integration w/ google maps
+    - [x] Location integration w/ google maps
     - [x] User can update notes on the product
     - [ ] User can take more pictures to add additional details
     - [ ] User can add more pictures to the item
@@ -109,11 +109,12 @@ Users can sort search results with cheaper prices, nearby locations, etc. Users 
     - [ ] Show the existing item that the search was made on
     - [x] Shows list of items found based on an existing item
     - [x] Each item has a link to item that it found online (external link)
+    - [x] User can save items from search page to be displayed on the home page
 
 * User Settings
     - [ ] User can change their email
     - [ ] User can change their password
-    - [ ] User can set defaults for location (default location, if location cannot be found, and default radius to search)
+    - [x] User can set defaults for location (default location, if location cannot be found, and default radius to search)
 
 ### 3. Navigation
 
@@ -723,7 +724,6 @@ Feed Page
   * (Read/GET) Query all nearby images
     ![image](https://user-images.githubusercontent.com/57577440/138152137-4f787513-0ae1-4dfe-8663-a57a0ad6290a.png)
 
-
 Search Page
 
 <img src="milestone_2_searchpage.gif" width=200>
@@ -733,5 +733,13 @@ Take a Picture Screen
 <img src="milestone_2_takingPicture.gif" width=200>
 
 ### Milestone 3: Additional Functionality
+
+Details Found Screen with Location
+
+Save & Display Recommended Items on Home Page
+
+<img src="milestone_2_searchpage.gif" width=200>
+
+User Default Location Settings Page
 
 ### Milestone 4: Refine Details
