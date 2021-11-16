@@ -738,7 +738,7 @@ Details Found Screen with Location
 
 Save & Display Recommended Items on Home Page
 
-<img src="milestone_2_searchpage.gif" width=200>
+<img src="milestone_3_saved_recommended_items.gif" width=200>
 
 User Default Location Settings Page
 
