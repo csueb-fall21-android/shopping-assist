@@ -718,12 +718,6 @@ Signup New User
 
 Feed Page
 
-* Home Feed
-  * (Read/GET) Query all recent images
-    ![image](https://user-images.githubusercontent.com/57577440/138152264-eb5f92e2-97e2-4839-bd8b-ad999578ba13.png)
-  * (Read/GET) Query all nearby images
-    ![image](https://user-images.githubusercontent.com/57577440/138152137-4f787513-0ae1-4dfe-8663-a57a0ad6290a.png)
-
 Search Page
 
 <img src="milestone_2_searchpage.gif" width=200>
