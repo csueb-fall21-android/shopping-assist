@@ -15,6 +15,8 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Item.class);
         ParseObject.registerSubclass(RecommendedItem.class);
         ParseObject.registerSubclass(ItemRecommendedItem.class);
+        ParseObject.registerSubclass(AppLocation.class);
+        ParseObject.registerSubclass(Location.class);
 
 
         // Use for troubleshooting -- remove this line for production
