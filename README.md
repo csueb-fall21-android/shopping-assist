@@ -735,6 +735,10 @@ Take a Picture Screen
 ### Milestone 3: Additional Functionality
 
 Details Found Screen with Location
+<img src="milestone_3_Add_Detail_Page.gif" width=200>
+
+Retake Picture Functionality
+<img src="milestone_3_Retake_Picture.gif" width=200>
 
 Save & Display Recommended Items on Home Page
 
