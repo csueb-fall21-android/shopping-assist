@@ -742,8 +742,7 @@ Save & Display Recommended Items on Home Page
 
 Created Google Maps and Default/Current Location Functionality
 
-<img src="(https://user-images.githubusercontent.com/57577440/141917744-5d392dbf-2d1d-4ba9-a671-fd9e803ab72d.gif)
-" width=200>
+<img src="https://github.com/csueb-fall21-android/shopping-assist/blob/main/Google%20Maps%20Location%20API.gif" width=200>
 
 User Default Location Settings Page
 
