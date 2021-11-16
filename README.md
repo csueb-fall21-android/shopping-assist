@@ -740,6 +740,11 @@ Save & Display Recommended Items on Home Page
 
 <img src="milestone_3_saved_recommended_items.gif" width=200>
 
+Created Google Maps and Default/Current Location Functionality
+
+<img src="![Google Maps Location API](https://user-images.githubusercontent.com/57577440/141912846-a5189dca-76a7-43f5-873e-9edd2299536f.gif)
+" width=200>
+
 User Default Location Settings Page
 
 ### Milestone 4: Refine Details
