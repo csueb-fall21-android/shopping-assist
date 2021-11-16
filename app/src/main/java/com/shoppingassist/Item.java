@@ -11,7 +11,6 @@ import org.parceler.Parcel;
 public class Item extends ParseObject {
     // Ensure that your subclass has a public default constructor
 
-    ParseObject Location = new ParseObject("Location");
     public static final String KEY_USER = "user";
     public static final String KEY_NAME = "name";
     public static final String KEY_PRICE = "price";
@@ -22,6 +21,7 @@ public class Item extends ParseObject {
     public static final String KEY_LOCATION = "location";
     public static final String KEY_PICTURE_DESCRIPTION = "pictureDescription";
     public static final String KEY_PICTUREFILE = "pictureFile";
+
 
     public ParseUser getUser() { return getParseUser(KEY_USER); }
     public void setUser(ParseUser user){ put(KEY_USER, user); }
