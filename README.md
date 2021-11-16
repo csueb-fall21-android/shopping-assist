@@ -730,9 +730,19 @@ Take a Picture Screen
 
 Details Found Screen with Location
 
+<img src="milestone_3_Add_Detail_Page.gif" width=200>
+
+Retake Picture Functionality
+
+<img src="milestone_3_Retake_Picture.gif" width=200>
+
 Save & Display Recommended Items on Home Page
 
 <img src="milestone_3_saved_recommended_items.gif" width=200>
+
+Created Google Maps and Default/Current Location Functionality
+
+<img src="https://github.com/csueb-fall21-android/shopping-assist/blob/main/Google%20Maps%20Location%20API.gif" width=200>
 
 User Default Location Settings Page
 
