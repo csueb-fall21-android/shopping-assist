@@ -14,7 +14,7 @@ public class ShoppingItem {
     @SerializedName("source")
     public String source;
 
-    @SerializedName("price")
+    @SerializedName("extracted_price")
     public String price;
 
     @SerializedName("title")

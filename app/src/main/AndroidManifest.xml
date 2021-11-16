@@ -28,7 +28,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ShoppingAssist">
+        android:theme="@style/Theme.ShoppingAssist"
+        android:usesCleartextTraffic="true" >
         <activity
             android:name=".SearchActivity"
             android:exported="true" />
