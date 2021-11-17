@@ -3,18 +3,13 @@
     package="com.shoppingassist">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Added by Hector, to get locations, remove these two lines if not needed -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
-
-    <!-- Added by Hector, needed for Google Maps -->
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Added by Hector, to get locations, remove these two lines if not needed -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Added by Hector, needed for Google Maps -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <queries>
+
         <!-- Camera -->
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
@@ -29,7 +24,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ShoppingAssist"
-        android:usesCleartextTraffic="true" >
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ItemDetailActivity"
+            android:exported="true" />
         <activity
             android:name=".SearchActivity"
             android:exported="true" />
@@ -60,9 +58,8 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".DetailFound" android:exported="true">
-        </activity>
-
+            android:name=".DetailFound"
+            android:exported="true"></activity>
         <activity
             android:name=".MapActivity"
             android:exported="true" />
@@ -78,18 +75,15 @@
             android:value="@string/back4app_client_key" />
         <!--
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
-            android:value="@string/google_maps_api_key" /> -->
-
+            android:value="@string/google_maps_api_key" />
+        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_mapsHec_api_key" /> <!--${MAPS_API_KEY}-->
-
+            android:value="@string/google_mapsHec_api_key" /> <!-- ${MAPS_API_KEY} -->
         <!-- Needed for adding a map to project, added by Hector remove if not needed -->
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <!-- Added by Hector, needed for Google maps -->
+            android:value="@integer/google_play_services_version" /> <!-- Added by Hector, needed for Google maps -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

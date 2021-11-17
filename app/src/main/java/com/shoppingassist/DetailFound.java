@@ -276,7 +276,6 @@ public class DetailFound extends AppCompatActivity implements GoogleApiClient.Co
                             Log.i(TAG, "Location save was successful");
 
                             Item item = new Item();
-                            Log.d(TAG,"Item need to save");
                             item.setName(prodNameVal);
                             item.setPrice(priceVal);
                             item.setExternalLink(link);
@@ -293,7 +292,7 @@ public class DetailFound extends AppCompatActivity implements GoogleApiClient.Co
                                         return;
                                     }
                                     Log.i(TAG, "Relationship between item and location save was successful");
-                                    Toast.makeText(context, "Saved recommended item", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "Saved Item", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
