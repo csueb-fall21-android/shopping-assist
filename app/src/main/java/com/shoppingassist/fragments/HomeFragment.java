@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -22,7 +23,9 @@ import com.shoppingassist.Item;
 import com.shoppingassist.MainActivity;
 import com.shoppingassist.R;
 import com.shoppingassist.RecommendedItem;
+import com.shoppingassist.SavedItemsDetailsAdapter;
 import com.shoppingassist.SavedRecommendedItemsAdapter;
+import com.shoppingassist.interfaces.OnSavedItemDetailsListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvPictures1;
     private RecyclerView rvPictures2;
     protected CameraAdapter adapter;
+    protected SavedItemsDetailsAdapter itemsAdapter;
     protected List<Item> allItems;
     protected SwipeRefreshLayout swipeContainer;
     protected List<RecommendedItem> savedItems;
@@ -69,8 +73,11 @@ public class HomeFragment extends Fragment {
 
         allItems = new ArrayList<>();
         adapter = new CameraAdapter(getContext(), allItems);
-        rvPictures1.setAdapter(adapter);
+        itemsAdapter = new SavedItemsDetailsAdapter(getContext(), allItems, (MainActivity) getActivity());
+        rvPictures1.setAdapter(itemsAdapter);
+        //rvPictures1.setAdapter(adapter);
         rvPictures1.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        queryItems();
 
         rvPictures2.setAdapter(adapter);
         rvPictures2.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -116,9 +123,14 @@ public class HomeFragment extends Fragment {
                     //Toast.makeText(getActivity(), "Made it here", Toast.LENGTH_SHORT).show();
                     Log.i(TAG, "Item: " + item.getPictureDescription() + ", username: " + item.getName());
                 }
-                     adapter.clear();
-                     adapter.addAll(items);
-                     swipeContainer.setRefreshing(false);
+                    adapter.clear();
+                    adapter.addAll(items);
+
+                    /*itemsAdapter.clear();
+                    itemsAdapter.addAll(items);
+                    swipeContainer.setRefreshing(false);
+
+                     */
             }
         });
     }

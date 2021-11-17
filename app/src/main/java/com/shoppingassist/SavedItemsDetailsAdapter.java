@@ -11,32 +11,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
-import com.shoppingassist.interfaces.OnSavedListItemInteractionListener;
+import com.shoppingassist.interfaces.OnSavedItemDetailsListener;
 
 import java.util.List;
 
-public class SavedRecommendedItemsAdapter extends RecyclerView.Adapter<SavedRecommendedItemsAdapter.ViewHolder> {
+public class SavedItemsDetailsAdapter extends RecyclerView.Adapter<SavedItemsDetailsAdapter.ItemViewHolder> {
 
     private Context context;
-    private List<RecommendedItem> recommendedItems;
-    private final OnSavedListItemInteractionListener mListener;
+    private List<Item> item;
+    private final OnSavedItemDetailsListener mListener;
 
-    public SavedRecommendedItemsAdapter(Context context, List<RecommendedItem> recommendedItems, OnSavedListItemInteractionListener mListener) {
-        this.mListener = mListener;
+    public SavedItemsDetailsAdapter(Context context, List<Item> allItems, OnSavedItemDetailsListener mListener) {
         this.context = context;
-        this.recommendedItems = recommendedItems;
+        this.mListener = mListener;
+        this.item = allItems;
     }
 
     @NonNull
     @Override
-    public SavedRecommendedItemsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SavedItemsDetailsAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.rv_recommended_item, parent, false);
-        return new ViewHolder(view);
+        return new ItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SavedRecommendedItemsAdapter.ViewHolder holder, int position) {
-        RecommendedItem recItem = recommendedItems.get(position);
+    public void onBindViewHolder(@NonNull SavedItemsDetailsAdapter.ItemViewHolder holder, int position) {
+        Item recItem = item.get(position);
         holder.bind(recItem);
 
         holder.ivImage.setOnClickListener(new View.OnClickListener() {
@@ -51,19 +51,19 @@ public class SavedRecommendedItemsAdapter extends RecyclerView.Adapter<SavedReco
 
     @Override
     public int getItemCount() {
-        return recommendedItems.size();
+        return item.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView ivImage;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             ivImage = itemView.findViewById(R.id.ivRecommendedImage);
         }
 
-        public void bind(RecommendedItem recItem) {
+        public void bind(Item recItem) {
             ParseFile image = recItem.getPictureFile();
 
             if (image != null) {
@@ -74,13 +74,13 @@ public class SavedRecommendedItemsAdapter extends RecyclerView.Adapter<SavedReco
 
     // Clean all elements of the recycler
     public void clear() {
-        recommendedItems.clear();
+        item.clear();
         notifyDataSetChanged();
     }
 
     // Add a list of items -- change to type used
-    public void addAll(List<RecommendedItem> list) {
-        recommendedItems.addAll(list);
+    public void addAll(List<Item> list) {
+        item.addAll(list);
         notifyDataSetChanged();
     }
 }
