@@ -17,10 +17,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginTop="164dp"
-        android:backgroundTint="@android:color/holo_blue_light"
+        android:layout_marginTop="400dp"
+        android:backgroundTint="@color/secondaryLightColor"
         android:text="@string/action_sign_in"
-        android:textColor="@color/white"
+        android:textColor="@color/secondaryTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,9 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginTop="5dp"
-        android:backgroundTint="@android:color/holo_green_light"
+        android:backgroundTint="@color/primaryTextColor"
         android:text="@string/sign_up"
-        android:textColor="@color/white"
+        android:textColor="@color/primaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btnLogin"
         app:layout_constraintHorizontal_bias="0"
@@ -44,13 +44,31 @@
         app:layout_constraintVertical_bias="0" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:id="@+id/ivLogo"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
+        app:srcCompat="@drawable/ic_svgexport_35" />
+
+    <TextView
+        android:id="@+id/conditionsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Shop Assist"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo"
+        app:layout_constraintVertical_bias="0.0" />
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

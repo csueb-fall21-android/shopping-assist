@@ -4,9 +4,9 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    app:itemBackground="@color/white"
-    app:itemIconTint="@color/black"
-    app:itemTextColor="@color/black"
+    app:itemBackground="@color/primaryColor"
+    app:itemIconTint="@color/primaryTextColor"
+    app:itemTextColor="@color/primaryTextColor"
     app:menu="@menu/menu_main"
     app:navigationIcon="@drawable/ic_baseline_add_shopping_cart_24">
 
