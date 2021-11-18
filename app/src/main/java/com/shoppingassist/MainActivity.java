@@ -25,6 +25,7 @@ import com.parse.ParseUser;
 import com.shoppingassist.fragments.CameraFragment;
 import com.shoppingassist.fragments.HomeFragment;
 import com.shoppingassist.fragments.ProfileFragment;
+import com.shoppingassist.interfaces.OnSavedItemDetailsListener;
 import com.shoppingassist.interfaces.OnSavedListItemInteractionListener;
 
 import org.parceler.Parcels;
@@ -32,7 +33,7 @@ import org.parceler.Parcels;
 import java.io.File;
 
 
-public class MainActivity extends AppCompatActivity implements ProfileFragment.LogoutUserListener, CameraFragment.sendPictureListener, OnSavedListItemInteractionListener {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.LogoutUserListener, CameraFragment.sendPictureListener, OnSavedListItemInteractionListener, OnSavedItemDetailsListener {
     public static final String TAG = "MainActivity";
     public static final String SELECTED_ITEM_ID_KEY = "selected_item";
 
@@ -168,5 +169,15 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
     @Override
     public void onClick(RecommendedItem item) {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(item.getExternalLink())));
+    }
+
+    @Override
+    public void onClick(Item item) {
+        Intent intent = new Intent(this, ItemDetailActivity.class);
+        intent.putExtra("vDetails",item.getPictureFile());
+        intent.putExtra("prodName",item.getName());
+        intent.putExtra("priceText",item.getPrice());
+        intent.putExtra("locText",item.getLocation());
+        startActivity(intent);
     }
 }

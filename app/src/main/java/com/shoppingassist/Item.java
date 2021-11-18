@@ -33,8 +33,8 @@ public class Item extends ParseObject {
         put(KEY_NAME, name);
     }
 
-    public String getPrice(){
-        return getString(KEY_PRICE);
+    public Number getPrice(){
+        return getNumber(KEY_PRICE);
     }
     public void setPrice(Number price){
         put(KEY_PRICE, price);
