@@ -8,7 +8,7 @@
     android:layout_alignParentBottom="true"
     app:itemHorizontalTranslationEnabled="false"
     app:labelVisibilityMode="selected"
-    app:itemBackground="@color/primaryDarkColor"
-    app:itemIconTint="@color/primaryTextColor"
-    app:itemTextColor="@color/primaryTextColor"
+    app:itemBackground="@color/secondaryColor"
+    app:itemIconTint="@color/secondaryTextColor"
+    app:itemTextColor="@color/secondaryTextColor"
     app:menu="@menu/menu_bottom_navigation" />

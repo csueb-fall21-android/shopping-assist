@@ -48,6 +48,7 @@
 
     <ImageButton
         android:id="@+id/ibSearchSave"
+        style="@style/ActionIconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/ivSearchImage"
@@ -55,12 +56,12 @@
         android:layout_marginTop="48dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="15dp"
-        android:backgroundTint="#009688"
         android:minHeight="48dp"
         android:src="@drawable/ic_baseline_bookmark_border_24" />
 
     <ImageButton
         android:id="@+id/ibSearchLink"
+        style="@style/DefaultIconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/ivSearchImage"
@@ -68,7 +69,6 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="15dp"
         android:layout_toStartOf="@+id/ibSearchSave"
-        android:backgroundTint="#009688"
         android:minHeight="48dp"
         android:src="@drawable/ic_baseline_link_24" />
 

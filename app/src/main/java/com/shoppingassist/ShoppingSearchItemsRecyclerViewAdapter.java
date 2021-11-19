@@ -65,6 +65,9 @@ public class ShoppingSearchItemsRecyclerViewAdapter extends RecyclerView.Adapter
             public void onClick(View v) {
                 if (null != mListener) {
                     mListener.onSaveClick(holder.mItem);
+                    v.setEnabled(false);
+                    ImageButton btnSave = (ImageButton) v;
+                    btnSave.setImageResource(R.drawable.ic_baseline_bookmark_24);
                 }
             }
         });

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
@@ -58,20 +60,6 @@ public class CameraFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        someActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if(result.getResultCode() == Activity.RESULT_OK){
-                            Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                            camImage.setImageBitmap(takenImage);
-                        }else{
-                            Toast.makeText(getContext(), "picture wasn't taken!!",Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
     }
 
     @Override
@@ -95,6 +83,7 @@ public class CameraFragment extends Fragment {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                             camImage.setImageBitmap(takenImage);
+                            btnDetailFound.setVisibility(View.VISIBLE);
                         } else {
                             Toast.makeText(getContext(), "picture wasn't taken!!", Toast.LENGTH_SHORT).show();
                         }
@@ -109,6 +98,7 @@ public class CameraFragment extends Fragment {
         });
 
         btnDetailFound = view.findViewById(R.id.btnDetailFound);
+        btnDetailFound.setVisibility(View.INVISIBLE);
         btnDetailFound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,121 +7,140 @@
 
     <ImageView
         android:id="@+id/detailImage"
-        android:layout_width="0dp"
-        android:layout_height="350dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/detailsFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_below="@+id/detailImage"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-smallcaps"
         android:text="Details Found!"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailImage" />
+        android:textSize="24sp" />
 
     <ImageView
         android:id="@+id/imageFound"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailsFound"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/detailsFound"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/prodName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/imageFound"
-        app:layout_constraintTop_toBottomOf="@id/detailsFound"
-        android:paddingStart="15dp"
-        android:paddingEnd="0dp"
-        android:hint="Product Name"/>
+        android:layout_below="@+id/detailsFound"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@+id/imageFound"
+        android:hint="Product Name" />
 
     <TextView
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/prodName"
-        app:layout_constraintTop_toBottomOf="@id/detailsFound"
-        android:paddingStart="5dp"
-        android:paddingEnd="0dp"
-        android:hint="(Price)"/>
+        android:layout_below="@+id/prodName"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/imageFound"
+        android:hint="(Price)" />
 
     <TextView
         android:id="@+id/longitude_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/imageFound"
-        app:layout_constraintTop_toBottomOf="@id/prodName"
+        android:layout_below="@+id/price"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/latitude_textview"
+        android:hint="Location"
         android:paddingStart="15dp"
-        android:paddingEnd="0dp"
-        android:hint="Location"/>
+        android:paddingEnd="0dp" />
 
     <TextView
         android:id="@+id/latitude_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/imageFound"
-        app:layout_constraintTop_toBottomOf="@id/longitude_textview"
-        android:paddingStart="15dp"
-        android:paddingEnd="0dp"
-        android:hint="Location"/>
+        android:layout_below="@+id/price"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/imageFound"
+        android:hint="Location" />
 
-    <Button
+    <ImageButton
         android:id="@+id/detailsButton"
+        style="@style/ActionIconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="44dp"
-        android:text="Full Details"
-        app:layout_constraintLeft_toRightOf="@id/price"
-        app:layout_constraintTop_toBottomOf="@id/detailImage" />
+        android:layout_alignBottom="@+id/imageFound"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="0dp"
+        android:minHeight="48dp"
+        android:src="@drawable/ic_baseline_link_24" />
 
     <TextView
         android:id="@+id/detailsPromptMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="36dp"
+        android:layout_below="@+id/imageFound"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
         android:text="Is this what you are looking for?"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageFound" />
 
     <Button
         android:id="@+id/saveButton"
+        style="@style/ActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_below="@+id/detailsPromptMessage"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
         android:text="Yes, Save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/detailsPromptMessage" />
 
     <Button
         android:id="@+id/moreDetailsButton"
+        style="@style/ActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="68dp"
-        android:layout_marginTop="48dp"
+        android:layout_below="@+id/detailsPromptMessage"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
         android:text="No, Add More Details"
         app:layout_constraintLeft_toRightOf="@id/saveButton"
         app:layout_constraintTop_toBottomOf="@id/detailsPromptMessage" />
 
     <Button
         android:id="@+id/retakeButton"
+
+        style="@style/DefaultButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Retake Picture"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/saveButton" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_below="@+id/saveButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="150dp"
+        android:text="Retake Picture" />
+</RelativeLayout>
