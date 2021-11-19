@@ -12,7 +12,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:fontFamily="sans-serif-smallcaps"
         android:text="@string/recentStr"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/primaryTextColor"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -59,7 +62,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:fontFamily="sans-serif-smallcaps"
         android:text="@string/nearbyStr"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -106,7 +111,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:fontFamily="sans-serif-smallcaps"
         android:text="@string/saved"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="20sp"
         android:textStyle="bold" />
 

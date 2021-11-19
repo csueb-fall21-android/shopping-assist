@@ -10,9 +10,11 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="sign_up">Sign up</string>
-    <string name="recentStr"><u>Recent</u></string>
-    <string name="nearbyStr"><u>Nearby</u></string>
+    <string name="recentStr">Recent</string>
+    <string name="nearbyStr">Nearby</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="saved">Saved</string>
+    <string name="shop_assist">Shop Assist</string>
+    <string name="conditionText">By clicking Sign Up, you agree to our Terms, Data Policy and Cookies Policy.</string>
 </resources>

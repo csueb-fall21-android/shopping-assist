@@ -44,7 +44,8 @@
 
         <activity
             android:name=".LandingActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.ShoppingAssist">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
