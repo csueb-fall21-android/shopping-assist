@@ -1,22 +1,10 @@
-package com.shoppingassist;
+package com.shoppingassist.models;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.shoppingassist.interfaces.OnSavedItemDetailsListener;
-
-import java.util.List;
+import com.shoppingassist.models.Location;
 
 @ParseClassName("RecommendedItem")
 public class RecommendedItem   extends ParseObject {

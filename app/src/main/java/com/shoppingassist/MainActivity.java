@@ -24,6 +24,8 @@ import com.shoppingassist.fragments.HomeFragment;
 import com.shoppingassist.fragments.ProfileFragment;
 import com.shoppingassist.interfaces.OnSavedItemDetailsListener;
 import com.shoppingassist.interfaces.OnSavedListItemInteractionListener;
+import com.shoppingassist.models.Item;
+import com.shoppingassist.models.RecommendedItem;
 
 import java.io.File;
 
@@ -59,8 +61,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
 
         cameraFragment = (CameraFragment) fm.findFragmentByTag(CAMERA_TAG);
         if (cameraFragment == null) {
-            cameraFragment = new CameraFragment();
-            //cameraFragment = CameraFragment.newInstance();
+            cameraFragment = CameraFragment.newInstance();
         }
 
         profileFragment = (ProfileFragment) fm.findFragmentByTag(PROFILE_TAG);
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
     private void logoutCurrentUser() {
         ParseUser.logOut();
 
-        Toast.makeText(MainActivity.this, "You have successfully logged out.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Successfully logged out", Toast.LENGTH_SHORT).show();
 
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
         query.getFirstInBackground(new GetCallback<Item>() {
             public void done(Item item, ParseException e) {
                 if (e == null) {
-                    Log.d(TAG, "Fetched item from server");
+                    Log.i(TAG, "Fetched item from server");
                     startSearchActivity("kettle", item); // placeholder query for now
                 } else {
                     Log.e(TAG, "Could not fetch item", e);
@@ -156,8 +157,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
     public void imageSendDetailFound(File photoFile) {
         Intent i = new Intent(this, DetailFoundActivity.class);
         i.putExtra("photoFile", photoFile.toString());
-        Toast.makeText(MainActivity.this, "You have successfully set Picture.", Toast.LENGTH_SHORT).show();
-
+        Log.i(TAG, "Picture set successfully.");
         startActivity(i);
     }
 
