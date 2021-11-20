@@ -5,22 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--
     <include
         android:id="@+id/action_bar_view"
         layout="@layout/toolbar_user_options"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" /> -->
+
+    <Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="122dp"
+        android:layout_height="46dp"
+        android:text="Logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/optionText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="612dp"
+        android:layout_width="285dp"
+        android:layout_height="45dp"
         android:text="User Options"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/action_bar_view"
+
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
@@ -47,21 +56,19 @@
         android:id="@+id/updateEButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="172dp"
         android:minHeight="48dp"
         android:text="Update Email"
-        app:layout_constraintStart_toEndOf="@+id/emailText"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/optionText" />
 
     <Button
-        android:id="@+id/updateSButton"
+        android:id="@+id/updatePButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="104dp"
         android:layout_marginTop="4dp"
         android:minHeight="48dp"
         android:text="Update Password"
-        app:layout_constraintLeft_toRightOf="@id/passwordText"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/updateEButton" />
 
     <TextView
@@ -73,10 +80,12 @@
         android:text="Email changed successfully!"
         android:textSize="14sp"
         android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/locText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/updateEButton" />
+        app:layout_constraintTop_toBottomOf="@id/updateEButton"
+        app:layout_constraintVertical_bias="0.193" />
 
     <TextView
         android:id="@+id/alertTextPassword"
@@ -87,10 +96,12 @@
         android:text="Password changed successfully!"
         android:textSize="14sp"
         android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/locText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/updateSButton" />
+        app:layout_constraintTop_toBottomOf="@id/updatePButton"
+        app:layout_constraintVertical_bias="0.18" />
 
     <ImageButton
         android:id="@+id/locButton"
@@ -108,12 +119,12 @@
         android:id="@+id/locText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="400dp"
+        android:layout_marginTop="116dp"
         android:hint="Set Default Location"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/locButton" />
+        app:layout_constraintLeft_toRightOf="@id/locButton"
+        app:layout_constraintTop_toBottomOf="@+id/passwordText" />
 
     <EditText
         android:id="@+id/radiusText"
@@ -131,25 +142,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
-        android:layout_marginBottom="292dp"
+        android:layout_marginTop="44dp"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/radiusText" />
+        app:layout_constraintLeft_toRightOf="@id/radiusText"
+        app:layout_constraintTop_toBottomOf="@+id/locButton" />
 
-    <include
-        android:id="@+id/bottom_navigation"
-        layout="@layout/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="84dp"
-        android:layout_marginBottom="0dp"
-        android:backgroundTintMode="src_in"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/locButton"
-        app:layout_constraintVertical_bias="0.942"
-        app:layout_scrollFlags="scroll|enterAlways"
-        tools:layout_editor_absoluteX="0dp" />
+    <!--
+     <include
+         android:id="@+id/bottom_navigation"
+         layout="@layout/bottom_nav"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_marginTop="84dp"
+         android:layout_marginBottom="0dp"
+         android:backgroundTintMode="src_in"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintTop_toBottomOf="@id/locButton"
+         app:layout_constraintVertical_bias="0.942"
+         app:layout_scrollFlags="scroll|enterAlways"
+         tools:layout_editor_absoluteX="0dp" /> -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
