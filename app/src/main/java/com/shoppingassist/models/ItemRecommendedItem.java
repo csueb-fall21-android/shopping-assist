@@ -1,7 +1,9 @@
-package com.shoppingassist;
+package com.shoppingassist.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.shoppingassist.models.Item;
+import com.shoppingassist.models.RecommendedItem;
 
 @ParseClassName("ItemRecommendedItem")
 public class ItemRecommendedItem  extends ParseObject {

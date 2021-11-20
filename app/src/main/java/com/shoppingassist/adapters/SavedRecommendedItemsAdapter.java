@@ -1,4 +1,4 @@
-package com.shoppingassist;
+package com.shoppingassist.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
+import com.shoppingassist.R;
 import com.shoppingassist.interfaces.OnSavedListItemInteractionListener;
+import com.shoppingassist.models.RecommendedItem;
 
 import java.util.List;
 

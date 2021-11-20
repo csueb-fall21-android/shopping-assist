@@ -19,95 +19,63 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvItems"
         android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:layout_below="@id/recentID"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        tools:layout_height="150dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvView1"
-            android:layout_width="match_parent"
-            android:layout_height="125dp"
-            android:layout_below="@+id/recentID"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:orientation="horizontal"
-            android:scrollbars="horizontal"
-            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:layout_height="150dp" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <!-- <ImageButton
-        android:id="@+id/rvArrow1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_height="325dp"
+        android:layout_below="@+id/recentID"
+        android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="95dp"
-        android:layout_toEndOf="@+id/rvView1"
-        android:minHeight="48dp"
-        android:src="@drawable/ic_baseline_arrow_forward_24" /> -->
-
-    <TextView
-        android:id="@+id/nearbyID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/swipeContainer"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/nearbyStr"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal"
+        android:scrollbars="horizontal"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:layout_height="325dp"
+        tools:listitem="@layout/rv_home_item" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer2"
-        android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:layout_below="@id/nearbyID"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        tools:layout_height="150dp">
+<!--    <TextView-->
+<!--        android:id="@+id/nearbyID"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/rvItems"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:fontFamily="sans-serif-smallcaps"-->
+<!--        android:text="@string/nearbyStr"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold" />-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvView2"
-            android:layout_width="match_parent"
-            android:layout_height="125dp"
-            android:layout_below="@+id/nearbyID"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal"
-            android:scrollbars="horizontal"
-            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:layout_height="150dp" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--        android:id="@+id/swipeContainer2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="125dp"-->
+<!--        android:layout_below="@id/nearbyID"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        tools:layout_height="150dp">-->
 
-    <!-- <ImageButton
-        android:id="@+id/rvArrow2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="300dp"
-        android:layout_toEndOf="@+id/rvView2"
-        android:minHeight="48dp"
-        android:src="@drawable/ic_baseline_arrow_forward_24" /> -->
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rvView2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="125dp"-->
+<!--            android:layout_below="@+id/nearbyID"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_marginStart="0dp"-->
+<!--            android:layout_marginTop="2dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:scrollbars="horizontal"-->
+<!--            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--            tools:layout_height="150dp" />-->
+<!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 
     <TextView
         android:id="@+id/tvSavedHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/swipeContainer2"
+        android:layout_below="@+id/rvItems"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"

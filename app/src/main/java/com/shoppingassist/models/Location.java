@@ -1,4 +1,4 @@
-package com.shoppingassist;
+package com.shoppingassist.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;

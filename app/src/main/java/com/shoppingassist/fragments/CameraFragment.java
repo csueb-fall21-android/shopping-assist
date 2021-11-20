@@ -112,12 +112,12 @@ public class CameraFragment extends Fragment {
     }
     private void launchCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Log.d(TAG,"photoFileName"+photoFileName);
+        Log.i(TAG,"photoFileName"+photoFileName);
         photoFile = getPhotoFileUrl(photoFileName);
 
         Uri fileProvider = FileProvider.getUriForFile(getContext(),"com.shoppingassist.fileprovider",photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-        Log.d(TAG,"intent.resolveActivity(getPackageManager()) "+intent.resolveActivity(getContext().getPackageManager()));
+        Log.i(TAG,"intent.resolveActivity(getPackageManager()) "+intent.resolveActivity(getContext().getPackageManager()));
         if(intent.resolveActivity(getContext().getPackageManager()) != null){
             someActivityResultLauncher.launch(intent);
         }else{

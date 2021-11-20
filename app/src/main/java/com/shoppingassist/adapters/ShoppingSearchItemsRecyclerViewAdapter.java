@@ -1,4 +1,4 @@
-package com.shoppingassist;
+package com.shoppingassist.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.shoppingassist.R;
 import com.shoppingassist.interfaces.OnListItemInteractionListener;
 import com.shoppingassist.models.ShoppingItem;
 

@@ -72,12 +72,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (e != null) {
                     Log.e(TAG, "Issue with signup", e);
                     String message = e.getMessage();
-                    Toast.makeText(LoginActivity.this, "Issue with signup", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Error signing in: " + message, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else {
                     goMainActivity();
-                    Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Signed up successfully!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -93,11 +93,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (e != null) {
                     Log.e(TAG, "Issue with login", e);
                     String message = e.getMessage();
-                    Toast.makeText(LoginActivity.this, "Issue with login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Error logging in: " + message, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 goMainActivity();
-                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
             }
         });
     }
