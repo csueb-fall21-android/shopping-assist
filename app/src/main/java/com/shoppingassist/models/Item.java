@@ -1,11 +1,9 @@
-package com.shoppingassist;
+package com.shoppingassist.models;
 
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseClassName;
 import com.parse.ParseUser;
-
-import org.parceler.Parcel;
 
 @ParseClassName("Item")
 public class Item extends ParseObject {

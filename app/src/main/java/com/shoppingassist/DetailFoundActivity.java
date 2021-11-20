@@ -23,8 +23,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,13 +37,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.shoppingassist.models.Item;
 
 
 public class DetailFoundActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
@@ -75,7 +71,7 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.details_found);
+        setContentView(R.layout.activity_details_found);
         /** For Captured Image **/
         detailImage = (ImageView) findViewById(R.id.detailImage);
         photoFile = new File(getIntent().getStringExtra("photoFile"));
@@ -152,17 +148,18 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
             mLatitudeTextView.setText(String.valueOf(mLocation.getLatitude()));
             mLongitudeTextView.setText(String.valueOf(mLocation.getLongitude()));
         } else {
-            Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cannot detect location", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Cannot detect location");
         }
     }
     @Override
     public void onConnectionSuspended(int i) {
-        Log.i(TAG, "Connection Suspended");
+        Log.i(TAG, "Connection suspended");
         mGoogleApiClient.connect();
     }
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i(TAG, "Connection failed. Error: " + connectionResult.getErrorCode());
+        Log.e(TAG, "Connection failed. Error: " + connectionResult.getErrorCode());
     }
     @Override
     protected void onStart() {
@@ -214,7 +211,8 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
                 Double.toString(location.getLongitude());
         mLatitudeTextView.setText(String.valueOf(location.getLatitude()));
         mLongitudeTextView.setText(String.valueOf(location.getLongitude() ));
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        Log.i(TAG, msg);
         // You can now create a LatLng Object for use with maps
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
     }
@@ -266,7 +264,7 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
         parsePictureFile.saveInBackground(new SaveCallback() {
             public void done(ParseException e) {
                 if (e == null) {
-                    com.shoppingassist.Location locationRef = new com.shoppingassist.Location();
+                    com.shoppingassist.models.Location locationRef = new com.shoppingassist.models.Location();
                     locationRef.setDescriptor(prodNameVal);
                     locationRef.setCoordinates(locationVal);
 
@@ -296,7 +294,7 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
                                         return;
                                     }
                                     Log.i(TAG, "Relationship between item and location save was successful");
-                                    Toast.makeText(context, "Saved Item", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "Item saved successfully", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }

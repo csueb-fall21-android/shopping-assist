@@ -13,28 +13,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.shoppingassist.CameraAdapter;
-import com.shoppingassist.Item;
+import com.shoppingassist.models.Item;
 import com.shoppingassist.MainActivity;
 import com.shoppingassist.R;
-import com.shoppingassist.RecommendedItem;
-import com.shoppingassist.SavedItemsDetailsAdapter;
-import com.shoppingassist.SavedRecommendedItemsAdapter;
-import com.shoppingassist.interfaces.OnSavedItemDetailsListener;
+import com.shoppingassist.models.RecommendedItem;
+import com.shoppingassist.adapters.SavedItemsDetailsAdapter;
+import com.shoppingassist.adapters.SavedRecommendedItemsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
     public static final String TAG = "HomeFragment";
-    private RecyclerView rvPictures1;
-    private RecyclerView rvPictures2;
-    protected CameraAdapter adapter;
+    private RecyclerView rvItems;
     protected SavedItemsDetailsAdapter itemsAdapter;
     protected List<Item> allItems;
     protected SwipeRefreshLayout swipeContainer;
@@ -68,29 +63,22 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvPictures1 = view.findViewById(R.id.rvView1);
-        rvPictures2 = view.findViewById(R.id.rvView2);
+        rvItems = view.findViewById(R.id.rvItems);
 
         allItems = new ArrayList<>();
-        adapter = new CameraAdapter(getContext(), allItems);
         itemsAdapter = new SavedItemsDetailsAdapter(getContext(), allItems, (MainActivity) getActivity());
-        rvPictures1.setAdapter(itemsAdapter);
-        //rvPictures1.setAdapter(adapter);
-        rvPictures1.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvItems.setAdapter(itemsAdapter);
+        rvItems.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         queryItems();
 
-        rvPictures2.setAdapter(adapter);
-        rvPictures2.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer); //Add back later when switch relative layout to swipeContainer
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                queryItems();
-            }
-        });
-
-        queryItems();
+//        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer); //Add back later when switch relative layout to swipeContainer
+//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                queryItems();
+//            }
+//        });
 
         rvSavedItems = view.findViewById(R.id.rvRecommendedItems);
         savedItems = new ArrayList<>();
@@ -114,23 +102,18 @@ public class HomeFragment extends Fragment {
         query.findInBackground(new FindCallback<Item>() {
             @Override
             public void done(List<Item> items, ParseException e) { //Gets all items from database
-                if(e != null){
+                if (e != null){
                     //Toast.makeText(getActivity(), "Made it here", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Issue with getting items", e);
                     return;
                 }
-                for(Item item : items){
+                for (Item item : items){
                     //Toast.makeText(getActivity(), "Made it here", Toast.LENGTH_SHORT).show();
-                    Log.i(TAG, "Item: " + item.getPictureDescription() + ", username: " + item.getName());
+                    Log.i(TAG, "Item: " + item.getName());
                 }
-                    adapter.clear();
-                    adapter.addAll(items);
-
-                    /*itemsAdapter.clear();
+                    itemsAdapter.clear();
                     itemsAdapter.addAll(items);
-                    swipeContainer.setRefreshing(false);
-
-                     */
+//                    swipeContainer.setRefreshing(false);
             }
         });
     }
