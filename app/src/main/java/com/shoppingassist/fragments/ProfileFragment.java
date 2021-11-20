@@ -31,11 +31,11 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.shoppingassist.Location;
 import com.shoppingassist.LoginActivity;
 import com.shoppingassist.MainActivity;
 import com.shoppingassist.MapActivity;
 import com.shoppingassist.R;
+import com.shoppingassist.models.Location;
 
 import java.util.List;
 

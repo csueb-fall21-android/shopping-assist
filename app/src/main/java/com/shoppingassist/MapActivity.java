@@ -32,8 +32,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import android.location.Location;
 
+import com.shoppingassist.models.Location;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -76,7 +76,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: found location!");
-                            Location currentLocation = (Location) task.getResult();
+                            android.location.Location currentLocation = (android.location.Location) task.getResult();
 
                             moveMapCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
@@ -106,7 +106,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     //Get address from latitude and longitude
-    public void getAddress(Location currentLocation) throws IOException {
+    public void getAddress(android.location.Location currentLocation) throws IOException {
         Geocoder geocoder;
 
         List<Address> addresses;
@@ -136,17 +136,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     //Remove if not needed
     private String getLocation(){ //Add check later if empty don't fill in textview
         //String curLoc = "";
-        ParseQuery<com.shoppingassist.Location> query = ParseQuery.getQuery(com.shoppingassist.Location.class);
-        query.include(com.shoppingassist.Location.KEY_DESCRIPTOR);
+        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+        query.include(Location.KEY_DESCRIPTOR);
 
-        query.findInBackground(new FindCallback<com.shoppingassist.Location>() {
+        query.findInBackground(new FindCallback<Location>() {
             @Override
-            public void done(List<com.shoppingassist.Location> locations, ParseException e) {
+            public void done(List<Location> locations, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with getting Location!", e);
                     return;
                 }
-                for(com.shoppingassist.Location location : locations){
+                for(Location location : locations){
                     if(location.getDescriptor() == "My Location"){
                         curLoc = location.getAddress();
                     }
@@ -179,11 +179,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onBackPressed();
     }
 
-    private void saveAddress(String address, ParseUser currentUser, Location curCoordinates){
+    private void saveAddress(String address, ParseUser currentUser, android.location.Location curCoordinates){
         String curLatitude = String.valueOf(curCoordinates.getLatitude());
         String curLongitude = String.valueOf(curCoordinates.getLongitude());
 
-        com.shoppingassist.Location curLocation = new com.shoppingassist.Location();
+        Log.i(TAG, curLatitude + "," + curLongitude);
+
+        Location curLocation = new Location();
         curLocation.setAddress(address);
         curLocation.setDescriptor("My Location");
         curLocation.setCoordinates(curLatitude + "," + curLongitude);
