@@ -48,6 +48,7 @@ public class SavedItemsDetailsAdapter extends RecyclerView.Adapter<SavedItemsDet
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
+                    Log.i(TAG, "Item clicked: " + recItem.getName());
                     mListener.onClick(recItem);
                 }
             }

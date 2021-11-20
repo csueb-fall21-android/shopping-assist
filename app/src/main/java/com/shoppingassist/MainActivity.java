@@ -126,33 +126,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
         startActivity(i);
     }
 
-    private void onBeginSearch() {
-        ParseQuery<Item> query = ParseQuery.getQuery("Item");
-        query.whereEqualTo("objectId", "viU7NASqFU"); // placeholder for now, fetch the first item
-        query.getFirstInBackground(new GetCallback<Item>() {
-            public void done(Item item, ParseException e) {
-                if (e == null) {
-                    Log.i(TAG, "Fetched item from server");
-                    startSearchActivity("kettle", item); // placeholder query for now
-                } else {
-                    Log.e(TAG, "Could not fetch item", e);
-                }
-            }
-        });
-    }
-
-    /**
-     * Used to begin a search on a specific query
-     * By default, this is hooked up to the Placeholder Search API, and not the real Serp Search API
-     */
-    private void startSearchActivity(String query, Item item) {
-        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-        intent.putExtra("query", query);
-        intent.putExtra("item", item);
-
-        MainActivity.this.startActivity(intent);
-    }
-
     @Override
     public void imageSendDetailFound(File photoFile) {
         Intent i = new Intent(this, DetailFoundActivity.class);
@@ -168,11 +141,9 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
 
     @Override
     public void onClick(Item item) {
-        Intent intent = new Intent(this, ItemDetailActivity.class);
-        intent.putExtra("vDetails",item.getPictureFile());
-        intent.putExtra("prodName",item.getName());
-        intent.putExtra("priceText",item.getPrice());
-        intent.putExtra("locText",item.getLocation());
-        startActivity(intent);
+        Log.d(TAG, "Opening detail activity for: " + item.getName());
+        Intent intent = new Intent(MainActivity.this, ItemDetailActivity.class);
+        intent.putExtra("item", item);
+        MainActivity.this.startActivity(intent);
     }
 }
