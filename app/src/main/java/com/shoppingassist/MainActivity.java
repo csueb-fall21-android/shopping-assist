@@ -12,14 +12,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.shoppingassist.fragments.CameraFragment;
@@ -27,8 +24,6 @@ import com.shoppingassist.fragments.HomeFragment;
 import com.shoppingassist.fragments.ProfileFragment;
 import com.shoppingassist.interfaces.OnSavedItemDetailsListener;
 import com.shoppingassist.interfaces.OnSavedListItemInteractionListener;
-
-import org.parceler.Parcels;
 
 import java.io.File;
 
@@ -159,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
 
     @Override
     public void imageSendDetailFound(File photoFile) {
-        Intent i = new Intent(this, DetailFound.class);
+        Intent i = new Intent(this, DetailFoundActivity.class);
         i.putExtra("photoFile", photoFile.toString());
         Toast.makeText(MainActivity.this, "You have successfully set Picture.", Toast.LENGTH_SHORT).show();
 

@@ -48,7 +48,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 
-public class DetailFound extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
+public class DetailFoundActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
     ImageView detailImage;
     Button saveButton,moreDetailsButton,retakeButton,detailsButton;
     TextView detailsPromptMessage,longitude_textview,latitude_textview,price,prodName,detailsFound,brand,externalLink;
@@ -69,6 +69,8 @@ public class DetailFound extends AppCompatActivity implements GoogleApiClient.Co
     private com.google.android.gms.location.LocationListener listener;
     private long UPDATE_INTERVAL = 2 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
+    private int NUM_UPDATES = 1;
+    private long EXPIRATION_DURATION = 10000; /* 10s */
     private LocationManager locationManager;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,8 +185,10 @@ public class DetailFound extends AppCompatActivity implements GoogleApiClient.Co
         // Create the location request
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(UPDATE_INTERVAL)
-                .setFastestInterval(FASTEST_INTERVAL);
+                .setNumUpdates(NUM_UPDATES)
+//                .setInterval(UPDATE_INTERVAL)
+//                .setFastestInterval(FASTEST_INTERVAL)
+                .setExpirationDuration(EXPIRATION_DURATION);
         // Request location updates
         if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;

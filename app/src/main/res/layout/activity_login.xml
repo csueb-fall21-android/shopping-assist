@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -14,96 +14,82 @@
 
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_svgexport_35__1_"
-        app:layout_constraintVertical_bias="0.0"/>
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_svgexport_35__1_" />
 
     <TextView
         android:id="@+id/tvName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ivLogo"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="0dp"
         android:fontFamily="sans-serif-smallcaps"
         android:text="@string/shop_assist"
+        android:textAlignment="center"
         android:textColor="@color/secondaryColor"
         android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/etUsername"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivLogo"
-        app:layout_constraintVertical_bias="0.0"/>
+        android:textStyle="bold" />
     />
 
     <EditText
         android:id="@+id/etUsername"
         style="@android:style/Widget.Holo.EditText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tvName"
+        android:layout_marginTop="15dp"
         android:hint="@string/prompt_email"
-        android:selectAllOnFocus="true"
-        app:layout_constraintBottom_toTopOf="@+id/etPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvName"
-        app:layout_constraintVertical_bias="0.0"/>
+        android:selectAllOnFocus="true" />
 
     <EditText
         android:id="@+id/etPassword"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/etUsername"
+        android:layout_marginTop="15dp"
         android:hint="@string/prompt_password"
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUsername"
-        app:layout_constraintVertical_bias="0.0"/>
+        android:selectAllOnFocus="true" />
 
     <Button
         android:id="@+id/btnLogin"
         style="@style/DefaultButton"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/action_sign_in"
-        app:layout_constraintBottom_toTopOf="@+id/btnSignup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_below="@+id/etPassword"
+        android:layout_marginTop="15dp"
+        android:text="@string/action_sign_in" />
 
     <Button
         android:id="@+id/btnSignup"
         style="@style/ActionButton"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sign_up"
-        app:layout_constraintBottom_toTopOf="@+id/conditionsText"
-        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
-        app:layout_constraintStart_toStartOf="@+id/btnLogin"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_below="@+id/btnLogin"
+        android:layout_marginTop="15dp"
+        android:text="@string/sign_up" />
 
     <TextView
         android:id="@+id/conditionsText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/btnSignup"
+        android:layout_marginTop="15dp"
         android:gravity="start|top"
         android:text="@string/conditionText"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignup"
-        app:layout_constraintVertical_bias="0.0"/>
+        android:textStyle="bold" />
     />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
