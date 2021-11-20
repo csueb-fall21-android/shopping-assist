@@ -4,6 +4,11 @@ import android.app.Application;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.shoppingassist.models.AppLocation;
+import com.shoppingassist.models.Item;
+import com.shoppingassist.models.ItemRecommendedItem;
+import com.shoppingassist.models.Location;
+import com.shoppingassist.models.RecommendedItem;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

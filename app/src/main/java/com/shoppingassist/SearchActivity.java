@@ -20,7 +20,11 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.shoppingassist.adapters.ShoppingSearchItemsRecyclerViewAdapter;
 import com.shoppingassist.interfaces.OnListItemInteractionListener;
+import com.shoppingassist.models.Item;
+import com.shoppingassist.models.ItemRecommendedItem;
+import com.shoppingassist.models.RecommendedItem;
 import com.shoppingassist.models.ShoppingItem;
 import com.shoppingassist.networking.CallbackResponse;
 import com.shoppingassist.networking.SearchApiClient;
@@ -85,7 +89,7 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
             public void onSuccess(List<ShoppingItem> models) {
                 progressBar.hide();
                 recyclerView.setAdapter(new ShoppingSearchItemsRecyclerViewAdapter(models, SearchActivity.this));
-                Log.d(TAG, "response successful");
+                Log.i(TAG, "response successful");
             }
 
             @Override
@@ -110,10 +114,10 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
             public void onSuccess(List<ShoppingItem> models) {
                 progressBar.hide();
                 for (ShoppingItem model : models) {
-                    Log.d(TAG, model.title + ": " + model.price);
+                    Log.i(TAG, model.title + ": " + model.price);
                 }
                 recyclerView.setAdapter(new ShoppingSearchItemsRecyclerViewAdapter(models, SearchActivity.this));
-                Log.d(TAG, "response successful");
+                Log.i(TAG, "Serp API response successful");
             }
 
             @Override
@@ -180,7 +184,7 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
                                         return;
                                     }
                                     Log.i(TAG, "Relationship between item and recommended item save was successful");
-                                    Toast.makeText(context, "Saved recommended item", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "Item saved", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -214,7 +218,7 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
                     image.compress(Bitmap.CompressFormat.PNG, 100, out);
                     out.flush();
                     out.close();
-                    Log.d(TAG, "Picture file saved");
+                    Log.i(TAG, "Picture file saved");
                 }
                 catch (IOException e) {
                     Log.e(TAG, "Error saving file from url", e);
