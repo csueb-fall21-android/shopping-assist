@@ -1,6 +1,7 @@
 package com.shoppingassist;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,6 +25,12 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_details);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24);
 
         Bundle extras = getIntent().getExtras();
         ParseFile imgFile = (ParseFile)extras.get("vDetails");
@@ -53,5 +60,11 @@ public class ItemDetailActivity extends AppCompatActivity {
         prodName.setText(prodNameVal);
         priceText.setText(String.valueOf(priceTextVal));
         locText.setText(locTextVal);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }
