@@ -56,7 +56,7 @@
 
     <ImageButton
         android:id="@+id/locButton"
-        style="@style/ActionIconButton"
+        style="@style/DefaultIconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/priceText"
@@ -80,5 +80,21 @@
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:textSize="20sp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/primaryColor"
+        android:clickable="true"
+        android:src="@drawable/ic_baseline_search_24"
+        android:tint="@color/secondaryTextColor"
+        app:fabSize="normal" />
 
 </RelativeLayout>
