@@ -5,12 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:theme="@style/Theme.ShoppingAssist">
+
+        <!-- Toolbar is the actual app bar with text and the action items -->
+        <include
+            layout="@layout/toolbar_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <ImageView
         android:id="@+id/detailImage"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:layout_below="@+id/appBar"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         tools:srcCompat="@tools:sample/avatars" />
@@ -38,7 +56,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/prodName"
+        android:id="@+id/etEditName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/detailsFound"
@@ -51,7 +69,7 @@
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/prodName"
+        android:layout_below="@+id/etEditName"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/imageFound"
@@ -105,7 +123,7 @@
         app:layout_constraintTop_toBottomOf="@id/imageFound" />
 
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/btnDetailsSave"
         style="@style/ActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -127,7 +145,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="30dp"
         android:text="No, Add More Details"
-        app:layout_constraintLeft_toRightOf="@id/saveButton"
+        app:layout_constraintLeft_toRightOf="@id/btnDetailsSave"
         app:layout_constraintTop_toBottomOf="@id/detailsPromptMessage" />
 
     <Button
@@ -136,7 +154,7 @@
         style="@style/DefaultButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/saveButton"
+        android:layout_below="@+id/btnDetailsSave"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="150dp"

@@ -6,17 +6,13 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.parse.GetCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.shoppingassist.models.Item;
 
 public class ItemDetailActivity extends AppCompatActivity {
@@ -39,10 +35,10 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         item = getIntent().getParcelableExtra("item");
 
-        ImageView vDetails = findViewById(R.id.vDetails);
-        TextView prodName = findViewById(R.id.prodName);
-        TextView priceText = findViewById(R.id.priceText);
-        TextView locText = findViewById(R.id.locText);
+        ImageView vDetails = findViewById(R.id.ivEditImage);
+        TextView prodName = findViewById(R.id.etEditName);
+        TextView priceText = findViewById(R.id.etEditPrice);
+        TextView locText = findViewById(R.id.tvEditLocation);
 
         ParseFile image = item.getPictureFile();
 
@@ -52,13 +48,13 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         prodName.setText(item.getName());
         priceText.setText(String.valueOf(item.getPrice()));
-        locText.setText(item.getLocation());
+        locText.setText(item.getLocation().getDescriptor());
 
         FloatingActionButton fab = findViewById(R.id.fabSearch);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                beginSearch();
+                startSearchActivity(item.getName(), item);
             }
         });
     }
@@ -67,11 +63,6 @@ public class ItemDetailActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
-    }
-
-
-    private void beginSearch() {
-        startSearchActivity(item.getName(), item);
     }
 
     /**

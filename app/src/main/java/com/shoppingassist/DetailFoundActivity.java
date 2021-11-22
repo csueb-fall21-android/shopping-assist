@@ -15,6 +15,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -26,11 +27,20 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
 import java.util.StringJoiner;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -43,13 +53,16 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.shoppingassist.models.Item;
 
+import org.parceler.Parcels;
+
 
 public class DetailFoundActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
+    Context context;
+    Item item;
     ImageView detailImage;
-    Button saveButton,moreDetailsButton,retakeButton,detailsButton;
-    TextView detailsPromptMessage,longitude_textview,latitude_textview,price,prodName,detailsFound,brand,externalLink;
-    public static final String TAG = "DetailsFound Page";
-    TextView tv;
+    Button saveButton, moreDetailsButton, retakeButton;
+    TextView detailsPromptMessage,longitude_textview,latitude_textview,price,prodName;
+    public static final String TAG = "DetailsFoundActivity";
     File photoFile;
     public GoogleApiClient mGoogleApiClient;
     private Location mLocation;
@@ -72,6 +85,14 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_found);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("Details found! ");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24);
+
         /** For Captured Image **/
         detailImage = (ImageView) findViewById(R.id.detailImage);
         photoFile = new File(getIntent().getStringExtra("photoFile"));
@@ -102,32 +123,46 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
         });
 
         /* Item Save */
-        prodName = findViewById(R.id.prodName);
+        prodName = findViewById(R.id.etEditName);
         price = findViewById(R.id.price);
-        detailsFound = findViewById(R.id.detailsFound);
         longitude_textview = findViewById(R.id.longitude_textview);
         latitude_textview = findViewById(R.id.latitude_textview);
         detailImage = findViewById(R.id.detailImage);
         detailsPromptMessage = findViewById(R.id.detailsPromptMessage);
-        saveButton = findViewById(R.id.saveButton);
+        moreDetailsButton = findViewById(R.id.moreDetailsButton);
+        saveButton = findViewById(R.id.btnDetailsSave);
+
+        context = this;
+
         saveButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                String prodNameVal = prodName.getText().toString();
-                String detailsFoundVal = detailsFound.getText().toString();
-                Number priceVal =10;
-                String longitude_textviewVal = longitude_textview.getText().toString();
-                String latitude_textviewVal = latitude_textview.getText().toString();
-                String detailsPromptMessageVal = detailsPromptMessage.getText().toString();
-                StringJoiner joiner = new StringJoiner(",");
-                joiner.add(latitude_textviewVal);
-                joiner.add(longitude_textviewVal);
-                String locationVal = joiner.toString();
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                saveItem("prodNameVal",priceVal,detailsFoundVal, "google.com",locationVal,detailsPromptMessageVal, photoFile);
+                Log.i(TAG, "onClick saveButton");
+                try {
+                    saveItem("view");
+                } catch (ExecutionException | InterruptedException e) {
+                    Log.e(TAG, "Error saving item: ", e);
+                }
             }
         });
+
+        moreDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "onClick moreDetailsButton");
+                try {
+                    saveItem("edit");
+                } catch (ExecutionException | InterruptedException e) {
+                    Log.e(TAG, "Error saving item: ", e);
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
     @SuppressLint("MissingPermission")
@@ -258,51 +293,80 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
         }
         return latitude;
     }
-    private void saveItem(String prodNameVal, Number priceVal, String detailsFoundVal, String link,  String locationVal, String detailsPromptMessageVal, File photoFile) {
-        Context context = this;
+
+    private void saveItem(String action) throws ExecutionException, InterruptedException {
+        String prodNameVal = prodName.getText().toString();
+        Number priceVal = 10;
+        String longitude_textviewVal = longitude_textview.getText().toString();
+        String latitude_textviewVal = latitude_textview.getText().toString();
+        StringJoiner joiner = new StringJoiner(",");
+        joiner.add(latitude_textviewVal);
+        joiner.add(longitude_textviewVal);
+        String locationVal = joiner.toString();
+
         ParseFile parsePictureFile = new ParseFile(photoFile);
         parsePictureFile.saveInBackground(new SaveCallback() {
             public void done(ParseException e) {
-                if (e == null) {
-                    com.shoppingassist.models.Location locationRef = new com.shoppingassist.models.Location();
-                    locationRef.setDescriptor(prodNameVal);
-                    locationRef.setCoordinates(locationVal);
-
-                    locationRef.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e != null) {
-                                Log.e(TAG, "Error while saving", e);
-                                return;
-                            }
-                            Log.i(TAG, "Location save was successful");
-
-                            Item item = new Item();
-                            item.setName(prodNameVal);
-                            item.setPrice(priceVal);
-                            item.setExternalLink(link);
-                            item.setLocation(locationRef);
-                            item.setDetails(detailsPromptMessageVal);
-                            item.setPictureFile(parsePictureFile);
-                            item.setUser(ParseUser.getCurrentUser());
-
-                            item.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    if (e != null) {
-                                        Log.e(TAG, "Error while saving relationship", e);
-                                        return;
-                                    }
-                                    Log.i(TAG, "Relationship between item and location save was successful");
-                                    Toast.makeText(context, "Item saved successfully", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    });
-                }
-                else {
+                if (e != null) {
                     Log.e(TAG, "Error while saving ParseFile", e);
+                    return;
                 }
+                Log.i(TAG, "Image save was successful");
+            }
+        });
+
+        com.shoppingassist.models.Location locationRef = new com.shoppingassist.models.Location();
+
+        if (!prodNameVal.equals("")) {
+            locationRef.setDescriptor(prodNameVal);
+        }
+        else {
+            locationRef.setDescriptor("Location Placeholder");
+        }
+        locationRef.setCoordinates(locationVal);
+
+        locationRef.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving location", e);
+                    return;
+                }
+                Log.i(TAG, "Location save was successful");
+            }
+        });
+
+        item = new Item();
+
+        if (!prodNameVal.equals("")) {
+            item.setName(prodNameVal);
+        }
+        else {
+            item.setName("Product Name Placeholder");
+        }
+
+        item.setPrice(priceVal);
+        item.setLocation(locationRef);
+        item.setDetails("");
+        item.setPictureFile(parsePictureFile);
+        item.setUser(ParseUser.getCurrentUser());
+
+        item.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving item", e);
+                    return;
+                }
+                Log.i(TAG, "Item saved successfully with image and location");
+                Toast.makeText(context, "Item saved successfully", Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent();
+                i.putExtra("item", item);
+                i.putExtra("action", action);
+
+                setResult(RESULT_OK, i);
+                finish();
             }
         });
     }
