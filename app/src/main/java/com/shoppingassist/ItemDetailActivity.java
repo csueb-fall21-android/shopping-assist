@@ -1,23 +1,31 @@
 package com.shoppingassist;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.parse.DeleteCallback;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.shoppingassist.models.Item;
+
+import java.util.List;
 
 public class ItemDetailActivity extends AppCompatActivity {
     private static final String TAG = "ItemDetailActivity";
@@ -67,9 +75,6 @@ public class ItemDetailActivity extends AppCompatActivity {
         deleteItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //int i = Integer.parseInt((String)v.getTag());
-
                 AlertDialog.Builder alert = new AlertDialog.Builder(ItemDetailActivity.this);
                 alert.setTitle("Delete");
                 alert.setMessage("Are you sure you want to delete?");
@@ -122,29 +127,17 @@ public class ItemDetailActivity extends AppCompatActivity {
 	protected void queryDeleteItems() {
 
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
-        //query.include(Item.KEY_USER);
-        //query.whereEqualTo("objectId", objectIdVal);
-        query.whereEqualTo("prodName", prodNameVal);
-    Log.d(TAG,"Here before search"+prodNameVal);
+        query.whereEqualTo("objectId", item.getObjectId());
         query.findInBackground(new FindCallback<Item>() {
             @Override
             public void done(List<Item> objects, ParseException e) {
-                // if the error is null.
                 if (e == null) {
-                    // on below line we are getting the first course and
-                    // calling a delete method to delete this course.
-                    Log.d(TAG,"Here before delete"+objects);
-                    for (Item obj : objects){
-                        Log.i(TAG, "Saved Item: " + obj.getName());
-                    }
+                    // calling a delete method to delete this item.
                     objects.get(0).deleteInBackground(new DeleteCallback() {
                         @Override
                         public void done(ParseException e) {
                             // inside done method checking if the error is null or not.
                             if (e == null) {
-                                // if the error is not null then we are displaying a toast message and opening our home activity.
-                                Log.d(TAG,"Here Item Deleted");
-
                                 Toast.makeText(ItemDetailActivity.this, "Item Deleted..", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(ItemDetailActivity.this, MainActivity.class);
                                 startActivity(i);
@@ -154,24 +147,11 @@ public class ItemDetailActivity extends AppCompatActivity {
                             }
                         }
                     });
+
                 } else {
-                    // if we don't get the data in our database then we are displaying below message.
                     Toast.makeText(ItemDetailActivity.this, "Fail to get the object..", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-        /*query.getInBackground("objectId", new GetCallback<Item>() {
-            public void done(Item item, ParseException e) {
-                if (e == null) {
-                    item.deleteInBackground();
-                    Log.d(TAG,"Delete Item Successfullt");
-
-                } else {
-                    Log.e(TAG,"Something wrong in delete Item",e);
-                    return;
-                }
-            }
-        });*/
     }
 }

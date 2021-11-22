@@ -80,15 +80,14 @@
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:textSize="20sp" />
-		
-	<Button
+
+    <Button
         android:id="@+id/deleteItemBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="44dp"
+        android:layout_alignBottom="@+id/locText"
+        android:layout_marginBottom="-83dp"
         android:text="Delete"
-        app:layout_constraintTop_toBottomOf="@id/locText"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
