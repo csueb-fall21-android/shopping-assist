@@ -22,6 +22,7 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.shoppingassist.models.Item;
 
 import java.util.List;
