@@ -1,20 +1,30 @@
 package com.shoppingassist;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.parse.DeleteCallback;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.shoppingassist.models.Item;
+
+import java.util.List;
 
 public class ItemDetailActivity extends AppCompatActivity {
     private static final String TAG = "ItemDetailActivity";
@@ -59,6 +69,36 @@ public class ItemDetailActivity extends AppCompatActivity {
                 startSearchActivity(item.getName(), item);
             }
         });
+
+		/* Delete Item Functionality */
+        Button deleteItemBtn = findViewById(R.id.deleteItemBtn);
+        deleteItemBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(ItemDetailActivity.this);
+                alert.setTitle("Delete");
+                alert.setMessage("Are you sure you want to delete?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        queryDeleteItems();
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                alert.show();
+
+            }
+        });
     }
 
     @Override
@@ -77,5 +117,36 @@ public class ItemDetailActivity extends AppCompatActivity {
         intent.putExtra("item", item);
 
         ItemDetailActivity.this.startActivity(intent);
+    }
+
+	protected void queryDeleteItems() {
+
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.whereEqualTo("objectId", item.getObjectId());
+        query.findInBackground(new FindCallback<Item>() {
+            @Override
+            public void done(List<Item> objects, ParseException e) {
+                if (e == null) {
+                    // calling a delete method to delete this item.
+                    objects.get(0).deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            // inside done method checking if the error is null or not.
+                            if (e == null) {
+                                Toast.makeText(ItemDetailActivity.this, "Item Deleted..", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(ItemDetailActivity.this, MainActivity.class);
+                                startActivity(i);
+                            } else {
+                                // if we get error we are displaying it in below line.
+                                Toast.makeText(ItemDetailActivity.this, "Fail to delete course..", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+                } else {
+                    Toast.makeText(ItemDetailActivity.this, "Fail to get the object..", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
