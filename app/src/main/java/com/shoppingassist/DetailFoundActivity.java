@@ -13,18 +13,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.StringJoiner;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -42,6 +43,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -52,23 +54,33 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.shoppingassist.models.Item;
-
-import org.parceler.Parcels;
+import com.shoppingassist.models.RecommendedItem;
+import com.shoppingassist.models.ShoppingItem;
+import com.shoppingassist.networking.CallbackResponse;
+import com.shoppingassist.networking.SearchApiClient;
+import com.shoppingassist.networking.SerpSearchApiClient;
 
 
 public class DetailFoundActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
     Context context;
     Item item;
-    ImageView detailImage;
+    ImageView ivCapturedImage;
     Button saveButton, moreDetailsButton, retakeButton;
-    TextView detailsPromptMessage,longitude_textview,latitude_textview,price,prodName;
+    TextView longitude_textview,latitude_textview;
+    TextView detailsFoundTextHeader;
+    ImageView ivFoundImage;
+    TextView tvFoundName;
+    TextView tvFoundPrice;
+    ImageButton ibFoundLink;
+
+    ShoppingItem searchResult;
     public static final String TAG = "DetailsFoundActivity";
+    public String placeholderLocation = "Hayward, California, United States";
     File photoFile;
     public GoogleApiClient mGoogleApiClient;
     private Location mLocation;
     private LocationManager mLocationManager;
     private LocationRequest mLocationRequest;
-
     private TextView mLatitudeTextView;
     private TextView mLongitudeTextView;
     Location loc;
@@ -89,15 +101,15 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Details found! ");
+        getSupportActionBar().setTitle("Searching for item...");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24);
 
         /** For Captured Image **/
-        detailImage = (ImageView) findViewById(R.id.detailImage);
+        ivCapturedImage = (ImageView) findViewById(R.id.ivCapturedImage);
         photoFile = new File(getIntent().getStringExtra("photoFile"));
         Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-        detailImage.setImageBitmap(takenImage);
+        ivCapturedImage.setImageBitmap(takenImage);
 
         /** For Current Location of Device **/
         mLatitudeTextView = (TextView) findViewById((R.id.latitude_textview));
@@ -115,31 +127,40 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
         retakeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
-                //ImageView camImage;
-                //camImage = findViewById(R.id.camImage);
-                //camImage.setBackground(null);
+                finish();
             }
         });
 
         /* Item Save */
-        prodName = findViewById(R.id.etEditName);
-        price = findViewById(R.id.price);
+        detailsFoundTextHeader = findViewById(R.id.detailsFoundTextHeader);
+        tvFoundName = findViewById(R.id.tvFoundName);
+        tvFoundPrice = findViewById(R.id.tvFoundPrice);
+        ivFoundImage = findViewById(R.id.ivFoundImage);
+        ibFoundLink = findViewById(R.id.ibFoundLink);
         longitude_textview = findViewById(R.id.longitude_textview);
         latitude_textview = findViewById(R.id.latitude_textview);
-        detailImage = findViewById(R.id.detailImage);
-        detailsPromptMessage = findViewById(R.id.detailsPromptMessage);
         moreDetailsButton = findViewById(R.id.moreDetailsButton);
         saveButton = findViewById(R.id.btnDetailsSave);
 
         context = this;
+
+        ibFoundLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (searchResult != null) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(searchResult.link)));
+                }
+            }
+        });
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "onClick saveButton");
                 try {
-                    saveItem("view");
+                    File pictureFile = getImageFileFromUrl(searchResult.thumbnail);
+                    Log.d(TAG, "Picture file being sent");
+                    saveItem("view", searchResult.title, Float.valueOf(searchResult.price), searchResult.link, pictureFile);
                 } catch (ExecutionException | InterruptedException e) {
                     Log.e(TAG, "Error saving item: ", e);
                 }
@@ -151,12 +172,14 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
             public void onClick(View view) {
                 Log.i(TAG, "onClick moreDetailsButton");
                 try {
-                    saveItem("edit");
+                    saveItem("edit", "", 0, "", photoFile);
                 } catch (ExecutionException | InterruptedException e) {
                     Log.e(TAG, "Error saving item: ", e);
                 }
             }
         });
+
+        placeholderSearchForItem("kettle", placeholderLocation);
     }
 
     @Override
@@ -294,9 +317,7 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
         return latitude;
     }
 
-    private void saveItem(String action) throws ExecutionException, InterruptedException {
-        String prodNameVal = prodName.getText().toString();
-        Number priceVal = 10;
+    private void saveItem(String action, String name, Number price, String link, File pictureFile) throws ExecutionException, InterruptedException {
         String longitude_textviewVal = longitude_textview.getText().toString();
         String latitude_textviewVal = latitude_textview.getText().toString();
         StringJoiner joiner = new StringJoiner(",");
@@ -304,7 +325,7 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
         joiner.add(longitude_textviewVal);
         String locationVal = joiner.toString();
 
-        ParseFile parsePictureFile = new ParseFile(photoFile);
+        ParseFile parsePictureFile = new ParseFile(pictureFile);
         parsePictureFile.saveInBackground(new SaveCallback() {
             public void done(ParseException e) {
                 if (e != null) {
@@ -317,12 +338,7 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
 
         com.shoppingassist.models.Location locationRef = new com.shoppingassist.models.Location();
 
-        if (!prodNameVal.equals("")) {
-            locationRef.setDescriptor(prodNameVal);
-        }
-        else {
-            locationRef.setDescriptor("Location Placeholder");
-        }
+        locationRef.setDescriptor(locationVal);
         locationRef.setCoordinates(locationVal);
 
         locationRef.saveInBackground(new SaveCallback() {
@@ -338,16 +354,17 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
 
         item = new Item();
 
-        if (!prodNameVal.equals("")) {
-            item.setName(prodNameVal);
+        if (!name.equals("")) {
+            item.setName(name);
         }
         else {
-            item.setName("Product Name Placeholder");
+            item.setName("Product Name");
         }
 
-        item.setPrice(priceVal);
+        item.setPrice(price);
         item.setLocation(locationRef);
         item.setDetails("");
+        item.setExternalLink(link);
         item.setPictureFile(parsePictureFile);
         item.setUser(ParseUser.getCurrentUser());
 
@@ -370,4 +387,128 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
             }
         });
     }
+
+    private void updateDetails(ShoppingItem shoppingItem) {
+        searchResult = shoppingItem;
+        if (searchResult.thumbnail != null) {
+            Glide.with(context).load(searchResult.thumbnail).into(ivFoundImage);
+        }
+        tvFoundName.setText(searchResult.title);
+        tvFoundPrice.setText(searchResult.price);
+    }
+
+    private void hideDetails() {
+        tvFoundName.setVisibility(View.GONE);
+        tvFoundPrice.setVisibility(View.GONE);
+        detailsFoundTextHeader.setText("No Item Found");
+        saveButton.setVisibility(View.GONE);
+        ibFoundLink.setVisibility(View.GONE);
+    }
+
+    private void placeholderSearchForItem(String query, String location) {
+        SearchApiClient searchApiClient = new SearchApiClient();
+
+        searchApiClient.getPlaceholderSearchResults(new CallbackResponse<List<ShoppingItem>>() {
+            @Override
+            public void onSuccess(List<ShoppingItem> models) {
+                Log.i(TAG, "Placeholder response successful");
+                for (ShoppingItem model : models) {
+                    Log.i(TAG, model.title + ": " + model.price);
+                }
+
+                if (models.size() != 0) {
+                    Log.i(TAG, "At least one item found! Selecting the first...");
+                    updateDetails(models.get(0));
+                }
+                else {
+                    Log.i(TAG, "No suggestions found.");
+                    hideDetails();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable error) {
+                Log.e(TAG, error.getMessage());
+            }
+        });
+
+    }
+
+    /**
+     * The real Search API that searches based on the query provided to this activity and the current user's location
+
+     */
+    private void searchForItem(String query, String location) {
+        SerpSearchApiClient serpSearchApiClient = new SerpSearchApiClient();
+
+        serpSearchApiClient.getSerpSearchResults(new CallbackResponse<List<ShoppingItem>>() {
+            @Override
+            public void onSuccess(List<ShoppingItem> models) {
+                Log.i(TAG, "Serp API response successful");
+
+                for (ShoppingItem model : models) {
+                    Log.i(TAG, model.title + ": " + model.price);
+                }
+
+                if (models.size() != 0) {
+                    Log.i(TAG, "At least one item found! Selecting the first...");
+                    updateDetails(models.get(0));
+                }
+                else {
+                    Log.i(TAG, "No suggestions found.");
+                    hideDetails();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable error) {
+                Log.e(TAG, error.getMessage());
+            }
+        }, query, location);
+    }
+
+    /**
+     * Helper function to convert url images into bitmap images
+     * @param imageUrl
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    private File getImageFileFromUrl(String imageUrl) throws ExecutionException, InterruptedException {
+        Context context = this;
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        File mediaStorageDir = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+            Log.d(TAG, "Failed to create Directory");
+        }
+        File imageFile = new File(mediaStorageDir.getPath() + File.separator + "recommendedItem");
+
+        FutureTask<File> future = new FutureTask<File>(new Callable<File>() {
+            public File call() {
+                try
+                {
+                    URL url = new URL(imageUrl);
+                    Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    FileOutputStream out = new FileOutputStream(imageFile);
+                    image.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    out.flush();
+                    out.close();
+                    Log.i(TAG, "Picture file saved");
+                }
+                catch (IOException e) {
+                    Log.e(TAG, "Error saving file from url", e);
+                }
+                return imageFile;
+            }});
+
+        executor.execute(future);
+
+        File returnFile =  future.get();
+        Log.d(TAG, "Waited to return image file");
+
+        return returnFile;
+    }
+
 }

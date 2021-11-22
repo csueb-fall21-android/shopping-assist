@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,10 +36,11 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         item = getIntent().getParcelableExtra("item");
 
-        ImageView vDetails = findViewById(R.id.ivEditImage);
-        TextView prodName = findViewById(R.id.etEditName);
-        TextView priceText = findViewById(R.id.etEditPrice);
-        TextView locText = findViewById(R.id.tvEditLocation);
+        ImageView vDetails = findViewById(R.id.ivItemImage);
+        TextView prodName = findViewById(R.id.tvItemName);
+        TextView priceText = findViewById(R.id.tvItemPrice);
+        TextView locText = findViewById(R.id.tvItemLocation);
+        ImageButton ibItemLocation = findViewById(R.id.ibItemLocation);
 
         ParseFile image = item.getPictureFile();
 
