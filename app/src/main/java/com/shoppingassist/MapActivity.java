@@ -138,27 +138,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         //Toast.makeText(MapActivity.this, "Here is address!" + address, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Address here!" + address);
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        Log.d(TAG, "Address here!" + String.valueOf(currentLocation.getLatitude()));
-
-        queryLocations();
+//        queryLocations();
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //locExists = checkExistsAddress();
                 //checkExistsAddress();
-                Toast.makeText(MapActivity.this, "Location exists is so " + locExists, Toast.LENGTH_SHORT).show();
-                saveAddress(address, currentUser, currentLocation);
+
+                Log.d(TAG, "Location exists is so " + locExists);
+//                Toast.makeText(MapActivity.this, "Location exists is so " + locExists, Toast.LENGTH_SHORT).show();
+                saveAddress(address, currentLocation);
             }
         });
 
         //saveAddress(address, currentUser, currentLocation);
         //return addresses;
-    }
-
-    public String sendAddress(){
-        return sendDescription;
     }
 
     /*@Override
@@ -171,72 +166,31 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onBackPressed();
     }*/
 
-    private void queryLocations(){
-        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-        query.include(Location.KEY_DESCRIPTOR);
+//    private void queryLocations() {
+//        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+//        query.include(Location.KEY_COORDINATES);
+//
+//        query.findInBackground(new FindCallback<Location>() {
+//            @Override
+//            public void done(List<Location> locations, ParseException e) {
+//                if (e != null) {
+//                    Log.e(TAG, "Issue with getting Location!", e);
+//                    return;
+//                }
+//                if (locations.size() > 0 && locations.get(0).getCoordinates().equals(curLatitude + "," + curLongitude)) {
+//                    Log.i(TAG, "Location exists:" + locations.get(0).getCoordinates());
+//                    onFinishAddress(locations.get(0).getAddress());
+//                }
+//            }
+//        });
+//    }
 
-        query.findInBackground(new FindCallback<Location>() {
-            @Override
-            public void done(List<Location> locations, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting Location!", e);
-                    return;
-                }
-                for(Location location : locations){
-                    if(location.getDescriptor().equals("My Location")){
-                        curLoc = location.getAddress();
-                        //Toast.makeText(MapActivity.this, "Address exists!!!", Toast.LENGTH_SHORT).show();
-                        locExists = true;
-                        //exists[0] = true;
-                        Toast.makeText(MapActivity.this, "Address exists here!!!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-    }
-
-    private void saveAddress(String address, ParseUser currentUser, android.location.Location curCoordinates){
+    private void saveAddress(String address, android.location.Location curCoordinates){
         String curLatitude = String.valueOf(curCoordinates.getLatitude());
         String curLongitude = String.valueOf(curCoordinates.getLongitude());
 
-        //boolean exists = checkExistsAddress();
-        //Toast.makeText(MapActivity.this, "Boolean is " + exists, Toast.LENGTH_SHORT).show();
-
-        //if(exists){
-        if(!locExists){
-            Location curLocation = new Location();
-            curLocation.setAddress(address);
-            curLocation.setDescriptor("My Location");
-            curLocation.setCoordinates(curLatitude + "," + curLongitude);
-            curLocation.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e != null) {
-                        Log.e(TAG, "Error while saving", e);
-                        Toast.makeText(MapActivity.this, "Error while saving default location!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    Log.i(TAG, "Location save was successful!");
-                    curLoc = address;
-                    onFinishAddress(address);
-                }
-            });
-        }
-        else {
-            Toast.makeText(MapActivity.this, "Boolean is " + locExists, Toast.LENGTH_SHORT).show();
-            onFinishAddress(curLoc);
-        }
-    }
-
-    /*public void getCurLoc(){
-        onFinishAddress("Test");
-    }*/
-
-    public void checkExistsAddress(){
-        //String curLoc = "";
-        boolean[] exists = {false};
         ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-        query.include(Location.KEY_DESCRIPTOR);
+        query.whereEqualTo("coordinates", curLatitude + "," + curLongitude);
 
         query.findInBackground(new FindCallback<Location>() {
             @Override
@@ -245,30 +199,32 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     Log.e(TAG, "Issue with getting Location!", e);
                     return;
                 }
-                for(Location location : locations){
-                    if(location.getDescriptor().equals("My Location")){
-                        //curLoc = location.getAddress();
-                        //Toast.makeText(MapActivity.this, "Address exists!!!", Toast.LENGTH_SHORT).show();
-                        locExists = true;
-                        //exists[0] = true;
-                        Toast.makeText(MapActivity.this, "Address exists here!!!" + exists[0], Toast.LENGTH_SHORT).show();
-                    }
+                Log.i(TAG, "Number of locations exists: " + locations.size());
+                if (locations.size() > 0) {
+                    Log.i(TAG, "Location exists:" + locations.get(0).getCoordinates());
+                    onFinishAddress(locations.get(0).getAddress());
+                }
+                else {
+                    Location curLocation = new Location();
+                    curLocation.setAddress(address);
+                    curLocation.setDescriptor(address);
+                    curLocation.setCoordinates(curLatitude + "," + curLongitude);
+                    curLocation.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                Log.e(TAG, "Error while saving", e);
+//                                Toast.makeText(MapActivity.this, "Error while saving default location!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            Log.i(TAG, "Location save was successful!");
+                            onFinishAddress(address);
+                        }
+                    });
                 }
             }
         });
 
-        /*while(exists[0] == false){
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }*/
-        //Toast.makeText(MapActivity.this, "Address exists!!!" + exists[0], Toast.LENGTH_SHORT).show();
-        //exists[0] = true;
-        //return locExists;
-        //return exists[0];
-        return;
     }
 
     @Override

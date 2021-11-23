@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,7 +35,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -49,16 +47,18 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.shoppingassist.models.Item;
-import com.shoppingassist.models.RecommendedItem;
 import com.shoppingassist.models.ShoppingItem;
 import com.shoppingassist.networking.CallbackResponse;
 import com.shoppingassist.networking.SearchApiClient;
 import com.shoppingassist.networking.SerpSearchApiClient;
+import com.shoppingassist.models.Location;
 
 
 public class DetailFoundActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
@@ -78,12 +78,12 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
     public String placeholderLocation = "Hayward, California, United States";
     File photoFile;
     public GoogleApiClient mGoogleApiClient;
-    private Location mLocation;
+    private android.location.Location mLocation;
     private LocationManager mLocationManager;
     private LocationRequest mLocationRequest;
     private TextView mLatitudeTextView;
     private TextView mLongitudeTextView;
-    Location loc;
+    android.location.Location loc;
     double latitude;
     double longitude;
 
@@ -263,7 +263,7 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
         Log.d("reque", "--->>>>");
     }
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(android.location.Location location) {
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
@@ -318,13 +318,6 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
     }
 
     private void saveItem(String action, String name, Number price, String link, File pictureFile) throws ExecutionException, InterruptedException {
-        String longitude_textviewVal = longitude_textview.getText().toString();
-        String latitude_textviewVal = latitude_textview.getText().toString();
-        StringJoiner joiner = new StringJoiner(",");
-        joiner.add(latitude_textviewVal);
-        joiner.add(longitude_textviewVal);
-        String locationVal = joiner.toString();
-
         ParseFile parsePictureFile = new ParseFile(pictureFile);
         parsePictureFile.saveInBackground(new SaveCallback() {
             public void done(ParseException e) {
@@ -336,54 +329,75 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
             }
         });
 
-        com.shoppingassist.models.Location locationRef = new com.shoppingassist.models.Location();
+        String curLatitude = latitude_textview.getText().toString();
+        String curLongitude = longitude_textview.getText().toString();
 
-        locationRef.setDescriptor(locationVal);
-        locationRef.setCoordinates(locationVal);
+        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+        query.whereEqualTo("coordinates", curLatitude + "," + curLongitude);
 
-        locationRef.saveInBackground(new SaveCallback() {
+        query.findInBackground(new FindCallback<Location>() {
             @Override
-            public void done(ParseException e) {
+            public void done(List<Location> locations, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Error while saving location", e);
+                    Log.e(TAG, "Issue with getting Location!", e);
                     return;
                 }
-                Log.i(TAG, "Location save was successful");
-            }
-        });
+                Log.i(TAG, "Number of locations exists: " + locations.size());
 
-        item = new Item();
+                Location locationRef = new Location();
 
-        if (!name.equals("")) {
-            item.setName(name);
-        }
-        else {
-            item.setName("Product Name");
-        }
-
-        item.setPrice(price);
-        item.setLocation(locationRef);
-        item.setDetails("");
-        item.setExternalLink(link);
-        item.setPictureFile(parsePictureFile);
-        item.setUser(ParseUser.getCurrentUser());
-
-        item.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving item", e);
-                    return;
+                if (locations.size() > 0) {
+                    locationRef = locations.get(0);
                 }
-                Log.i(TAG, "Item saved successfully with image and location");
-                Toast.makeText(context, "Item saved successfully", Toast.LENGTH_SHORT).show();
+                else {
+                    locationRef.setCoordinates(curLatitude + "," + curLongitude);
+                    locationRef.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                Log.e(TAG, "Error while saving location", e);
+                                return;
+                            }
+                            Log.i(TAG, "Location save was successful");
+                        }
+                    });
+                }
 
-                Intent i = new Intent();
-                i.putExtra("item", item);
-                i.putExtra("action", action);
+                item = new Item();
 
-                setResult(RESULT_OK, i);
-                finish();
+                if (!name.equals("")) {
+                    item.setName(name);
+                }
+                else {
+                    item.setName("Product Name");
+                }
+
+                item.setPrice(price);
+                item.setLocation(locationRef);
+                item.setDetails("");
+                item.setExternalLink(link);
+                item.setPictureFile(parsePictureFile);
+                item.setUser(ParseUser.getCurrentUser());
+
+                item.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving item", e);
+                            return;
+                        }
+                        Log.i(TAG, "Item saved successfully with image and location");
+                        Toast.makeText(context, "Item saved successfully", Toast.LENGTH_SHORT).show();
+
+                        Intent i = new Intent();
+                        i.putExtra("item", item);
+                        i.putExtra("action", action);
+
+                        setResult(RESULT_OK, i);
+                        finish();
+                    }
+                });
+
             }
         });
     }
