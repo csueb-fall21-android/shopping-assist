@@ -93,7 +93,7 @@
         app:layout_constraintTop_toBottomOf="@id/updateSButton" />
 
     <ImageButton
-        android:id="@+id/locButton"
+        android:id="@+id/ibEditLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -105,7 +105,7 @@
         app:layout_constraintTop_toBottomOf="@id/passwordText" />
 
     <TextView
-        android:id="@+id/locText"
+        android:id="@+id/tvEditLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="400dp"
@@ -113,7 +113,7 @@
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/locButton" />
+        app:layout_constraintLeft_toRightOf="@id/ibEditLocation" />
 
     <EditText
         android:id="@+id/radiusText"
@@ -124,7 +124,7 @@
         android:hint="Set Location Radius Search"
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/locButton" />
+        app:layout_constraintTop_toBottomOf="@id/ibEditLocation" />
 
     <Spinner
         android:id="@+id/radiusList"
@@ -147,7 +147,7 @@
         android:layout_marginBottom="0dp"
         android:backgroundTintMode="src_in"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/locButton"
+        app:layout_constraintTop_toBottomOf="@id/ibEditLocation"
         app:layout_constraintVertical_bias="0.942"
         app:layout_scrollFlags="scroll|enterAlways"
         tools:layout_editor_absoluteX="0dp" />

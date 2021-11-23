@@ -8,9 +8,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,10 +47,11 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         item = getIntent().getParcelableExtra("item");
 
-        ImageView vDetails = findViewById(R.id.vDetails);
-        TextView prodName = findViewById(R.id.prodName);
-        TextView priceText = findViewById(R.id.priceText);
-        TextView locText = findViewById(R.id.locText);
+        ImageView vDetails = findViewById(R.id.ivItemImage);
+        TextView prodName = findViewById(R.id.tvItemName);
+        TextView priceText = findViewById(R.id.tvItemPrice);
+        TextView locText = findViewById(R.id.tvItemLocation);
+        ImageButton ibItemLocation = findViewById(R.id.ibItemLocation);
 
         ParseFile image = item.getPictureFile();
 
@@ -60,16 +61,16 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         prodName.setText(item.getName());
         priceText.setText(String.valueOf(item.getPrice()));
-        locText.setText(item.getLocation());
+        locText.setText(item.getLocation().getDescriptor());
 
         FloatingActionButton fab = findViewById(R.id.fabSearch);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                beginSearch();
+                startSearchActivity(item.getName(), item);
             }
         });
-		
+
 		/* Delete Item Functionality */
         Button deleteItemBtn = findViewById(R.id.deleteItemBtn);
         deleteItemBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,11 +108,6 @@ public class ItemDetailActivity extends AppCompatActivity {
         return true;
     }
 
-
-    private void beginSearch() {
-        startSearchActivity(item.getName(), item);
-    }
-
     /**
      * Used to begin a search on a specific query
      * By default, this is hooked up to the Placeholder Search API, and not the real Serp Search API
@@ -123,7 +119,7 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         ItemDetailActivity.this.startActivity(intent);
     }
-	
+
 	protected void queryDeleteItems() {
 
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);

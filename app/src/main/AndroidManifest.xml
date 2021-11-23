@@ -26,6 +26,9 @@
         android:theme="@style/Theme.ShoppingAssist"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".EditDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ItemDetailActivity"
             android:exported="true" />
         <activity
