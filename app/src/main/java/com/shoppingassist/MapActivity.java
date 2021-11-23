@@ -1,6 +1,7 @@
 package com.shoppingassist;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -32,7 +33,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import android.location.Location;
+//import android.location.Location;
+
+import com.shoppingassist.models.Location;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -52,6 +56,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Button saveButton;
     private String curLoc = "Testing";
     public String sendDescription;
+    private boolean locExists =false;
+
+    private boolean isQueryFinished = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +68,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         saveButton = findViewById(R.id.saveButton);
 
         getLocationPermission();
+
+        /*Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // do your stuff here
+                //locExists = checkExistsAddress();
+                checkExistsAddress();
+                isQueryFinished = true;
+            }
+        });
+        thread.start();
+        while(!isQueryFinished);*/
     }
 
     private void getDeviceLocation() { //Add functionality to save current location to database
@@ -76,7 +95,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: found location!");
-                            Location currentLocation = (Location) task.getResult();
+                            android.location.Location currentLocation = (android.location.Location) task.getResult();
 
                             moveMapCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
@@ -106,7 +125,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     //Get address from latitude and longitude
-    public void getAddress(Location currentLocation) throws IOException {
+    public void getAddress(android.location.Location currentLocation) throws IOException {
         Geocoder geocoder;
 
         List<Address> addresses;
@@ -122,9 +141,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         ParseUser currentUser = ParseUser.getCurrentUser();
         Log.d(TAG, "Address here!" + String.valueOf(currentLocation.getLatitude()));
 
+        queryLocations();
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //locExists = checkExistsAddress();
+                //checkExistsAddress();
+                //queryLocations();
+
+                Toast.makeText(MapActivity.this, "Location exists is so " + locExists + curLoc, Toast.LENGTH_SHORT).show();
                 saveAddress(address, currentUser, currentLocation);
             }
         });
@@ -133,43 +159,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         //return addresses;
     }
 
-    //Remove if not needed
-    private String getLocation(){ //Add check later if empty don't fill in textview
-        //String curLoc = "";
-        ParseQuery<com.shoppingassist.Location> query = ParseQuery.getQuery(com.shoppingassist.Location.class);
-        query.include(com.shoppingassist.Location.KEY_DESCRIPTOR);
-
-        query.findInBackground(new FindCallback<com.shoppingassist.Location>() {
-            @Override
-            public void done(List<com.shoppingassist.Location> locations, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting Location!", e);
-                    return;
-                }
-                for(com.shoppingassist.Location location : locations){
-                    if(location.getDescriptor() == "My Location"){
-                        curLoc = location.getAddress();
-                    }
-                }
-            }
-        });
-        //query.
-        //String curLoc = "";
-
-        //Location curLocation = new Location();
-        //curLoc = curLocation.getDescriptor();
-        return curLoc;
-    }
-
-    /*private String getCurAddress(){
-        return sendDescription;
-    }*/
-
     public String sendAddress(){
         return sendDescription;
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         sendDescription = getLocation();
         //sendAddress();
@@ -177,26 +171,111 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Toast.makeText(this, "Made it back to profile!", Toast.LENGTH_SHORT).show();
 
         super.onBackPressed();
+    }*/
+
+    private void queryLocations(){
+        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+        query.include(Location.KEY_DESCRIPTOR);
+
+        query.findInBackground(new FindCallback<Location>() {
+            @Override
+            public void done(List<Location> locations, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting Location!", e);
+                    return;
+                }
+                for(Location location : locations){
+                    if(location.getDescriptor().equals("My Location")){
+                        //curLoc = location.getAddress();
+                        //Toast.makeText(MapActivity.this, "Address exists!!!", Toast.LENGTH_SHORT).show();
+                        locExists = true;
+                        curLoc = location.getAddress();
+                        //exists[0] = true;
+                        Toast.makeText(MapActivity.this, "Address exists here!!!" + curLoc, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
-    private void saveAddress(String address, ParseUser currentUser, Location curCoordinates){
+    private void saveAddress(String address, ParseUser currentUser, android.location.Location curCoordinates){
         String curLatitude = String.valueOf(curCoordinates.getLatitude());
         String curLongitude = String.valueOf(curCoordinates.getLongitude());
 
-        com.shoppingassist.Location curLocation = new com.shoppingassist.Location();
-        curLocation.setAddress(address);
-        curLocation.setDescriptor("My Location");
-        curLocation.setCoordinates(curLatitude + "," + curLongitude);
-        curLocation.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(e != null){
-                    Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(MapActivity.this, "Error while saving default location!", Toast.LENGTH_SHORT).show();
+        boolean exists = checkExistsAddress();
+        //Toast.makeText(MapActivity.this, "Boolean is " + exists, Toast.LENGTH_SHORT).show();
+
+        //if(!exists){
+        if(!locExists){
+            Location curLocation = new Location();
+            curLocation.setAddress(address);
+            curLocation.setDescriptor("My Location");
+            curLocation.setCoordinates(curLatitude + "," + curLongitude);
+            curLocation.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Error while saving", e);
+                        Toast.makeText(MapActivity.this, "Error while saving default location!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Log.i(TAG, "Location save was successful!");
+                    curLoc = address;
+                    onFinishAddress(address);
                 }
-                Log.i(TAG, "Location save was successful!");
+            });
+        }
+        else {
+            Toast.makeText(MapActivity.this, "Boolean is " + locExists, Toast.LENGTH_SHORT).show();
+            onFinishAddress(curLoc);
+        }
+    }
+
+    private void addressExists(){
+
+    }
+
+    /*public void getCurLoc(){
+        onFinishAddress("Test");
+    }*/
+
+    public boolean checkExistsAddress(){
+        //String curLoc = "";
+        boolean[] exists = {false};
+        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+        query.include(Location.KEY_DESCRIPTOR);
+
+        query.findInBackground(new FindCallback<Location>() {
+            @Override
+            public void done(List<Location> locations, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting Location!", e);
+                    return;
+                }
+                for(Location location : locations){
+                    if(location.getDescriptor().equals("My Location")){
+                        //curLoc = location.getAddress();
+                        //Toast.makeText(MapActivity.this, "Address exists!!!", Toast.LENGTH_SHORT).show();
+                        locExists = true;
+                        exists[0] = true;
+                        //Toast.makeText(MapActivity.this, "Address exists here!!!" + exists[0], Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
+
+        /*while(exists[0] == false){
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }*/
+        //Toast.makeText(MapActivity.this, "Address exists!!!" + exists[0], Toast.LENGTH_SHORT).show();
+        //exists[0] = true;
+        //return locExists;
+        return exists[0];
+        //return;
     }
 
     @Override
@@ -285,5 +364,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
             }
         }
+    }
+
+    public void onFinishAddress(String address){
+        Intent data = new Intent();
+        data.putExtra("location", address);
+        setResult(RESULT_OK, data);
+        finish();
     }
 }

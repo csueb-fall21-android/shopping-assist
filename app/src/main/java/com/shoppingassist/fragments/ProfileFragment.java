@@ -1,5 +1,7 @@
 package com.shoppingassist.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.location.Address;
@@ -31,15 +33,19 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.shoppingassist.Location;
+//import com.shoppingassist.Location;
 import com.shoppingassist.LoginActivity;
 import com.shoppingassist.MainActivity;
 import com.shoppingassist.MapActivity;
 import com.shoppingassist.R;
+import com.shoppingassist.models.Location;
 
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
+    private final int REQUEST_CODE = 20;
+
+
     public static final String TAG = "ProfileFragment";
     private static final int ERROR_DIALOG_REQUEST = 9001;
 
@@ -62,8 +68,8 @@ public class ProfileFragment extends Fragment {
     private MapActivity mapActivity;
     private List<Address> addressIs;
 
-    private String curLoc;
-    private String getLoc;
+    private String curLoc = "Testing";
+    public String getLoc = "Default";
 
     //private FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
     //final Task location = mFusedLocationProviderClient.getLastLocation();;
@@ -167,13 +173,19 @@ public class ProfileFragment extends Fragment {
                 public void onClick(View view) {
                     //Toast.makeText(getActivity(), "Map is ready!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), MapActivity.class);
-                    startActivity(intent);
-                    getLoc = getLocation();
-                    locText.setText(getLoc);
+                    startActivityForResult(intent, REQUEST_CODE);
+                    //mapActivity.getCurLoc();
+                    //startActivity(intent);
+                    //getLoc = getLocation();
+                    //locText.setText(getLoc);
+                    //getLoc = getLocation();
+                    //locText.setText(getLoc);
                 }
             });
             //Add here to fill in text view with current address
             //getLoc = getLocation();
+            //Toast.makeText(getContext(), getLoc, Toast.LENGTH_SHORT).show();
+            //locText.setText(getLoc);
             //Toast.makeText(getContext(), "Back to Profile!", Toast.LENGTH_SHORT).show();
             //Log.d(TAG, "Current address here!" + getLoc);
         }
@@ -181,13 +193,17 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    private void retLoc(String loc){
+        getLoc = loc;
+    }
 
+    //private String retGetLoc()
 
     private String getLocation(){
         //String curLoc = "";
         ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
         query.include(Location.KEY_DESCRIPTOR);
-        Toast.makeText(getContext(), "Inside get location", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "Inside get location", Toast.LENGTH_SHORT).show();
 
         query.findInBackground(new FindCallback<Location>() {
             @Override
@@ -198,10 +214,11 @@ public class ProfileFragment extends Fragment {
                     return;
                 }
                 for(Location location : locations){
-                    if(location.getDescriptor() == "My Location"){
+                    if(location.getDescriptor().equals("My Location")){
                         curLoc = location.getAddress();
                         Log.i(TAG, "Found the default address " + location.getDescriptor());
-                        Toast.makeText(getContext(), "Found Location!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Found Location! " + curLoc, Toast.LENGTH_SHORT).show();
+
                     }
                 }
             }
@@ -211,6 +228,7 @@ public class ProfileFragment extends Fragment {
 
         //Location curLocation = new Location();
         //curLoc = curLocation.getDescriptor();
+        Toast.makeText(getContext(), "Found Location! " + curLoc, Toast.LENGTH_SHORT).show();
         return curLoc;
     }
 
@@ -264,4 +282,23 @@ public class ProfileFragment extends Fragment {
         });
         Toast.makeText(getActivity(), "Password Saved successfully!", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == REQUEST_CODE && resultCode ==  RESULT_OK){
+            String currentLocation = data.getStringExtra("location");
+            getLoc = currentLocation;
+            Toast.makeText(getActivity(), "Testing from activity here!" + getLoc, Toast.LENGTH_SHORT).show();
+            locText.setText(getLoc);
+        }
+
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /*public void onFinishAddress(String address){
+        Toast.makeText(getActivity(), "Testing here!", Toast.LENGTH_SHORT).show();
+        getLoc= address;
+        Toast.makeText(getActivity(), "Testing here!" + getLoc, Toast.LENGTH_SHORT).show();
+    }*/
 }
