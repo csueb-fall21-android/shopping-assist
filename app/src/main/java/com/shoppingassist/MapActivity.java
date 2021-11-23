@@ -148,9 +148,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 //locExists = checkExistsAddress();
                 //checkExistsAddress();
-                //queryLocations();
-
-                Toast.makeText(MapActivity.this, "Location exists is so " + locExists + curLoc, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapActivity.this, "Location exists is so " + locExists, Toast.LENGTH_SHORT).show();
                 saveAddress(address, currentUser, currentLocation);
             }
         });
@@ -186,12 +184,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
                 for(Location location : locations){
                     if(location.getDescriptor().equals("My Location")){
-                        //curLoc = location.getAddress();
+                        curLoc = location.getAddress();
                         //Toast.makeText(MapActivity.this, "Address exists!!!", Toast.LENGTH_SHORT).show();
                         locExists = true;
-                        curLoc = location.getAddress();
                         //exists[0] = true;
-                        Toast.makeText(MapActivity.this, "Address exists here!!!" + curLoc, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MapActivity.this, "Address exists here!!!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -202,10 +199,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         String curLatitude = String.valueOf(curCoordinates.getLatitude());
         String curLongitude = String.valueOf(curCoordinates.getLongitude());
 
-        boolean exists = checkExistsAddress();
+        //boolean exists = checkExistsAddress();
         //Toast.makeText(MapActivity.this, "Boolean is " + exists, Toast.LENGTH_SHORT).show();
 
-        //if(!exists){
+        //if(exists){
         if(!locExists){
             Location curLocation = new Location();
             curLocation.setAddress(address);
@@ -231,15 +228,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    private void addressExists(){
-
-    }
-
     /*public void getCurLoc(){
         onFinishAddress("Test");
     }*/
 
-    public boolean checkExistsAddress(){
+    public void checkExistsAddress(){
         //String curLoc = "";
         boolean[] exists = {false};
         ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
@@ -257,8 +250,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         //curLoc = location.getAddress();
                         //Toast.makeText(MapActivity.this, "Address exists!!!", Toast.LENGTH_SHORT).show();
                         locExists = true;
-                        exists[0] = true;
-                        //Toast.makeText(MapActivity.this, "Address exists here!!!" + exists[0], Toast.LENGTH_SHORT).show();
+                        //exists[0] = true;
+                        Toast.makeText(MapActivity.this, "Address exists here!!!" + exists[0], Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -274,8 +267,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         //Toast.makeText(MapActivity.this, "Address exists!!!" + exists[0], Toast.LENGTH_SHORT).show();
         //exists[0] = true;
         //return locExists;
-        return exists[0];
-        //return;
+        //return exists[0];
+        return;
     }
 
     @Override
@@ -324,7 +317,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void getLocationPermission(){
         Log.d(TAG, "getLocationPermission: getting location permissions");
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION};
+                Manifest.permission.ACCESS_COARSE_LOCATION};
 
         if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
