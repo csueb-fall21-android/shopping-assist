@@ -81,13 +81,13 @@ Users can sort search results with cheaper prices, nearby locations, etc. Users 
 * List Screen / Page of items after Login or Sign Up
     - [x] After login show a feed of saved lists and pictures that were taken previously. 
     - [ ] Have functionality in the Login page to click on the camera button to take a new picture.
-    - [ ] New account will not have a feed of saved items, so just display the layout along with functionality to click camera for a new picture.
-    - [ ] Click on an item to see its detailed view
+    - [x] New account will not have a feed of saved items, so just display the layout along with functionality to click camera for a new picture.
+    - [x] Click on an item to see its detailed view
 
 * Take a Picture Screen
     - [x] User will be redirected to the camera app to take a picture
     - [ ] After the user takes a picture, details will be automatically populated: price, name, location. User will be asked to confirm whether the details of the item is correct
-      - [ ] If the user confirms that the details are correct, user is redirected to detailed item view
+      - [x] If the user confirms that the details are correct, user is redirected to detailed item view
       - [x] If the user wants to add details manually, redirect to add details manually
       - [x] User can also choose to retake the picture
     - [ ] If details cannot be found automatically, user has the option to add details manually or to retake the picture
@@ -100,9 +100,9 @@ Users can sort search results with cheaper prices, nearby locations, etc. Users 
     - [ ] User can add more pictures to the item
 
 * Detailed Item View
-    - [ ] User can view item details including name, price, location found
-    - [ ] User can view a gallery of pictures of the item
-    - [ ] Additionally, user can click on a button to search for recommended nearby or online items based on this item's details and redirects to Search List View
+    - [x] User can view item details including name, price, location found
+    - [x] User can view a gallery of pictures of the item
+    - [x] Additionally, user can click on a button to search for recommended nearby or online items based on this item's details and redirects to Search List View
     - [ ] Additionally, user can send the details of this item to a user via a external messaging app of their choice
 
 * Search List View
@@ -112,8 +112,8 @@ Users can sort search results with cheaper prices, nearby locations, etc. Users 
     - [x] User can save items from search page to be displayed on the home page
 
 * User Settings
-    - [ ] User can change their email
-    - [ ] User can change their password
+    - [x] User can change their email
+    - [x] User can change their password
     - [x] User can set defaults for location (default location, if location cannot be found, and default radius to search)
 
 ### 3. Navigation
@@ -747,3 +747,15 @@ Created Google Maps and Default/Current Location Functionality
 User Default Location Settings Page
 
 ### Milestone 4: Refine Details
+
+Search for Similar Items from Item Detail Screen
+
+<img src="milestone_4_search_view_details.gif" width=200>
+
+Suggest Item on the Take Picture By Using Search API
+
+<img src="milestone_4_link_to_search.gif" width=200>
+
+Delete Item
+
+<img src="milestone_4_delete_item.gif" width=200>

@@ -1,6 +1,7 @@
 package com.shoppingassist;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -27,12 +28,15 @@ import com.shoppingassist.interfaces.OnSavedListItemInteractionListener;
 import com.shoppingassist.models.Item;
 import com.shoppingassist.models.RecommendedItem;
 
+import org.parceler.Parcels;
+
 import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity implements ProfileFragment.LogoutUserListener, CameraFragment.sendPictureListener, OnSavedListItemInteractionListener, OnSavedItemDetailsListener {
     public static final String TAG = "MainActivity";
     public static final String SELECTED_ITEM_ID_KEY = "selected_item";
+    private final int REQUEST_CODE = 20;
 
     private static String HOME_TAG = "posts";
     private static String CAMERA_TAG = "compose";
@@ -126,39 +130,34 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
         startActivity(i);
     }
 
-    private void onBeginSearch() {
-        ParseQuery<Item> query = ParseQuery.getQuery("Item");
-        query.whereEqualTo("objectId", "viU7NASqFU"); // placeholder for now, fetch the first item
-        query.getFirstInBackground(new GetCallback<Item>() {
-            public void done(Item item, ParseException e) {
-                if (e == null) {
-                    Log.i(TAG, "Fetched item from server");
-                    startSearchActivity("kettle", item); // placeholder query for now
-                } else {
-                    Log.e(TAG, "Could not fetch item", e);
-                }
-            }
-        });
-    }
-
-    /**
-     * Used to begin a search on a specific query
-     * By default, this is hooked up to the Placeholder Search API, and not the real Serp Search API
-     */
-    private void startSearchActivity(String query, Item item) {
-        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-        intent.putExtra("query", query);
-        intent.putExtra("item", item);
-
-        MainActivity.this.startActivity(intent);
-    }
-
     @Override
     public void imageSendDetailFound(File photoFile) {
         Intent i = new Intent(this, DetailFoundActivity.class);
         i.putExtra("photoFile", photoFile.toString());
         Log.i(TAG, "Picture set successfully.");
-        startActivity(i);
+        startActivityForResult(i, REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            Item item = data.getParcelableExtra("item");
+            String action = data.getStringExtra("action");
+
+            if (action.equals("edit")) {
+                Intent intent = new Intent(MainActivity.this, EditDetailActivity.class);
+                intent.putExtra("item", item);
+                Log.d(TAG, "Opening edit detail activity for: " + item.getName());
+                MainActivity.this.startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(MainActivity.this, ItemDetailActivity.class);
+                intent.putExtra("item", item);
+                Log.d(TAG, "Opening detail activity for: " + item.getName());
+                MainActivity.this.startActivity(intent);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -168,11 +167,9 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
 
     @Override
     public void onClick(Item item) {
-        Intent intent = new Intent(this, ItemDetailActivity.class);
-        intent.putExtra("vDetails",item.getPictureFile());
-        intent.putExtra("prodName",item.getName());
-        intent.putExtra("priceText",item.getPrice());
-        intent.putExtra("locText",item.getLocation());
-        startActivity(intent);
+        Log.d(TAG, "Opening detail activity for: " + item.getName());
+        Intent intent = new Intent(MainActivity.this, ItemDetailActivity.class);
+        intent.putExtra("item", item);
+        MainActivity.this.startActivity(intent);
     }
 }
