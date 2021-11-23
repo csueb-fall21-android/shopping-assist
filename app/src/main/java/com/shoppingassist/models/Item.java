@@ -73,6 +73,6 @@ public class Item extends ParseObject {
     public void setPictureFile(ParseFile parseFile){ put(KEY_PICTUREFILE, parseFile); }
 
     /**Location which is pointer to Location**/
-    public String getLocation(){ return getString(KEY_LOCATION); }
+    public Location getLocation(){ return (Location) getParseObject(KEY_LOCATION); }
     public void setLocation(Location location){ put(KEY_LOCATION, location); }
 }
