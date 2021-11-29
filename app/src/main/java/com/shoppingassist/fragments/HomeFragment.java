@@ -96,9 +96,10 @@ public class HomeFragment extends Fragment {
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         //query.include(Item.KEY_PICTUREFILE);
         query.include(Item.KEY_USER);
+        query.include(Item.KEY_LOCATION);
         //query.include(Item.KEY_NAME);
-        query.setLimit(7); //Change later to reflect more pictures, picked 7 for testing
-        //query.addDescendingOrder(Item.KEY_CREATED_AT);
+        query.setLimit(10); //Change later to reflect more pictures, picked 7 for testing
+        query.addDescendingOrder(Item.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Item>() {
             @Override
             public void done(List<Item> items, ParseException e) { //Gets all items from database

@@ -85,7 +85,8 @@ public class CameraFragment extends Fragment {
                             camImage.setImageBitmap(takenImage);
                             btnDetailFound.setVisibility(View.VISIBLE);
                         } else {
-                            Toast.makeText(getContext(), "picture wasn't taken!!", Toast.LENGTH_SHORT).show();
+                            Log.i(TAG, "Picture not taken");
+//                            Toast.makeText(getContext(), "picture wasn't taken!!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
