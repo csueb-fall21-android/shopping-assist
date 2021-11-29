@@ -60,7 +60,7 @@ public class SearchActivity extends AppCompatActivity implements OnListItemInter
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvSearch);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        updatePlaceholderAdapter(progressBar, recyclerView);
+        updateAdapter(progressBar, recyclerView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

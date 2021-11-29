@@ -179,7 +179,7 @@ public class DetailFoundActivity extends AppCompatActivity implements GoogleApiC
             }
         });
 
-        placeholderSearchForItem("kettle", placeholderLocation);
+        searchForItem(item.getName(), placeholderLocation);
     }
 
     @Override
