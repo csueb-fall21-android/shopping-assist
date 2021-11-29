@@ -9,6 +9,10 @@ public class Location extends ParseObject {
     public static final String KEY_DESCRIPTOR = "descriptor";
     public static final String KEY_COORDINATES = "coordinates";
 
+    //Added by Hector
+    public static final String KEY_ADDRESS = "address";
+    //public static final String KEY_USER = "user";
+
     public String getDescriptor(){
         return getString(KEY_DESCRIPTOR);
     }
@@ -22,4 +26,11 @@ public class Location extends ParseObject {
     public void setCoordinates(String coordinates){
         put(KEY_COORDINATES, coordinates);
     }
+
+    //Added by Hector
+    public String getAddress() { return getString(KEY_ADDRESS); }
+    public void setAddress(String address) { put(KEY_ADDRESS, address); }
+
+    //public String getKeyUser(){ return getString(KEY_USER);}
+    //public void setKeyUser(String user){ put(KEY_USER, user);}
 }

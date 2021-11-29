@@ -172,4 +172,5 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.L
         intent.putExtra("item", item);
         MainActivity.this.startActivity(intent);
     }
+
 }
