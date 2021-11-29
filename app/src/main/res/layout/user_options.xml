@@ -71,6 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/updateEButton" />
 
+    <!--
     <TextView
         android:id="@+id/alertTextEmail"
         android:layout_width="wrap_content"
@@ -101,13 +102,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/updatePButton"
-        app:layout_constraintVertical_bias="0.18" />
+        app:layout_constraintVertical_bias="0.18" /> -->
 
     <ImageButton
         android:id="@+id/locButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="100dp"
         android:minWidth="32dp"
         android:minHeight="48dp"
@@ -119,19 +120,24 @@
         android:id="@+id/locText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
         android:hint="Set Default Location"
+
         android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        app:layout_constraintLeft_toRightOf="@id/locButton"
-        app:layout_constraintTop_toBottomOf="@+id/passwordText" />
+        android:paddingEnd="0dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/radiusText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locButton"
+        app:layout_constraintVertical_bias="0.243" />
 
     <EditText
         android:id="@+id/radiusText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="60dp"
         android:hint="Set Location Radius Search"
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +148,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="60dp"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"
         app:layout_constraintLeft_toRightOf="@id/radiusText"

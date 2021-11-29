@@ -43,6 +43,7 @@ import com.shoppingassist.models.Location;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
+    ParseUser curUser = ParseUser.getCurrentUser(); //Used to setup default email edittext
     private final int REQUEST_CODE = 20;
 
 
@@ -65,10 +66,10 @@ public class ProfileFragment extends Fragment {
     private EditText radiusText;
     private Spinner radiusList;
 
-    private MapActivity mapActivity;
-    private List<Address> addressIs;
+    //private MapActivity mapActivity;
+    //private List<Address> addressIs;
 
-    private String curLoc = "Testing";
+    //private String curLoc = "Testing";
     public String getLoc = "Default";
 
     //private FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
@@ -115,12 +116,19 @@ public class ProfileFragment extends Fragment {
         passwordText = view.findViewById(R.id.passwordText);
         updateEButton = view.findViewById(R.id.updateEButton);
         updatePButton = view.findViewById(R.id.updatePButton);
-        alertTextMail = view.findViewById(R.id.alertTextEmail);
-        alertTextPassword = view.findViewById(R.id.alertTextPassword);
+        //alertTextMail = view.findViewById(R.id.alertTextEmail);
+        //alertTextPassword = view.findViewById(R.id.alertTextPassword);
         locButton = view.findViewById(R.id.locButton);
         locText = view.findViewById(R.id.locText);
         radiusText = view.findViewById(R.id.radiusText);
         radiusList = view.findViewById(R.id.radiusList);
+
+        if(curUser.getEmail() == null){ //No email exists to set up edittext
+            //Toast.makeText(getContext(), "No email exists!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            emailText.setText(curUser.getEmail().toString());
+        }
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +153,7 @@ public class ProfileFragment extends Fragment {
 
                 //currentUser.setEmail(email);
                 saveEmail(email, currentUser);
+                emailText.setText(curUser.getEmail().toString());
             }
         });
 
@@ -161,11 +170,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        //locText.setText("dsfgdg");
-        //Add converting latitude to longitude here
-        //addressIs = mapActivity.getAddress();
-
-
         if(isServicesOK()) {
             //mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
             locButton.setOnClickListener(new View.OnClickListener() {
@@ -176,60 +180,11 @@ public class ProfileFragment extends Fragment {
                     startActivityForResult(intent, REQUEST_CODE);
                     //mapActivity.getCurLoc();
                     //startActivity(intent);
-                    //getLoc = getLocation();
-                    //locText.setText(getLoc);
-                    //getLoc = getLocation();
-                    //locText.setText(getLoc);
                 }
             });
-            //Add here to fill in text view with current address
-            //getLoc = getLocation();
-            //Toast.makeText(getContext(), getLoc, Toast.LENGTH_SHORT).show();
-            //locText.setText(getLoc);
-            //Toast.makeText(getContext(), "Back to Profile!", Toast.LENGTH_SHORT).show();
-            //Log.d(TAG, "Current address here!" + getLoc);
         }
 
 
-    }
-
-    private void retLoc(String loc){
-        getLoc = loc;
-    }
-
-    //private String retGetLoc()
-
-    private String getLocation(){
-        //String curLoc = "";
-        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-        query.include(Location.KEY_DESCRIPTOR);
-        //Toast.makeText(getContext(), "Inside get location", Toast.LENGTH_SHORT).show();
-
-        query.findInBackground(new FindCallback<Location>() {
-            @Override
-            public void done(List<Location> locations, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting Location!", e);
-                    Toast.makeText(getContext(), "Error in finding location!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                for(Location location : locations){
-                    if(location.getDescriptor().equals("My Location")){
-                        curLoc = location.getAddress();
-                        Log.i(TAG, "Found the default address " + location.getDescriptor());
-                        Toast.makeText(getContext(), "Found Location! " + curLoc, Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-            }
-        });
-        //query.
-        //String curLoc = "";
-
-        //Location curLocation = new Location();
-        //curLoc = curLocation.getDescriptor();
-        Toast.makeText(getContext(), "Found Location! " + curLoc, Toast.LENGTH_SHORT).show();
-        return curLoc;
     }
 
     public boolean isServicesOK(){
@@ -260,7 +215,7 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Email update was successful!");
-                emailText.setText("");
+                //emailText.setText("");
             }
         });
 
@@ -294,6 +249,10 @@ public class ProfileFragment extends Fragment {
 
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void findNearestLoc(){ //Based on location from item find nearest location
+
     }
 
     /*public void onFinishAddress(String address){
