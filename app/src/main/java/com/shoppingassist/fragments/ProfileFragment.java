@@ -120,8 +120,8 @@ public class ProfileFragment extends Fragment {
         //alertTextPassword = view.findViewById(R.id.alertTextPassword);
         locButton = view.findViewById(R.id.locButton);
         locText = view.findViewById(R.id.locText);
-        radiusText = view.findViewById(R.id.radiusText);
-        radiusList = view.findViewById(R.id.radiusList);
+        //radiusText = view.findViewById(R.id.radiusText);
+        //radiusList = view.findViewById(R.id.radiusList);
 
         if(curUser.getEmail() == null){ //No email exists to set up edittext
             //Toast.makeText(getContext(), "No email exists!", Toast.LENGTH_SHORT).show();
@@ -243,7 +243,6 @@ public class ProfileFragment extends Fragment {
         if(requestCode == REQUEST_CODE && resultCode ==  RESULT_OK){
             String currentLocation = data.getStringExtra("location");
             getLoc = currentLocation;
-            Toast.makeText(getActivity(), "Testing from activity here!" + getLoc, Toast.LENGTH_SHORT).show();
             locText.setText(getLoc);
         }
 
@@ -255,9 +254,4 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    /*public void onFinishAddress(String address){
-        Toast.makeText(getActivity(), "Testing here!", Toast.LENGTH_SHORT).show();
-        getLoc= address;
-        Toast.makeText(getActivity(), "Testing here!" + getLoc, Toast.LENGTH_SHORT).show();
-    }*/
 }

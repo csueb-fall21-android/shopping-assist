@@ -71,39 +71,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/updateEButton" />
 
-    <!--
-    <TextView
-        android:id="@+id/alertTextEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="84dp"
-        android:text="Email changed successfully!"
-        android:textSize="14sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/locText"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/updateEButton"
-        app:layout_constraintVertical_bias="0.193" />
-
-    <TextView
-        android:id="@+id/alertTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="32dp"
-        android:text="Password changed successfully!"
-        android:textSize="14sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/locText"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/updatePButton"
-        app:layout_constraintVertical_bias="0.18" /> -->
-
     <ImageButton
         android:id="@+id/locButton"
         android:layout_width="wrap_content"
@@ -125,49 +92,21 @@
         android:paddingStart="5dp"
         android:paddingEnd="0dp"
         app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toTopOf="@+id/radiusText"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locButton"
+        app:layout_constraintTop_toBottomOf="@+id/defaultText"
         app:layout_constraintVertical_bias="0.243" />
 
-    <EditText
-        android:id="@+id/radiusText"
+    <TextView
+        android:id="@+id/defaultText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="60dp"
-        android:hint="Set Location Radius Search"
-        android:minHeight="48dp"
+        android:text="Default Location"
+        android:textSize="34sp"
+        app:layout_constraintTop_toBottomOf="@+id/locButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/locButton" />
-
-    <Spinner
-        android:id="@+id/radiusList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="60dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        app:layout_constraintLeft_toRightOf="@id/radiusText"
-        app:layout_constraintTop_toBottomOf="@+id/locButton" />
-
-    <!--
-     <include
-         android:id="@+id/bottom_navigation"
-         layout="@layout/bottom_nav"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_alignParentBottom="true"
-         android:layout_marginTop="84dp"
-         android:layout_marginBottom="0dp"
-         android:backgroundTintMode="src_in"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintTop_toBottomOf="@id/locButton"
-         app:layout_constraintVertical_bias="0.942"
-         app:layout_scrollFlags="scroll|enterAlways"
-         tools:layout_editor_absoluteX="0dp" /> -->
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

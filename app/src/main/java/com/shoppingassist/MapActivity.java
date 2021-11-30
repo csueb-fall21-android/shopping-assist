@@ -58,11 +58,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private Button saveButton;
     private String curLoc = "Testing";
-    public String sendDescription;
-    private boolean locExists =false, locationExists = false;
+    private boolean locationExists = false;
 
     private String objectId;
-    //private boolean isQueryFinished = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,67 +125,31 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         String address = addresses.get(0).getAddressLine(0);
 
-        //Toast.makeText(MapActivity.this, "Here is address!" + address, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Address here!" + address);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         Log.d(TAG, "Address here!" + String.valueOf(currentLocation.getLatitude()));
 
         queryUserLocation(currentUser);
-        //queryLocations(); //Fix to take user into account
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //locExists = checkExistsAddress();
-                //checkExistsAddress();
-                Toast.makeText(MapActivity.this, "Location exists is so " + locExists, Toast.LENGTH_SHORT).show();
-                //saveAddress(address, currentUser, currentLocation);
                 savePtrAddress(address, currentUser, currentLocation);
             }
         });
-
-        //saveAddress(address, currentUser, currentLocation);
-        //return addresses;
     }
 
     private void queryUserLocation(ParseUser currentUser){ //check here if location pointer exists
         ParseObject locInfo = currentUser.getParseObject("location");
-        //String curLocation = currentUser.getString("location");
-
-        //Toast.makeText(MapActivity.this, "User location is " + curLocation, Toast.LENGTH_SHORT).show();
 
         if(locInfo == null){
-            Toast.makeText(MapActivity.this, "Object is empty! ", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Object is empty!");
         }
         else{
             locationExists = true;
-            Toast.makeText(MapActivity.this, "Did not work", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Location exists, set boolean to true so that we will overwrite existing address");
         }
-    }
-
-    private void queryLocations(){ //Checks if address exists and sets boolean to true to fill in text
-        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-        query.include(Location.KEY_DESCRIPTOR);
-
-        query.findInBackground(new FindCallback<Location>() {
-            @Override
-            public void done(List<Location> locations, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting Location!", e);
-                    return;
-                }
-                for(Location location : locations){
-                    if(location.getDescriptor().equals("My Location")){
-                        curLoc = location.getAddress();
-                        //Toast.makeText(MapActivity.this, "Address exists!!!", Toast.LENGTH_SHORT).show();
-                        locExists = true;
-                        //exists[0] = true;
-                        Toast.makeText(MapActivity.this, "Address exists here!!!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
     }
 
     //create new location here and then set it to currentUser as PTR reference
@@ -196,10 +158,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         String curLongitude = String.valueOf(curCoordinates.getLongitude());
         curLoc = address;
 
-        //boolean exists = checkExistsAddress();
-        //Toast.makeText(MapActivity.this, "Boolean is " + exists, Toast.LENGTH_SHORT).show();
-
-        //if(exists){
         if(!locationExists){
             Location curLocation = new Location();
             curLocation.setAddress(address);
@@ -215,7 +173,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     }
                     Log.i(TAG, "Location save was successful!");
                     objectId = curLocation.getObjectId();
-                    Toast.makeText(MapActivity.this, "ObjectID is " + objectId, Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "ObjectID is " + objectId);
                     currentUser.put("location", ParseObject.createWithoutData("Location", objectId));
                     currentUser.saveInBackground();
 
@@ -225,21 +183,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         @Override
                         public void done(ParseObject object, ParseException e) {
                             String locIs = locInfo.getString("address");
-                            //curLoc = address;
                             onFinishAddress(locIs);
-                            Toast.makeText(MapActivity.this, "User address is here " + locIs, Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Current User address is " + locIs);
                         }
                     });
-                    //curLoc = address;
-                    //onFinishAddress(address);
                 }
             });
         }
         else {
             ParseObject locInfo = currentUser.getParseObject("location");
             updateLocation(address, currentUser, locInfo);
-            Toast.makeText(MapActivity.this, "Do nothing, address exists already", Toast.LENGTH_SHORT).show();
-            //onFinishAddress(curLoc); //Change to get new address when figure out why exact location is not working
+            Log.d(TAG, "Address exists already, overwriting with new address");
         }
     }
 
